@@ -1,0 +1,38 @@
+<div id="transactions">
+    <div id="transactions-filter">
+        <span class="subtitle">Транзакции за</span>
+        <span id="transactions-filter-week" class="button filter">неделю</span>
+        <span id="transactions-filter-month" class="button filter">месяц</span>
+        <span id="transactions-filter-period" class="button filter">период</span>
+        <div id="filter-period">с <input id="from_date" type="text" name="date" /> по <input id="to_date" type="text" name="date" /></div>
+    </div>
+    <div id="transactions-filter">
+        <input id="transactions-filter-text" type="text" name="text" placeholder="Поиск по тегам, счету" />
+    </div>
+    <div id="transactions-new-form">
+        <span id="button-new-transaction" class="button">Добавить транзакцию</span>
+
+        <div id="transaction-new" style="display: none;">
+            <form id="transaction-form" action="api.php">
+                <div class="transaction_line">Счета: <select id="from_account" name="from_account"></select>&nbsp;<input id="from_amount" type="text" name="from_amount" class="amount" autocomplete="off" / >&nbsp;→&nbsp;<select id="to_account" name="to_account"></select>&nbsp;<input id="to_amount" type="text" name="to_amount" class="amount" autocomplete="off" /></div>
+                <div class="transaction_line">Дата: <input id="transaction_date" type="text" name="date" /></div>
+                <div class="transaction_line">Теги: <input id="transaction_tags" type="text" name="tags" autocomplete="off" /></div>
+                <div class="transaction_line"><input type="submit" name="submit" value="Добавить">&nbsp;&nbsp;&nbsp;<span id="button_cancel" class="button small">Отменить</span></div>
+                <input type="hidden" name="action" value="transaction">
+                <input type="hidden" name="mode" value="insert">
+                <input type="hidden" name="id" value="">
+            </form>
+        </div>
+    </div>
+    <div id="transactions-list-container">
+        <div id="transactions-list"></div>
+    </div>
+    <div id="transactions-info-container">
+        <p class="budget">
+            Приход — <span id="transactions-receipt" class="account_balance budget"></span>
+        </p>
+        <p class="budget">
+            Расход — <span id="transactions-expense" class="account_balance budget"></span>
+        </p>
+    </div>
+</div>
