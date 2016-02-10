@@ -126,6 +126,44 @@ html, body {
     padding: 20px;
 }
 
+#reports {
+    width: 100%;
+    float: left;
+}
+
+#reports-canvas-container {
+    width: 100%;
+    height: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#reports-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+#reports-canvas rect {
+  fill: #356eaf;
+}
+
+#reports-canvas text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+#reports-filter {
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    height: 40px;
+}
+
+#reports-filter span.subtitle {
+    margin: auto 0;
+}
+
 div.header {
     font-size: 100%;
     padding: 0 0 2em 0;
@@ -150,16 +188,6 @@ input.amount {
 
 .ui-widget-content {
     background: #ffffff;
-}
-
-.chart rect {
-  fill: steelblue;
-}
-
-.chart text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: middle;
 }
 
 div.tooltip {
