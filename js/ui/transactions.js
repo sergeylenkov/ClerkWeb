@@ -368,11 +368,11 @@ function Transactions() {
             if (!$(this).is(":hidden")) {
                 var transaction = self.transactions[$(this).attr("index")];
 
-                if (transaction.to_type_id == 2) {
+                if (transaction.to_type_id == data.accountType.expense) {
                     expense = expense + transaction.from_account_amount;
                 }
 
-                if (transaction.from_type_id == 0) {
+                if (transaction.from_type_id == data.accountType.receipt) {
                     receipt = receipt + transaction.to_account_amount;
                 }
 
@@ -380,9 +380,6 @@ function Transactions() {
             }
         });
 
-        console.log(count);
-        console.log(expense);
-        console.log(receipt);
         $("#transactions-receipt").html(receipt.formatAmount());
         $("#transactions-expense").html(expense.formatAmount());
     }

@@ -58,11 +58,11 @@ function Data(url) {
         });
 	}
 
-	this.expensesByMonth = function(callback) {
+	this.expensesByMonth = function(account, callback) {
         $.ajax({
             url: this._url,
             dataType: "json",
-            data: { action: "expenses_by_month" },
+            data: { action: "expenses_by_month" , account: account },
         }).done(function (response) {
 			callback(response);
 		});
