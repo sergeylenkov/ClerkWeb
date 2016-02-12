@@ -1,2 +1,17 @@
 <div id="accounts">
+    <div id="accounts_list">
+    </div>
+    <div id="accounts_content">
+        <div id="accounts_form" style="display: none;">
+            <span id="accounts_form_title">Редактирование счета</span>
+            <form id="account_form" action="api.php">
+                <div class="transaction_line">Название: <input id="account_name" type="text" name="name" /></div>
+                <div class="transaction_line">Теги: <input id="transaction_tags" type="text" name="tags" autocomplete="off" /></div>
+                <div class="transaction_line"><input type="submit" name="submit" value="Добавить">&nbsp;&nbsp;&nbsp;<span id="button_cancel" class="button small">Отменить</span></div>
+                <input type="hidden" name="action" value="account">
+                <input type="hidden" name="mode" value="insert">
+                <input type="hidden" name="id" value="">
+            </form>
+        </div>
+    </div>
 </div>

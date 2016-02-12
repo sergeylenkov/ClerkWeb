@@ -14,17 +14,7 @@ function Dashboard() {
                         item.attr("index", accounts[i].id);
                         item.find(".account_name").text(accounts[i].name);
 
-                        var icon = item.find(".icon");
-
-                        if (accounts[i].icon_id == 48) {
-                            icon.addClass("icon-card");
-                        } else if (accounts[i].icon_id == 58) {
-                            icon.addClass("icon-bank");
-                        } else {
-                            icon.addClass("icon-cash");
-                        }
-
-                        $("#accounts").append(item);
+                        $("#dashboard_accounts").append(item);
 
                         self.balance(item, accounts[i]);
                     }

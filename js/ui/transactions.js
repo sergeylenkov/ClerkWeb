@@ -1,5 +1,6 @@
 function Transactions() {
     var self = this;
+    var view;
     var fromDate = Date.today();
     var toDate = Date.today();
     var accountId;
@@ -9,8 +10,8 @@ function Transactions() {
 
     this.load = function(container) {
         $.get("templates/transactions.html", function(html) {
-            var list = $(html);
-            container.append(list);
+            view = $(html);
+            container.append(view);
 
             $("#filter-period").css("opacity", 0);
             $("#filter-period").hide();
