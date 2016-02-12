@@ -7,12 +7,12 @@ function Reports() {
             var report = $(html);
             container.append(report);
 
-            $("#reports-filter-expenses").click(function() {
+            $("#reports_filter_expenses").click(function() {
                 if ($(this).hasClass("active")) {
                     return;
                 }
 
-                $("#reports-filter").find(".button").removeClass("active");
+                $("#reports_filter").find(".button").removeClass("active");
                 $(this).addClass("active");
 
                 self.type = data.accountType.expense;
@@ -20,12 +20,12 @@ function Reports() {
                 self.updateAccountsList();
             });
 
-            $("#reports-filter-receipts").click(function() {
+            $("#reports_filter_receipts").click(function() {
                 if ($(this).hasClass("active")) {
                     return;
                 }
 
-                $("#reports-filter").find(".button").removeClass("active");
+                $("#reports_filter").find(".button").removeClass("active");
                 $(this).addClass("active");
 
                 self.type = data.accountType.receipt;
@@ -37,7 +37,7 @@ function Reports() {
                 self.selectReport(self.type, $("#reports_account").val());
             });
 
-            $("#reports-filter-expenses").click();
+            $("#reports_filter_expenses").click();
         });
     }
 
@@ -49,12 +49,12 @@ function Reports() {
     }
 
     this.fillChart = function(data) {
-        var width = $("#reports-canvas").outerWidth(true);
-        var height = $("#reports-canvas").outerHeight(true);
+        var width = $("#reports_canvas").outerWidth(true);
+        var height = $("#reports_canvas").outerHeight(true);
         var barPadding = 1;
         var max = d3.max(data, function(d) { return d.value; });
         var scale = d3.scale.linear().domain([0, max]).range([0, height]);
-        var svg = d3.select("#reports-canvas").attr("width", width).attr("height", height);
+        var svg = d3.select("#reports_canvas").attr("width", width).attr("height", height);
         var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
         svg.selectAll("*").remove();
