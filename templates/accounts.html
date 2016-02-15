@@ -1,12 +1,17 @@
 <div id="accounts">
+    <div id="accounts_filter">
+        <span class="subtitle">Тип счетов </span>
+        <span id="accounts_filter_deposits" class="button filter">депозиты</span>
+        <span id="accounts_filter_expenses" class="button filter">расходы</span>
+        <span id="accounts_filter_receipts" class="button filter">доходы</span>
+    </div>
     <div id="accounts_list">
     </div>
     <div id="accounts_content">
-        <div id="accounts_form" style="display: none;">
+        <div id="accounts_form">
             <span id="accounts_form_title">Редактирование счета</span>
             <form id="account_form" action="api.php">
-                <div class="transaction_line">Название: <input id="account_name" type="text" name="name" /></div>
-                <div class="transaction_line">Теги: <input id="transaction_tags" type="text" name="tags" autocomplete="off" /></div>
+                <div class="transaction_line">Название: <input id="account_form_name" type="text" name="name" /></div>
                 <div class="transaction_line"><input type="submit" name="submit" value="Добавить">&nbsp;&nbsp;&nbsp;<span id="button_cancel" class="button small">Отменить</span></div>
                 <input type="hidden" name="action" value="account">
                 <input type="hidden" name="mode" value="insert">

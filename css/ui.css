@@ -78,22 +78,22 @@ html, body {
     box-sizing: border-box;
 }
 
-#transactions-filter {
+#transactions_filter {
     padding: 0 20px;
     box-sizing: border-box;
     display: flex;
     height: 40px;
 }
 
-#transactions-filter span.subtitle {
+#transactions_filter span.subtitle {
     margin: auto 0;
 }
 
-#transactions-filter #filter-period {
+#transactions_filter #filter_period {
     margin: auto 0 auto 10px;
 }
 
-#transactions-filter-text {
+#transactions_filter_text {
     width: 400px;
     height: 20px;
     margin: auto 0 auto 0;
@@ -101,14 +101,14 @@ html, body {
     outline: none;
 }
 
-#transactions-list-container {
+#transactions_list_container {
     padding: 20px;
     box-sizing: border-box;
     width: 85%;
     float: left;
 }
 
-#transactions-info-container {
+#transactions_info_container {
     width: 15%;
     float: left;
     font-size: 12px;
@@ -122,14 +122,14 @@ html, body {
     margin: auto 0 auto 10px;
 }
 
-#transactions-new-form {
+#transactions_new_form {
     padding: 20px;
     box-sizing: border-box;
     width: 100%;
     float: left;
 }
 
-#transaction-new {
+#transaction_new {
     float: left;
     width: 60%;
     border: 1px solid #bebebe;
@@ -183,18 +183,42 @@ html, body {
     float: left;
 }
 
+#accounts_filter {
+    width: 100%;
+    float: left;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    height: 40px;
+}
+
+#accounts_filter span.subtitle {
+    margin: auto 0;
+}
+
 #accounts_list {
-    width: 20%;
+    width: 30%;
     float: left;
     padding: 20px;
     box-sizing: border-box;
 }
 
 #accounts_content {
-    width: 20%;
+    width: 70%;
     float: left;
     padding: 20px;
     box-sizing: border-box;
+}
+
+#accounts_form_title {
+    font-size: 120%;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    float: left;
+}
+
+#accounts_list .account.selected {
+    background: #f6f6f6;
 }
 
 div.header {

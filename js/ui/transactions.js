@@ -13,61 +13,19 @@ function Transactions() {
             view = $(html);
             container.append(view);
 
-            $("#filter-period").css("opacity", 0);
-            $("#filter-period").hide();
+            $("#filter_period").css("opacity", 0);
+            $("#filter_period").hide();
 
-            $("#transactions-filter-period").click(function() {
-                if ($(this).hasClass("active")) {
-                    return;
-                }
-
-                $("#transactions-filter").find(".button").removeClass("active");
-                $(this).addClass("active");
-
-                $("#filter-period").show();
-                $("#filter-period").transition({"opacity": 1}, 300);
-
-                if (settings['from_date_filter']) {
-                    fromDate = Date.parse(settings['from_date_filter']);
-                }
-
-                if (settings['to_date_filter']) {
-                    toDate = Date.parse(settings['to_date_filter']);
-                }
-
-                self.updateList();
+            $("#transactions_filter_period").click(function() {
+                self.selectPeriod($(this), 0);
             });
 
-            $("#transactions-filter-week").click(function() {
-                if ($(this).hasClass("active")) {
-                    return;
-                }
-
-                $("#transactions-filter").find(".button").removeClass("active");
-                $(this).addClass("active");
-
-                $("#filter-period").transition({"opacity": 0}, 300);
-
-                fromDate = Date.today().setWeek(Date.today().getWeek());
-                toDate = Date.today().moveToDayOfWeek(0, 1);
-
-                self.updateList();
+            $("#transactions_filter_week").click(function() {
+                self.selectPeriod($(this), 1);
             });
 
-            $("#transactions-filter-month").click(function() {
-                if ($(this).hasClass("active")) {
-                    return;
-                }
-
-                $("#transactions-filter").find(".button").removeClass("active");
-                $(this).addClass("active");
-
-                $("#filter-period").transition({"opacity": 0}, 300);
-
-                fromDate = Date.today().moveToFirstDayOfMonth();
-                toDate = Date.today().moveToLastDayOfMonth();
-
-                self.updateList();
+            $("#transactions_filter_month").click(function() {
+                self.selectPeriod($(this), 2);
             });
 
             var defaultDate = Date.today();
@@ -118,12 +76,12 @@ function Transactions() {
                 $("#to_date").val(settings['to_date_filter']);
             }
 
-            $("#transactions-filter-text").keyup(function() {
+            $("#transactions_filter_text").keyup(function() {
                 self.filter($(this).val());
                 self.updateAmount();
             });
 
-            $("#transactions-filter-week").click();
+            $("#transactions_filter_week").click();
 
             self.initForm();
         });
@@ -132,7 +90,7 @@ function Transactions() {
     this.initForm = function () {
         self.fillAccountsSelect();
 
-        $("#button-new-transaction").click(function () {
+        $("#button_new_transaction").click(function () {
             var date = new Date(datePicker.getDate());
 
             $("input[name=id]").val("");
@@ -145,14 +103,14 @@ function Transactions() {
             $("#transaction_tags").tagit("removeAll");
             $("#transaction_date").val(date.toString("yyyy-MM-dd"));
 
-            $("#button-new-transaction").fadeOut(300, function() {
-                $("#transaction-new").fadeIn(300);
+            $("#button_new_transaction").fadeOut(300, function() {
+                $("#transaction_new").fadeIn(300);
             });
         });
 
         $("#button_cancel").click(function () {
-            $("#transaction-new").fadeOut(300, function() {
-                $("#button-new-transaction").fadeIn(300);
+            $("#transaction_new").fadeOut(300, function() {
+                $("#button_new_transaction").fadeIn(300);
             });
         });
 
@@ -175,16 +133,16 @@ function Transactions() {
 
         datePicker.setDate(Date.today().toString('yyyy-MM-dd'));
 
-        $("#transaction-form").submit(function (event) {
-            data.saveTransaction($("#transaction-form").serialize(), function(response) {
+        $("#transaction_form").submit(function (event) {
+            data.saveTransaction($("#transaction_form").serialize(), function(response) {
                 if (!response.error) {
-                    $("#transaction-new").fadeOut(300, function() {
-                        $("#button-new-transaction").fadeIn(300);
+                    $("#transaction_new").fadeOut(300, function() {
+                        $("#button_new_transaction").fadeIn(300);
 
-                        $("#transactions-list").fadeOut(300, function() {
+                        $("#transactions_list").fadeOut(300, function() {
                             self.update();
 
-                            $("#transactions-list").fadeIn(300);
+                            $("#transactions_list").fadeIn(300);
                         });
                     });
                 }
@@ -237,7 +195,7 @@ function Transactions() {
 
     this.update = function() {
         data.transactions(accountId, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(transactions) {
-            $("#transactions-list").html("");
+            $("#transactions_list").html("");
             self.transactions = transactions;
 
             $.get("templates/transactions-item.html", function(html) {
@@ -257,8 +215,6 @@ function Transactions() {
                      item.find(".transaction_date .subtitle").text(weekDay);
 
                      if (date.equals(lastDate)) {
-                         //dateStr = "";
-                         //weekDay = "";
                          item.find(".transaction_date").css("visibility", "hidden");
                      }
 
@@ -311,10 +267,10 @@ function Transactions() {
                         self.delete(self.transactions[$(this).attr("index")]);
                     });
 
-                    $("#transactions-list").append(item);
+                    $("#transactions_list").append(item);
                 }
 
-                self.filter($("#transactions-filter-text").val());
+                self.filter($("#transactions_filter_text").val());
                 self.updateAmount();
             });
         });
@@ -325,7 +281,7 @@ function Transactions() {
 
         var first = true;
 
-        $("#transactions-list").find(".transaction").each(function() {
+        $("#transactions_list").find(".transaction").each(function() {
             if (text.length == 0) {
                 $(this).show();
 
@@ -365,7 +321,7 @@ function Transactions() {
         var expense = 0;
         var receipt = 0;
 
-        $("#transactions-list").find(".transaction").each(function() {
+        $("#transactions_list").find(".transaction").each(function() {
             if (!$(this).is(":hidden")) {
                 var transaction = self.transactions[$(this).attr("index")];
 
@@ -381,8 +337,8 @@ function Transactions() {
             }
         });
 
-        $("#transactions-receipt").html(receipt.formatAmount());
-        $("#transactions-expense").html(expense.formatAmount());
+        $("#transactions_receipt").html(receipt.formatAmount());
+        $("#transactions_expense").html(expense.formatAmount());
     }
 
     this.edit = function(transaction) {
@@ -405,14 +361,14 @@ function Transactions() {
 
         $("#transaction_date").val(transaction.paid_at);
 
-        $("#button-new-transaction").fadeOut(300, function() {
-            $("#transaction-new").fadeIn(300);
+        $("#button_new_transaction").fadeOut(300, function() {
+            $("#transaction_new").fadeIn(300);
         });
     }
 
     this.delete = function(transaction) {
         data.deleteTransaction(transaction, function(response) {
-            $("#transactions-list").find(".transaction").each(function() {
+            $("#transactions_list").find(".transaction").each(function() {
                 if ($(this).attr("index") == transaction.id) {
                     $(this).transaction({ "opacity": 0 }, 300, function() {
                         self.update();
@@ -423,10 +379,44 @@ function Transactions() {
     }
 
     this.updateList = function () {
-        $("#transactions-list").transition({ "opacity": 0 }, 300, function() {
+        $("#transactions_list").transition({ "opacity": 0 }, 300, function() {
             self.update();
 
-            $("#transactions-list").transition({ "opacity": 1 }, 300);
+            $("#transactions_list").transition({ "opacity": 1 }, 300);
         });
+    }
+
+    this.selectPeriod = function(sender, type) {
+        if (sender.hasClass("active")) {
+            return;
+        }
+
+        $("#transactions_filter").find(".button").removeClass("active");
+        sender.addClass("active");
+
+        if (type == 0) {
+            $("#filter_period").show();
+            $("#filter_period").transition({"opacity": 1}, 300);
+
+            if (settings['from_date_filter']) {
+                fromDate = Date.parse(settings['from_date_filter']);
+            }
+
+            if (settings['to_date_filter']) {
+                toDate = Date.parse(settings['to_date_filter']);
+            }
+        } else if (type == 1) {
+            $("#filter_period").transition({"opacity": 0}, 300);
+
+            fromDate = Date.today().setWeek(Date.today().getWeek());
+            toDate = Date.today().moveToDayOfWeek(0, 1);
+        } else if (type == 2) {
+            $("#filter_period").transition({"opacity": 0}, 300);
+
+            fromDate = Date.today().moveToFirstDayOfMonth();
+            toDate = Date.today().moveToLastDayOfMonth();
+        }
+
+        self.updateList();
     }
 }

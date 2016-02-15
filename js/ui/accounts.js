@@ -1,38 +1,42 @@
 function Accounts() {
     var self = this;
     var view;
+    var accounts;
 
     this.load = function(container) {
         $.get("templates/accounts.html", function(html) {
             view = $(html);
             container.append(view);
 
-            $("#accounts_list").html("");
+            $("#accounts_filter_deposits").click(function() {
+                self.selectAccountType($(this), data.accountType.deposit);
+            });
 
-            $("#accounts_list").append($("<div/>", { "class": "header", text: "Депозиты" }));
+            $("#accounts_filter_expenses").click(function() {
+                self.selectAccountType($(this), data.accountType.expense);
+            });
 
-            data.accounts(data.accountType.deposit, true, function(accounts) {
-                $.get("templates/accounts-item.html", function(html) {
-                    for (var i = 0; i < accounts.length; i++) {
-                        var item = $(html);
-                        item.attr("index", accounts[i].id);
-                        item.find(".account_name").text(accounts[i].name);
+            $("#accounts_filter_receipts").click(function() {
+                self.selectAccountType($(this), data.accountType.receipt);
+            });
 
-                        $("#accounts_list").append(item);
+            $("#accounts_filter_deposits").click();
 
-                        self.balance(item, accounts[i]);
-
-                        item.click(function() {
-                            sefl.edit();
-                        });
-                    }
-                });
+            $("#accounts_form").css("opacity", 0);
+            $("#account_form").find("#button_cancel").click(function() {
+                $("#accounts_form").transition({ "opacity": 0 }, 300);
             });
         });
     }
 
     this.edit = function(account) {
-        
+        $("#account_form_name").val(account.name);
+
+        $("input[name=id]").val(account.id);
+        $("input[name=mode]").val("update");
+        $("input[name=submit]").val("Изменить");
+
+        $("#accounts_form").transition({ "opacity": 1 }, 300);
     }
 
     this.balance = function(item, account) {
@@ -56,6 +60,40 @@ function Accounts() {
                 amountInfoItem.hide();
                 amountItem.html(response.balance.formatAmount());
             }
+        });
+    }
+
+    this.selectAccountType = function(sender, type) {
+        if (sender.hasClass("active")) {
+            return;
+        }
+
+        $("#accounts_filter").find(".button").removeClass("active");
+        sender.addClass("active");
+
+        $("#accounts_list").html("");
+
+        data.accounts(type, true, function(accounts) {
+            self.accounts = accounts;
+
+            $.get("templates/accounts-item.html", function(html) {
+                for (var i = 0; i < self.accounts.length; i++) {
+                    var item = $(html);
+                    item.attr("index", i);
+                    item.find(".account_name").text(accounts[i].name);
+
+                    $("#accounts_list").append(item);
+
+                    self.balance(item, accounts[i]);
+
+                    item.click(function() {
+                        $("#accounts_list").find(".account").removeClass("selected");
+
+                        $(this).addClass("selected");
+                        self.edit(self.accounts[$(this).attr("index")]);
+                    });
+                }
+            });
         });
     }
 }
