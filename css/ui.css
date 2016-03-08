@@ -406,3 +406,13 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
