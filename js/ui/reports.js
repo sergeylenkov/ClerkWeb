@@ -57,6 +57,8 @@ function Reports() {
         width = width - margin.left - margin.right,
         height = height - margin.top - margin.bottom;
         //var scale = d3.scale.linear().domain([0, max]).range([0, height]);
+        d3.select("#reports_canvas").selectAll("*").remove();
+
         var svg = d3.select("#reports_canvas")
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
@@ -64,7 +66,7 @@ function Reports() {
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         //var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
-        svg.selectAll("*").remove();
+        //svg.selectAll("*").remove();
 
         //var path = svg.append("g").attr("transform", "translate(" + 60 + "," + -30 + ")");
         var parseDate = d3.time.format("%Y %m").parse;
