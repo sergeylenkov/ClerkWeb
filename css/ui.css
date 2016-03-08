@@ -153,7 +153,7 @@ html, body {
     height: 100%;
 }
 
-#reports_canvas rect {
+/*#reports_canvas rect {
   fill: #356eaf;
 }
 
@@ -161,7 +161,7 @@ html, body {
   fill: white;
   font: 10px sans-serif;
   text-anchor: middle;
-}
+}*/
 
 #reports_filter {
     padding: 0 20px;
@@ -391,4 +391,18 @@ input.tags {
 
 .transaction .action .edit {
     margin: 0 10px 0 0;
+}
+
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
 }
