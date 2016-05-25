@@ -12,6 +12,10 @@
             <span id="accounts_form_title">Редактирование счета</span>
             <form id="account_form" action="api.php">
                 <div class="transaction_line">Название: <input id="account_form_name" type="text" name="name" /></div>
+                <div class="transaction_line">Тип: <select id="account_form_type" name="type"></select></div>
+                <div class="transaction_line">Валюта: <select id="account_form_currency" name="currency"></select></div>
+                <div id="credit_limit_field" class="transaction_line">Лимит: <input id="account_form_credit_limit" type="text" name="credit_limit" /></div>
+                <div class="transaction_line">Примечание: <textarea id="account_form_note" name="note"></textarea></div>
                 <div class="transaction_line"><input type="submit" name="submit" value="Добавить">&nbsp;&nbsp;&nbsp;<span id="button_cancel" class="button small">Отменить</span></div>
                 <input type="hidden" name="action" value="account">
                 <input type="hidden" name="mode" value="insert">

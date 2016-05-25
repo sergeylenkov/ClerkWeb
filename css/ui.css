@@ -225,6 +225,18 @@ html, body {
     background: #f6f6f6;
 }
 
+#accounts_list .account:hover {
+    background: #f6f6f6;
+}
+
+#account_form_name {
+    width: 200px;
+}
+
+#account_form_currency {
+    width: 200px;
+}
+
 div.header {
     font-size: 100%;
     padding: 0 0 2em 0;

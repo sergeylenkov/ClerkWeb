@@ -127,4 +127,24 @@ function Data(url) {
 			callback(response);
 		});
 	}
+
+	this.saveAccount = function(data, callback) {
+		$.ajax({
+			url: this._url,
+			dataType: "json",
+			data: data,
+		}).done(function(response) {
+			callback(response);
+		});
+	}
+
+	this.currencies = function(callback) {
+		$.ajax({
+			url: this._url,
+			dataType: "json",
+			data: {action: "currencies"},
+		}).done(function(response) {
+			callback(response);
+		});
+	}
 }

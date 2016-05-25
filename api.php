@@ -8,13 +8,13 @@ header("Pragma: no-cache");
 $mysql = new PDO("sqlite:database.sqlite");
 
 if ($_GET["action"] == "accounts") {
-  $account = array();
+    $account = array();
 
-  foreach ($mysql->query("SELECT * FROM accounts WHERE type_id = " . $_GET["type"] . " AND active = " . $_GET["active"] . " ORDER BY order_id") as $row) {
-	  $account[] = array("id" => $row["id"], "name" => $row["name"], "currency_id" => $row["currency_id"], "icon_id" => $row["icon_id"], "credit_limit" => round($row["credit_limit"], 2));
-  }
+    foreach ($mysql->query("SELECT * FROM accounts WHERE type_id = " . $_GET["type"] . " AND active = " . $_GET["active"] . " ORDER BY order_id") as $row) {
+	    $account[] = array("id" => $row["id"], "name" => $row["name"], "currency_id" => $row["currency_id"], "icon_id" => $row["icon_id"], "type_id" => $row["type_id"], "credit_limit" => round($row["credit_limit"], 2));
+    }
 
-  echo json_encode($account);
+    echo json_encode($account);
 }
 
 if ($_GET["action"] == "balance") {
@@ -259,6 +259,55 @@ if ($_GET["action"] == "available_amounts") {
     }
 
     echo json_encode($result);
+}
+
+if ($_GET["action"] == "account") {
+    if ($_GET["mode"] == "insert") {
+    } else if ($_GET["mode"] == "update") {
+        $error = false;
+        $statement = $mysql->prepare("UPDATE accounts SET name = ?, note = ?, credit_limit = ?, currency_id = ? WHERE id = ?");
+
+        if (isset($_GET['note'])) {
+            $note = $_GET['note'];
+        } else {
+            $note = "";
+        }
+
+        if (isset($_GET['credit_limit'])) {
+            $credit_limit = $_GET['credit_limit'];
+        } else {
+            $credit_limit = 0;
+        }
+
+        $account_id = $_GET['id'];
+
+        if (!$statement->execute(array($_GET['name'], $note, $credit_limit, $_GET['currency'], $account_id))) {
+            $error = true;
+        }
+
+        echo json_encode(array("error" => $error, "id" => $account_id, "info" => $mysql->errorInfo()));
+    } else if ($_GET["mode"] == "delete") {
+        $error = false;
+        $statement = $mysql->prepare("UPDATE accounts SET active = ? WHERE id = ?");
+
+        $account_id = $_GET['id'];
+
+        if (!$statement->execute(array(0, $account_id))) {
+            $error = true;
+        }
+
+        echo json_encode(array("error" => $error, "id" => $account_id, "info" => $mysql->errorInfo()));
+    }
+}
+
+if ($_GET["action"] == "currencies") {
+    $currencies = array();
+
+    foreach ($mysql->query("SELECT * FROM currencies ORDER BY name") as $row) {
+	    $currencies[] = array("id" => $row["id"], "name" => $row["name"]);
+    }
+
+    echo json_encode($currencies);
 }
 
 ?>

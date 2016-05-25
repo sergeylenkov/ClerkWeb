@@ -2,6 +2,7 @@ function Accounts() {
     var self = this;
     var view;
     var accounts;
+    var type = data.accountType.deposit;
 
     this.load = function(container) {
         $.get("templates/accounts.html", function(html) {
@@ -22,15 +23,56 @@ function Accounts() {
 
             $("#accounts_filter_deposits").click();
 
-            $("#accounts_form").css("opacity", 0);
-            $("#account_form").find("#button_cancel").click(function() {
-                $("#accounts_form").transition({ "opacity": 0 }, 300);
-            });
+            self.initForm();
         });
+    }
+
+    this.initForm = function() {
+        $("#accounts_form").css("opacity", 0);
+
+        $("#account_form").find("#button_cancel").click(function() {
+            $("#accounts_form").transition({ "opacity": 0 }, 300);
+            $("#accounts_list").find(".account").removeClass("selected");
+        });
+
+        $("#account_form").submit(function(event) {
+            data.saveAccount($("#account_form").serialize(), function(response) {
+                if (!response.error) {
+                    $("#accounts_form").transition({ "opacity": 0 }, 300, function() {
+                        self.update();
+                    });
+                }
+            });
+
+            event.preventDefault();
+        });
+
+        data.currencies(function(currencies) {
+            for (var i = 0; i < currencies.length; i++) {
+                $("#account_form_currency").append($('<option>', {value: currencies[i].id, text: currencies[i].name}));
+            }
+        });
+
+        $("#account_form_type").append($('<option>', {value: 0, text: "Доход"}));
+        $("#account_form_type").append($('<option>', {value: 1, text: "Депозит"}));
+        $("#account_form_type").append($('<option>', {value: 2, text: "Расход"}));
+        $("#account_form_type").append($('<option>', {value: 3, text: "Долг"}));
     }
 
     this.edit = function(account) {
         $("#account_form_name").val(account.name);
+        $("#account_form_currency").val(account.currency_id);
+        $("#account_form_credit_limit").val(0);
+
+        $("#credit_limit_field").hide();
+
+        if (account.credit_limit > 0) {
+            $("#account_form_credit_limit").val(account.credit_limit);
+            $("#credit_limit_field").show();
+        }
+
+        $("#account_form_type").val(account.type_id);
+        $("#account_form_type").attr("disabled", "disabled");
 
         $("input[name=id]").val(account.id);
         $("input[name=mode]").val("update");
@@ -71,6 +113,10 @@ function Accounts() {
         $("#accounts_filter").find(".button").removeClass("active");
         sender.addClass("active");
 
+        self.update();
+    }
+
+    this.update = function() {
         $("#accounts_list").html("");
 
         data.accounts(type, true, function(accounts) {
