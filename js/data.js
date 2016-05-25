@@ -117,4 +117,14 @@ function Data(url) {
 			callback(response);
 		});
 	}
+
+	this.availableAmounts = function(callback) {
+		$.ajax({
+			url: this._url,
+			dataType: "json",
+			data: {action: "available_amounts"},
+		}).done(function(response) {
+			callback(response);
+		});
+	}
 }

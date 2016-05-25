@@ -245,4 +245,20 @@ if ($_GET["action"] == "all_tags") {
     echo json_encode($tags);
 }
 
+if ($_GET["action"] == "available_amounts") {
+    $result = array();
+
+    foreach ($mysql->query("SELECT a.*, c.short_name AS currency_name FROM accounts a, currencies c WHERE a.type_id = 1 AND a.active = 1 AND a.currency_id = c.id") as $row) {
+        $receipt = $mysql->query("SELECT COALESCE(SUM(to_account_amount), 0) AS sum FROM transactions WHERE to_account_id = " . $row["id"] . " AND deleted = 0")->fetch();
+        $expense = $mysql->query("SELECT COALESCE(SUM(from_account_amount), 0) AS sum FROM transactions WHERE from_account_id = " . $row["id"] . " AND deleted = 0")->fetch();
+
+  	    $account = array("id" => $row["id"], "name" => $row["name"], "currency_id" => $row["currency_id"], "currency_name" => $row["currency_name"],
+                         "credit_limit" => round($row["credit_limit"], 2), "receipt" => $receipt, "expense" => $expense, "balance" => round($receipt["sum"] - $expense["sum"], 2));
+
+        $result[] = $account;
+    }
+
+    echo json_encode($result);
+}
+
 ?>

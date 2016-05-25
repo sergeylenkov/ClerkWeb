@@ -7,6 +7,34 @@ function Dashboard() {
             view = $(html);
             container.append(view);
 
+            data.availableAmounts(function(accounts) {
+                var amounts = {};
+
+                for (var i = 0; i < accounts.length; i++) {
+                    var account = accounts[i];
+
+                    if (account.credit_limit > 0) {
+                        continue;
+                    }
+
+                    if (amounts[account.currency_id]) {
+                        amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
+                    } else {
+                        amounts[account.currency_id] = { "balance": account.balance, "currency": account.currency_name };
+                    }
+                }
+
+                $.get("templates/dashboard-amount.html", function(html) {
+                    for (var k in amounts) {
+                        var item = $(html);
+                        item.find(".balance").html(amounts[k].balance.formatAmount(false));
+                        item.find(".currency").html(replaceCurrencyNameWithSign(amounts[k].currency));
+
+                        $("#dashboard_available_amount").append(item);
+                    }
+                });
+            });
+
             data.accounts(data.accountType.deposit, true, function(accounts) {
                 $.get("templates/dashboard-account.html", function(html) {
                     for (var i = 0; i < accounts.length; i++) {
@@ -19,6 +47,10 @@ function Dashboard() {
                         self.balance(item, accounts[i]);
                     }
                 });
+            });
+
+            data.accounts(data.accountType.debt, true, function(accounts) {
+                console.log(accounts);
             });
 
             $("#budget_header").html("Бюджет за " + monthNames[Date.today().getMonth()]);

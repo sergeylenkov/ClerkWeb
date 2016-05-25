@@ -5,7 +5,8 @@ html, body {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 13px;
     color: #333333;
-    background: #f6f5f3;
+    /*background: #f6f5f3;*/
+    background: #ffffff;
     overflow-y: scroll;
 }
 
@@ -69,6 +70,19 @@ html, body {
 #dashboard_budget {
     float: left;
     width: 50%;
+}
+
+#dashboard_available_amount {
+    margin: 20px 0 0 0;
+}
+
+#dashboard_available_amount .amount_item {
+    margin: 0 0 10px 0;
+    font-size: 140%;
+}
+
+#dashboard_available_amount .amount_item .currency {
+    font-size: 80%;
 }
 
 #transactions {
@@ -217,8 +231,8 @@ div.header {
 }
 
 span.header {
-    font-size: 120%;
-    font-weight: bold;
+    font-size: 160%;
+    font-weight: normal;
 }
 
 .fraction {
