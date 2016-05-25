@@ -1,6 +1,6 @@
 function Data(url) {
 	this._url = url;
-	this.accountType = {receipt: 0, deposit: 1, expense: 2, credit: 3};
+	this.accountType = {receipt: 0, deposit: 1, expense: 2, credit: 3, debt: 4};
 
 	this.accounts = function(type, active, callback) {
         $.ajax({

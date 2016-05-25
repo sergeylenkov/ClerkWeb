@@ -35,22 +35,24 @@ function Dashboard() {
                 });
             });
 
-            data.accounts(data.accountType.deposit, true, function(accounts) {
-                $.get("templates/dashboard-account.html", function(html) {
-                    for (var i = 0; i < accounts.length; i++) {
-                        var item = $(html);
-                        item.attr("index", accounts[i].id);
-                        item.find(".account_name").text(accounts[i].name);
+            data.accounts(data.accountType.deposit, true, function(result) {
+                var accounts = result;
 
-                        $("#dashboard_accounts").append(item);
+                data.accounts(data.accountType.debt, true, function(result) {
+                    accounts = accounts.concat(result);
 
-                        self.balance(item, accounts[i]);
-                    }
+                    $.get("templates/dashboard-account.html", function(html) {
+                        for (var i = 0; i < accounts.length; i++) {
+                            var item = $(html);
+                            item.attr("index", accounts[i].id);
+                            item.find(".account_name").text(accounts[i].name);
+
+                            $("#dashboard_accounts").append(item);
+
+                            self.balance(item, accounts[i]);
+                        }
+                    });
                 });
-            });
-
-            data.accounts(data.accountType.debt, true, function(accounts) {
-                console.log(accounts);
             });
 
             $("#budget_header").html("Бюджет за " + monthNames[Date.today().getMonth()]);
@@ -93,6 +95,9 @@ function Dashboard() {
                 }
 
                 amountInfoItem.html("(" + account.credit_limit.formatAmount() + sign + Math.abs(response.balance).formatAmount() + ")");
+            } else if (account.type_id == data.accountType.debt) {
+                amountItem.html(response.balance.formatAmount());
+                amountInfoItem.html("(" + response.expense.formatAmount() + " - " + Math.abs(response.receipt).formatAmount() + ")");
             } else {
                 amountInfoItem.hide();
                 amountItem.html(response.balance.formatAmount());

@@ -21,7 +21,7 @@ if ($_GET["action"] == "balance") {
     $receipt = $mysql->query("SELECT COALESCE(SUM(to_account_amount), 0) AS sum FROM transactions WHERE to_account_id = " . $_GET["id"] . " AND deleted = 0")->fetch();
     $expense = $mysql->query("SELECT COALESCE(SUM(from_account_amount), 0) AS sum FROM transactions WHERE from_account_id = " . $_GET["id"] . " AND deleted = 0")->fetch();
 
-    echo json_encode(array("balance" => round($receipt["sum"] - $expense["sum"], 2)));
+    echo json_encode(array("balance" => round($receipt["sum"] - $expense["sum"], 2), "receipt" => round($receipt["sum"], 2), "expense" => round($expense["sum"], 2) ));
 }
 
 if ($_GET["action"] == "budget") {
