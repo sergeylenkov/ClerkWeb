@@ -257,6 +257,10 @@ function Transactions() {
 
                     name.find(".transaction_tags").text(tags);
 
+                    if (transaction.note && transaction.note.length > 0) {
+                        name.find(".transaction_note").text("(" + transaction.note + ")");
+                    }
+
                     item.find(".edit").attr("index", i);
                     item.find(".edit").click(function() {
                         self.edit(self.transactions[$(this).attr("index")]);
@@ -360,6 +364,7 @@ function Transactions() {
         }
 
         $("#transaction_date").val(transaction.paid_at);
+        $("#transaction_note").val(transaction.note);
 
         $("#button_new_transaction").fadeOut(300, function() {
             $("#transaction_new").fadeIn(300);

@@ -73,12 +73,14 @@ html, body {
 }
 
 #dashboard_available_amount {
-    margin: 20px 0 0 0;
+    margin: 20px 40px 0 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 #dashboard_available_amount .amount_item {
     margin: 0 0 10px 0;
-    font-size: 140%;
+    font-size: 160%;
 }
 
 #dashboard_available_amount .amount_item .currency {
@@ -148,6 +150,11 @@ html, body {
     width: 60%;
     border: 1px solid #bebebe;
     padding: 20px;
+}
+
+#transaction_form textarea {
+    width: 100%;
+    border: 1px solid #dddddd;
 }
 
 #reports {
@@ -328,6 +335,10 @@ span.button.filter.active {
     margin-left: 0;
 }
 
+.account_balance.minus {
+    color: #f04137;
+}
+
 .transaction_line {
     margin: 1em 0 1em 0;
     float: left;
@@ -383,6 +394,13 @@ span.button.filter.active {
     padding: 0.2em 0 0 0;
     width: 100%;
 }
+
+.transaction_note {
+    font-weight: lighter;
+    font-style: italic;
+    font-size: 90%;
+    color: #9e9e9e;
+ }
 
 input.tags {
     width: 50%;

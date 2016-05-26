@@ -79,7 +79,7 @@ if ($_GET["action"] == "transactions") {
 
         $transactions[] = array("id" => $row["id"], "paid_at" => $row["paid_at"], "from_account_name" => $row["from_account_name"], "from_account_id" => $row["from_account_id"], "from_type_id" => $row["from_type_id"],
                                 "to_account_name" => $row["to_account_name"], "to_account_id" => $row["to_account_id"], "to_type_id" => $row["to_type_id"],
-                                "to_account_amount" => round($row["to_account_amount"], 2), "from_account_amount" => round($row["from_account_amount"], 2), "tags" => $tags);
+                                "to_account_amount" => round($row["to_account_amount"], 2), "from_account_amount" => round($row["from_account_amount"], 2), "tags" => $tags, "note" => $row["note"]);
     }
 
     echo json_encode($transactions);

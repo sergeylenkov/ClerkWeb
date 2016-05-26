@@ -80,7 +80,7 @@ function Dashboard() {
 
     this.balance = function(item, account) {
         data.accountBalance(account, function(response) {
-            var amountItem = item.find(".account_balance");
+            var amountItem = item.find(".account_balance").first();
             var amountInfoItem = item.find(".info");
 
             if (account.credit_limit) {
@@ -98,6 +98,8 @@ function Dashboard() {
             } else if (account.type_id == data.accountType.debt) {
                 amountItem.html(response.balance.formatAmount());
                 amountInfoItem.html("(" + response.expense.formatAmount() + " - " + Math.abs(response.receipt).formatAmount() + ")");
+
+                amountItem.addClass("minus");
             } else {
                 amountInfoItem.hide();
                 amountItem.html(response.balance.formatAmount());
