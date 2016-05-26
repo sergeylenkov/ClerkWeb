@@ -210,6 +210,17 @@ if ($_GET["action"] == "transaction") {
         }
 
         echo json_encode(array("error" => $error, "id" => $_GET['id'], "info" => $mysql->errorInfo()));
+    } else if ($_GET["mode"] == "split") {
+        $error = false;
+        $statement = $mysql->prepare("UPDATE transactions SET from_account_amount = ?, to_account_amount = ? WHERE id = ?");
+
+        $transaction_id = $_GET['id'];
+
+        if (!$statement->execute(array($_GET['from_amount'], $_GET['to_amount'], $transaction_id))) {
+            $error = true;
+        }
+
+        echo json_encode(array("error" => $error, "id" => $transaction_id, "info" => $mysql->errorInfo()));
     }
 }
 

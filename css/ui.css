@@ -427,6 +427,10 @@ input.tags {
     margin: 0 10px 0 0;
 }
 
+.transaction .action .split {
+    margin: 0 0 0 10px;
+}
+
 path {
     stroke: steelblue;
     stroke-width: 2;

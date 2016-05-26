@@ -88,6 +88,16 @@ function Data(url) {
 		});
 	}
 
+	this.splitTransaction = function(transaction, callback) {
+		$.ajax({
+			url: this._url,
+			dataType: "json",
+			data: {action: "transaction", mode: "split", id: transaction.id, from_amount: transaction.from_account_amount, to_amount: transaction.to_account_amount},
+		}).done(function(response) {
+			callback(response);
+		});
+	}
+
 	this.accountBalance = function(account, callback) {
 		$.ajax({
             url: this._url,
