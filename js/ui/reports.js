@@ -1,6 +1,7 @@
 function Reports() {
     var self = this;
     var type = 0;
+    var lastDate = null;
 
     this.load = function(container) {
         $.get("templates/reports.html", function(html) {
@@ -129,13 +130,26 @@ function Reports() {
             d0 = chartData[i - 1],
             d1 = chartData[i],
             d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-            //focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
+
+            if (d.date == lastDate) {
+                return;
+            }
+
+            lastDate = d.date;
+
+            tooltip.css("top", y(d.value) + 100);
+            tooltip.css("left", x(d.date) + 50);
 
             var fromDate = Date.parse(d.date.toString("yyyy-MM-dd")).moveToFirstDayOfMonth();
             var toDate = Date.parse(d.date.toString("yyyy-MM-dd")).moveToLastDayOfMonth();
 
-            var html = monthNames[fromDate.getMonth()] + " " + fromDate.toString("yyyy") + "</br>";
-            html = html + "Расход: " + d.value.formatAmount() + "</br>";
+            var year = "";
+
+            if (fromDate.getFullYear() != Date.today().getFullYear()) {
+                year = " " + fromDate.getFullYear();
+            }
+            var html = monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</br>";
+            html = html + "Расход: <span class='sum'>" + d.value.formatAmount() + "</span>";
 
             tooltip.find("#report_tooltip_top").html(html);
             tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
@@ -150,8 +164,6 @@ function Reports() {
                 });
 
                 tooltip.find("#report_tooltip_content").html(html);
-
-                //focus.select("text").html(html);
             });
         }
 

@@ -28,6 +28,10 @@ String.prototype.splice = function(start, delCount, newSubStr) {
 	return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
 };
 
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function replaceCurrencyNameWithSign(name) {
 	if (currenciesSign[name.toLowerCase()]) {
 		return currenciesSign[name.toLowerCase()];
