@@ -41,6 +41,16 @@ if ($_GET["action"] == "expenses") {
     echo json_encode($expenses);
 }
 
+if ($_GET["action"] == "expenses_by_date") {
+    $expenses = array();
+
+    foreach ($mysql->query("SELECT a.name AS name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC") as $row) {
+        $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
+    }
+
+    echo json_encode($expenses);
+}
+
 if ($_GET["action"] == "last_transactions") {
     $transactions = array();
 
@@ -234,7 +244,7 @@ if ($_GET["action"] == "expenses_by_month") {
 	$expenses = array();
 
     if ($_GET["account"] == -1) {
-	    foreach ($mysql->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t, accounts a WHERE t.deleted = 0 AND t.to_account_id = a.id AND a.type_id = 2 GROUP BY strftime('%Y %m', t.paid_at) ORDER BY t.paid_at") as $row) {
+	    foreach ($mysql->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t, accounts a WHERE t.deleted = 0 AND t.to_account_id = a.id AND a.type_id = 2 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY strftime('%Y %m', t.paid_at) ORDER BY t.paid_at") as $row) {
 	           $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
 	    }
     } else {

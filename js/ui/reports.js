@@ -42,13 +42,16 @@ function Reports() {
     }
 
     this.selectReport = function(type, account) {
-        data.expensesByMonth(account, function(data) {
-            console.log(data);
+        var fromDate = Date.today().addMonths(-6);
+        var toDate = Date.today().moveToLastDayOfMonth();
+
+        data.expensesByMonth(account, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(data) {
+            //console.log(data);
             self.fillChart(data);
         });
     }
 
-    this.fillChart = function(data) {
+    this.fillChart = function(chartData) {
         var width = $("#reports_canvas").outerWidth(true);
         var height = $("#reports_canvas").outerHeight(true);
         //var barPadding = 1;
@@ -85,19 +88,19 @@ function Reports() {
             .x(function(d) { return x(d.date); })
             .y(function(d) { return y(d.value); });
 
-        data.forEach(function(d) {
+        chartData.forEach(function(d) {
             d.date = parseDate(d.date);
             //d.value = +d.value;
         });
 
         // Scale the range of the data
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.value; })]);
+        x.domain(d3.extent(chartData, function(d) { return d.date; }));
+        y.domain([0, d3.max(chartData, function(d) { return d.value; })]);
 
         // Add the valueline path.
         svg.append("path")
             .attr("class", "line")
-            .attr("d", valueline(data));
+            .attr("d", valueline(chartData));
 
         // Add the X Axis
         svg.append("g")
@@ -110,29 +113,54 @@ function Reports() {
             .attr("class", "y axis")
             .call(yAxis);
 
-        var focus = svg.append("g")
+        /*var focus = svg.append("g")
                        .attr("class", "focus")
                        .style("display", "none");
 
         focus.append("circle").attr("r", 4.5);
-        focus.append("text").attr("x", 9).attr("dy", ".35em");
+        focus.append("text").attr("x", 9).attr("dy", ".35em");*/
+
+        var tooltip = $("#report_tooltip");
+        tooltip.hide();
 
         function mousemove() {
             var x0 = x.invert(d3.mouse(this)[0]),
-            i = bisectDate(data, x0, 1),
-            d0 = data[i - 1],
-            d1 = data[i],
+            i = bisectDate(chartData, x0, 1),
+            d0 = chartData[i - 1],
+            d1 = chartData[i],
             d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-            focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
-            focus.select("text").text(d.value);
+            //focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
+
+            var fromDate = Date.parse(d.date.toString("yyyy-MM-dd")).moveToFirstDayOfMonth();
+            var toDate = Date.parse(d.date.toString("yyyy-MM-dd")).moveToLastDayOfMonth();
+
+            var html = monthNames[fromDate.getMonth()] + " " + fromDate.toString("yyyy") + "</br>";
+            html = html + "Расход: " + d.value.formatAmount() + "</br>";
+
+            tooltip.find("#report_tooltip_top").html(html);
+            tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
+            tooltip.show();
+
+            data.expensesByDate(fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
+                console.log(result);
+                html = "";
+
+                result.forEach(function(expense) {
+                    html = html + "<div class='tooltip_line'><span class='name'>" + expense.name + "</span> <span class='amount'>" + expense.sum.formatAmount() + "</span></div>";
+                });
+
+                tooltip.find("#report_tooltip_content").html(html);
+
+                //focus.select("text").html(html);
+            });
         }
 
         svg.append("rect")
            .attr("class", "overlay")
            .attr("width", width)
            .attr("height", height)
-           .on("mouseover", function() { focus.style("display", null); })
-           .on("mouseout", function() { focus.style("display", "none"); })
+           .on("mouseover", function() { tooltip.show(); })
+           .on("mouseout", function() { tooltip.hide(); })
            .on("mousemove", mousemove);
         /*svg.selectAll("rect").data(data).enter().append("rect")
         .attr("x", function(d, i) {

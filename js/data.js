@@ -32,6 +32,16 @@ function Data(url) {
 		});
 	}
 
+	this.expensesByDate = function(from, to, callback) {
+	    $.ajax({
+	        url: this._url,
+	        dataType: "json",
+	        data: { action: "expenses_by_date", from: from, to: to },
+	    }).done(function (response) {
+			callback(response);
+		});
+	}
+
 	this.lastTransactions = function(limit, callback) {
         $.ajax({
             url: this._url,
@@ -58,11 +68,11 @@ function Data(url) {
         });
 	}
 
-	this.expensesByMonth = function(account, callback) {
+	this.expensesByMonth = function(account, fromDate, toDate, callback) {
         $.ajax({
             url: this._url,
             dataType: "json",
-            data: { action: "expenses_by_month" , account: account },
+            data: { action: "expenses_by_month" , account: account, from: fromDate, to: toDate },
         }).done(function (response) {
 			callback(response);
 		});

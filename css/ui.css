@@ -189,6 +189,43 @@ html, body {
     margin: auto 10px auto 20px;
 }
 
+#report_tooltip {
+    position: absolute;
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 2px 2px 21px -4px rgba(0,0,0,0.75);
+    font-size: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#report_tooltip_top {
+    padding: 0 0 5px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+#report_tooltip_content {
+    margin: 5px 0 0 0;
+    box-sizing: border-box;
+}
+
+#report_tooltip_content .tooltip_line {
+    padding: 2px 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+#report_tooltip_content .tooltip_line .name {
+    text-align: left;
+    margin: 0 10px 0 0;
+}
+
+#report_tooltip_content .tooltip_line .amount {
+    text-align: right;
+    margin: 0 0 0 auto;
+}
+
 #accounts {
     width: 100%;
     float: left;
