@@ -2,6 +2,7 @@ function Reports() {
     var self = this;
     var type = 0;
     var lastDate = null;
+    var selectedAccount = -1;
 
     this.load = function(container) {
         $.get("templates/reports.html", function(html) {
@@ -43,6 +44,7 @@ function Reports() {
     }
 
     this.selectReport = function(type, account) {
+        selectedAccount = account;
         var fromDate = Date.today().addMonths(-6);
         var toDate = Date.today().moveToLastDayOfMonth();
 
@@ -55,12 +57,10 @@ function Reports() {
     this.fillChart = function(chartData) {
         var width = $("#reports_canvas").outerWidth(true);
         var height = $("#reports_canvas").outerHeight(true);
-        //var barPadding = 1;
-        //var max = d3.max(data, function(d) { return d.value; });
         var margin = {top: 20, right: 80, bottom: 30, left: 80};
         width = width - margin.left - margin.right,
         height = height - margin.top - margin.bottom;
-        //var scale = d3.scale.linear().domain([0, max]).range([0, height]);
+
         d3.select("#reports_canvas").selectAll("*").remove();
 
         var svg = d3.select("#reports_canvas")
@@ -68,11 +68,7 @@ function Reports() {
                     .attr("height", height + margin.top + margin.bottom)
                     .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        //var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
-        //svg.selectAll("*").remove();
-
-        //var path = svg.append("g").attr("transform", "translate(" + 60 + "," + -30 + ")");
         var parseDate = d3.time.format("%Y %m").parse;
         var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
@@ -91,7 +87,6 @@ function Reports() {
 
         chartData.forEach(function(d) {
             d.date = parseDate(d.date);
-            //d.value = +d.value;
         });
 
         // Scale the range of the data
@@ -114,13 +109,6 @@ function Reports() {
             .attr("class", "y axis")
             .call(yAxis);
 
-        /*var focus = svg.append("g")
-                       .attr("class", "focus")
-                       .style("display", "none");
-
-        focus.append("circle").attr("r", 4.5);
-        focus.append("text").attr("x", 9).attr("dy", ".35em");*/
-
         var tooltip = $("#report_tooltip");
         tooltip.hide();
 
@@ -137,8 +125,8 @@ function Reports() {
 
             lastDate = d.date;
 
-            tooltip.css("top", y(d.value) + 100);
-            tooltip.css("left", x(d.date) + 50);
+            tooltip.css("top", y(d.value) + margin.top + 90);
+            tooltip.css("left", x(d.date) + margin.left + 20);
 
             var fromDate = Date.parse(d.date.toString("yyyy-MM-dd")).moveToFirstDayOfMonth();
             var toDate = Date.parse(d.date.toString("yyyy-MM-dd")).moveToLastDayOfMonth();
@@ -155,8 +143,7 @@ function Reports() {
             tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
             tooltip.show();
 
-            data.expensesByDate(fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
-                console.log(result);
+            data.expensesByDate(selectedAccount, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
                 html = "";
 
                 result.forEach(function(expense) {
@@ -171,33 +158,9 @@ function Reports() {
            .attr("class", "overlay")
            .attr("width", width)
            .attr("height", height)
-           .on("mouseover", function() { tooltip.show(); })
-           .on("mouseout", function() { tooltip.hide(); })
+           .on("mouseover", function() { /*tooltip.show();*/ })
+           .on("mouseout", function() { /*tooltip.hide();*/ })
            .on("mousemove", mousemove);
-        /*svg.selectAll("rect").data(data).enter().append("rect")
-        .attr("x", function(d, i) {
-            return i * (width / data.length);
-        })
-        .attr("y", function(d) {
-            //return height - (d.value / 1000.0);
-            return height - scale(d.value);
-        })
-        .attr("width", width / data.length - barPadding)
-        .attr("height", function(d) {
-            return scale(d.value); //(d.value / 1000.0);
-        })
-        .on("mouseover", function() {
-            tooltip.style("opacity", 1);
-        })
-        .on("mousemove", function(d) {
-            var date = Date.parse(d.date);
-            var dateStr = monthNames[date.getMonth()] + " " + date.getFullYear();
-
-            tooltip.html(dateStr + "<br>" + d.value).style("left", (d3.event.pageX - 34) + "px").style("top", (d3.event.pageY - 40) + "px");
-        })
-        .on("mouseout", function() {
-            tooltip.style("opacity", 0);
-        });*/
     }
 
     this.updateAccountsList = function() {

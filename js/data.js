@@ -32,12 +32,22 @@ function Data(url) {
 		});
 	}
 
-	this.expensesByDate = function(from, to, callback) {
+	this.expensesByDate = function(account, from, to, callback) {
 	    $.ajax({
 	        url: this._url,
 	        dataType: "json",
-	        data: { action: "expenses_by_date", from: from, to: to },
+	        data: { action: "expenses_by_date", account: account, from: from, to: to },
 	    }).done(function (response) {
+			callback(response);
+		});
+	}
+
+	this.expensesByMonth = function(account, fromDate, toDate, callback) {
+        $.ajax({
+            url: this._url,
+            dataType: "json",
+            data: { action: "expenses_by_month" , account: account, from: fromDate, to: toDate },
+        }).done(function (response) {
 			callback(response);
 		});
 	}
@@ -66,16 +76,6 @@ function Data(url) {
         }).done(function (response) {
             callback(response);
         });
-	}
-
-	this.expensesByMonth = function(account, fromDate, toDate, callback) {
-        $.ajax({
-            url: this._url,
-            dataType: "json",
-            data: { action: "expenses_by_month" , account: account, from: fromDate, to: toDate },
-        }).done(function (response) {
-			callback(response);
-		});
 	}
 
 	this.saveTransaction = function(data, callback) {

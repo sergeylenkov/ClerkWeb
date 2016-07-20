@@ -193,7 +193,7 @@ html, body {
     position: absolute;
     background: #ffffff;
     color: #000000;
-    box-shadow: 2px 2px 21px -4px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 21px -4px rgba(0,0,0,0.5);
     font-size: 10px;
     padding: 10px;
     box-sizing: border-box;
@@ -205,6 +205,37 @@ html, body {
     border-bottom: 1px solid #e6e6e6;
     line-height: 16px;
 }
+
+/*#report_tooltip:before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  height: 0;
+  width: 0;
+  border: 10px solid transparent;
+  border-bottom-color: #ffffff;
+  margin-left: -10px;
+}
+
+#report_tooltip:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  height: 15px;
+  width: 15px;
+  background-color: #ffffff;
+  margin-left: -10px;
+  margin-bottom: -10px;
+  z-index: -1;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  box-shadow: 2px 2px 21px -4px rgba(0,0,0,0.5);
+}*/
 
 #report_tooltip_top .sum {
     font-weight: bold;

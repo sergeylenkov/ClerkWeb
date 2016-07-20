@@ -44,11 +44,33 @@ if ($_GET["action"] == "expenses") {
 if ($_GET["action"] == "expenses_by_date") {
     $expenses = array();
 
-    foreach ($mysql->query("SELECT a.name AS name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC") as $row) {
-        $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
+    if ($_GET["account"] == -1) {
+        foreach ($mysql->query("SELECT a.name AS name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC") as $row) {
+            $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
+        }
+    } else {
+        foreach ($mysql->query("SELECT tg.name AS name, SUM(t.from_account_amount) AS sum from transactions t, transactions_tags tt, tags tg WHERE t.to_account_id = " . $_GET["account"] . " AND t.deleted = 0 AND tt.transaction_id = t.id AND tg.id = tt.tag_id AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY tg.name ORDER BY sum DESC") as $row) {
+            $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
+        }
     }
 
     echo json_encode($expenses);
+}
+
+if ($_GET["action"] == "expenses_by_month") {
+	$expenses = array();
+
+    if ($_GET["account"] == -1) {
+	    foreach ($mysql->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t, accounts a WHERE t.deleted = 0 AND t.to_account_id = a.id AND a.type_id = 2 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY strftime('%Y %m', t.paid_at) ORDER BY t.paid_at") as $row) {
+	           $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
+	    }
+    } else {
+        foreach ($mysql->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t, accounts a WHERE t.to_account_id = " . $_GET["account"] . " AND t.deleted = 0 AND t.to_account_id = a.id AND a.type_id = 2 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY strftime('%Y %m', t.paid_at) ORDER BY t.paid_at") as $row) {
+	           $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
+	    }
+    }
+
+	echo json_encode($expenses);
 }
 
 if ($_GET["action"] == "last_transactions") {
@@ -238,22 +260,6 @@ if ($_GET["action"] == "rate") {
     $mysql->query("SELECT t.paid_at, t.from_account_amount, t.to_account_amount, a.currency_id, a2.currency_id FROM transactions t, accounts a, accounts a2 \
 				   WHERE t.from_account_id = a.id AND a.currency_id = " . $_GET["from"] . " AND t.to_account_id = a2.id AND a2.currency_id = " . $_GET["to"] . " AND t.paid_at <= '" . $_GET["date"] . "' \
 				   ORDER BY t.paid_at DESC LIMIT 1")->fetch();
-}
-
-if ($_GET["action"] == "expenses_by_month") {
-	$expenses = array();
-
-    if ($_GET["account"] == -1) {
-	    foreach ($mysql->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t, accounts a WHERE t.deleted = 0 AND t.to_account_id = a.id AND a.type_id = 2 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY strftime('%Y %m', t.paid_at) ORDER BY t.paid_at") as $row) {
-	           $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
-	    }
-    } else {
-        foreach ($mysql->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t, accounts a WHERE t.to_account_id = " . $_GET["account"] . " AND t.deleted = 0 AND t.to_account_id = a.id AND a.type_id = 2 GROUP BY strftime('%Y %m', t.paid_at) ORDER BY t.paid_at") as $row) {
-	           $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
-	    }
-    }
-
-	echo json_encode($expenses);
 }
 
 if ($_GET["action"] == "all_tags") {
