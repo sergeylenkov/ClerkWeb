@@ -8,17 +8,29 @@ Number.prototype.formatAmount = function(showFraction = true) {
 	var str = this.toFixed(2).toString();
 	var amount = str.replace(".", ",");
 	var values = amount.split(",");
+	var sign = "";
+
+	if (values[0].charAt(0) == "-") {
+		sign = "-";
+		values[0] = values[0].substr(1);
+	}
 
 	if (values.length == 1) {
 		values[1] = "00";
 	}
 
-	if (values[0].length > 3) {
+	var length = values[0].length;
+
+	if (length > 3) {
 		values[0] = values[0].splice(values[0].length - 3, 0, " ");
 	}
 
+	if (length > 6) {
+		values[0] = values[0].splice(values[0].length - 7, 0, " ");
+	}
+
 	if (showFraction) {
-		return values[0] + "<span class='fraction'>," + values[1] + "</span>";
+		return sign + values[0] + "<span class='fraction'>," + values[1] + "</span>";
 	}
 
 	return values[0];

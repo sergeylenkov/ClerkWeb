@@ -100,7 +100,14 @@ function Accounts() {
                 amountInfoItem.html("(" + account.credit_limit.formatAmount() + sign + Math.abs(response.balance).formatAmount() + ")");
             } else {
                 amountInfoItem.hide();
-                amountItem.html(response.balance.formatAmount());
+
+                if (account.type_id == data.accountType.receipt) {
+                    amountItem.html(response.expense.formatAmount());
+                } else if (account.type_id == data.accountType.expense) {
+                    amountItem.html("-" + response.receipt.formatAmount());
+                } else {
+                    amountItem.html(response.balance.formatAmount());
+                }
             }
         });
     }
@@ -113,13 +120,17 @@ function Accounts() {
         $("#accounts_filter").find(".button").removeClass("active");
         sender.addClass("active");
 
+        $("#accounts_form").transition({ "opacity": 0 }, 300);
+        $("#accounts_list").find(".account").removeClass("selected");
+
+        self.type = type;
         self.update();
     }
 
     this.update = function() {
         $("#accounts_list").html("");
 
-        data.accounts(type, true, function(accounts) {
+        data.accounts(self.type, true, function(accounts) {
             self.accounts = accounts;
 
             $.get("templates/accounts-item.html", function(html) {

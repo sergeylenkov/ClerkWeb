@@ -194,7 +194,7 @@ html, body {
     background: #ffffff;
     color: #000000;
     box-shadow: 2px 2px 21px -4px rgba(0,0,0,0.5);
-    font-size: 10px;
+    font-size: 80%;
     padding: 10px;
     box-sizing: border-box;
     pointer-events: none;
@@ -310,6 +310,10 @@ html, body {
     background: #f6f6f6;
 }
 
+#accounts_list .account_balance {
+    font-size: 100%;
+}
+
 #account_form_name {
     width: 200px;
 }
@@ -320,7 +324,7 @@ html, body {
 
 div.header {
     font-size: 100%;
-    padding: 0 0 2em 0;
+    padding: 0 0 20px 0;
 }
 
 span.header {
@@ -373,11 +377,11 @@ span.button.filter.active {
 }
 
 .budget_header {
-    margin: 0 0 2em 0;
+    margin: 0 0 20px 0;
 }
 
 .budget_item {
-    margin: 0 0 1em 0;
+    margin: 0 0 10px 0;
 }
 
 .account {
@@ -386,7 +390,7 @@ span.button.filter.active {
 }
 
 .account_name {
-    margin: 0 0 0.5em 0;
+    margin: 0 0 5px 0;
     padding: 0;
     font-weight: bold;
 }
