@@ -137,7 +137,7 @@ function Reports() {
                 year = " " + fromDate.getFullYear();
             }
             var html = monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</br>";
-            html = html + "Расход: <span class='sum'>" + d.value.formatAmount() + "</span>";
+            html = html + "<div class='tooltip_line'><span class='name'>Расход:</span> <span class='amount'>" + d.value.formatAmount() + "</span>";
 
             tooltip.find("#report_tooltip_top").html(html);
             tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
