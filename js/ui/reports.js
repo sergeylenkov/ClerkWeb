@@ -136,8 +136,9 @@ function Reports() {
             if (fromDate.getFullYear() != Date.today().getFullYear()) {
                 year = " " + fromDate.getFullYear();
             }
-            var html = monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</br>";
-            html = html + "Расход: <span class='sum'>" + d.value.formatAmount() + "</span>";
+
+            var html = "<div class='tooltip_line'>" + monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</div>";
+            html = html + "<div class='tooltip_line'>Расход: <span class='sum'>" + d.value.formatAmount() + "</span></div>";
 
             tooltip.find("#report_tooltip_top").html(html);
             tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");

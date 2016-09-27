@@ -155,6 +155,28 @@ html, body {
 #transaction_form textarea {
     width: 100%;
     border: 1px solid #dddddd;
+	outline: none;
+}
+
+#transaction_form input {
+    outline: none;
+    padding: 5px;
+    border: 1px solid #dddddd;
+}
+
+
+#transaction_form input.amount {
+    width: 120px;
+	text-align: right;
+}
+
+#transaction_form select {
+    border: 1px solid #dddddd;
+    border-radius: 0;
+    padding: 5px;
+    outline: none;
+    -webkit-appearance: none;
+    background: #efefef;
 }
 
 #reports {
@@ -206,39 +228,17 @@ html, body {
     line-height: 16px;
 }
 
-/*#report_tooltip:before {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  height: 0;
-  width: 0;
-  border: 10px solid transparent;
-  border-bottom-color: #ffffff;
-  margin-left: -10px;
+#report_tooltip_top .tooltip_line {
+    padding: 2px 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
 }
-
-#report_tooltip:after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  height: 15px;
-  width: 15px;
-  background-color: #ffffff;
-  margin-left: -10px;
-  margin-bottom: -10px;
-  z-index: -1;
-  -moz-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  box-shadow: 2px 2px 21px -4px rgba(0,0,0,0.5);
-}*/
 
 #report_tooltip_top .sum {
     font-weight: bold;
+    text-align: right;
+    margin: 0 0 0 auto;
 }
 
 #report_tooltip_content {
@@ -334,10 +334,6 @@ span.header {
 
 .fraction {
     color: #808080;
-}
-
-input.amount {
-    width: 120px;
 }
 
 .tagit-label {
