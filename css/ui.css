@@ -220,12 +220,14 @@ html, body {
     padding: 10px;
     box-sizing: border-box;
     pointer-events: none;
+    min-width: 140px;
 }
 
 #report_tooltip_top {
     padding: 0 0 5px 0;
     border-bottom: 1px solid #e6e6e6;
     line-height: 16px;
+    font-size: 110%;
 }
 
 #report_tooltip_top .tooltip_line {
@@ -235,7 +237,12 @@ html, body {
     display: flex;
 }
 
-#report_tooltip_top .sum {
+#report_tooltip_top .tooltip_line .name {
+    text-align: left;
+    margin: 0 10px 0 0;
+}
+
+#report_tooltip_top .tooltip_line .amount {
     font-weight: bold;
     text-align: right;
     margin: 0 0 0 auto;
