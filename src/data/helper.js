@@ -1,8 +1,25 @@
-function Data(url) {
-	this._url = url;
+import { ApiRequest } from './api.js';
+
+export class DataHelper {
+	constructor(url) {
+		this.api = new ApiRequest(url);
+		console.log('DataHelper ' + url);
+	}
+
+	accounts(callback) {
+		this.api.get('accounts', callback);
+    }
+}
+
+/*	this._url = url;
 	this.accountType = {receipt: 0, deposit: 1, expense: 2, credit: 3, debt: 4};
 
 	this.accounts = function(type, active, callback) {
+		let request = this.makeRequest('account', { type: type, active: active }, callback);
+
+		if (request) {
+			request.send();
+		}
         $.ajax({
             url: this._url,
             dataType: "json",
@@ -167,4 +184,4 @@ function Data(url) {
 			callback(response);
 		});
 	}
-}
+}*/
