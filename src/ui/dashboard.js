@@ -1,5 +1,14 @@
-function Dashboard() {
-    var self = this;
+export class Dashboard {
+    constructor() {
+        this.view = document.createElement('div');
+    }
+
+    show(container) {
+        container.appendChild(this.view);
+    }
+}
+
+    /*var self = this;
     var view;
 
     this.load = function(container) {
@@ -106,4 +115,4 @@ function Dashboard() {
             }
         });
     }
-}
+}*/
