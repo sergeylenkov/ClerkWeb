@@ -1,12 +1,17 @@
+import { Date } from './lib/date.js';
+import { Utils } from './utils.js';
 import { DataHelper } from './data/helper.js';
 import { Menu } from './ui/menu.js';
+import { Dashboard } from './ui/dashboard.js';
 
-var data = new DataHelper('api.php');
-var menu;
+function main() {    
+    window.data = new DataHelper('api.php');
+    window.dashboard = new Dashboard();
 
-data.accounts(function(response) {
-    console.log('data:accounts');
-    console.log(response);
-    menu = new Menu(response);
-    menu.show(document.getElementById('main'));
-});
+    dashboard.show(document.getElementById('content'));
+    dashboard.update();
+}
+
+window.onload = function() {
+    main();
+}

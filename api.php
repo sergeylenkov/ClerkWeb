@@ -8,17 +8,17 @@ header("Pragma: no-cache");
 $db = new PDO("sqlite:database.sqlite");
 
 if ($_GET["action"] == "accounts") {
-    $account = array();
+    $accounts = array();
 
     /*foreach ($db->query("SELECT * FROM accounts WHERE type_id = " . $_GET["type"] . " AND active = " . $_GET["active"] . " ORDER BY order_id") as $row) {
 	    $account[] = array("id" => $row["id"], "name" => $row["name"], "currency_id" => $row["currency_id"], "icon_id" => $row["icon_id"], "type_id" => $row["type_id"], "credit_limit" => round($row["credit_limit"], 2));
     }*/
 
     foreach ($db->query("SELECT * FROM accounts WHERE active = 1 ORDER BY order_id") as $row) {
-	    $account[] = array("id" => $row["id"], "name" => $row["name"], "currency_id" => $row["currency_id"], "icon_id" => $row["icon_id"], "type_id" => $row["type_id"], "credit_limit" => round($row["credit_limit"], 2));
+	    $accounts[] = array("id" => $row["id"], "name" => $row["name"], "currency_id" => $row["currency_id"], "icon_id" => $row["icon_id"], "type_id" => $row["type_id"], "credit_limit" => round($row["credit_limit"], 2));
     }
 
-    echo json_encode($account);
+    echo json_encode($accounts);
 }
 
 if ($_GET["action"] == "balance") {

@@ -1,6 +1,7 @@
 export class Menu {
 	constructor(accounts) {
 		this.view = document.createElement('div');
+		this.view.className = 'menu';
 
 		let header = this.header('', 'Dashboard', false);
 		this.view.appendChild(header);
@@ -30,14 +31,14 @@ export class Menu {
 
 	header(icon, text, expandable) {
 		let item = document.createElement('div');
-		item.className += 'menu-item';
+		item.className = 'menu-item';
 
 		let iconElement = document.createElement('div');
-		iconElement.className += 'menu-item-icon';
+		iconElement.className = 'menu-item-icon';
 		item.appendChild(iconElement);
 
 		let titleElement = document.createElement('div');
-		titleElement.className += 'menu-item-title';
+		titleElement.className = 'menu-item-title';
 		let node = document.createTextNode(text);
     	titleElement.appendChild(node);
 
@@ -45,7 +46,7 @@ export class Menu {
 
 		if (expandable) {
 			let expandButton = document.createElement('div');
-			expandButton.className += 'menu-item-button';
+			expandButton.className = 'menu-item-button';
 			item.appendChild(expandButton);
 		}
 

@@ -1,12 +1,15 @@
 export class ApiRequest {
 	constructor(url) {
 		this.url = url;
-		console.log('ApiRequest ' + url);
 	}
 
-	get(action, callback) {
+	get(action, data, callback) {
 		if (this.makeRequest(callback)) {
 			let url = this.url + '?action=' + action;
+
+			if (data) {
+				url = url + '&' + this.formatParams(data);
+			}
 			console.log('get ' + url);
 			this.request.open('get', url, true);
 			this.request.send();
@@ -28,17 +31,21 @@ export class ApiRequest {
 	    this.request = new XMLHttpRequest();
 
 	    if (!this.request) {
-	    	console.log('create requets error');
+	    	console.log('create request error');
 			return false;
 	    }
 
 		this.request.responseType = 'json';
 	    this.request.onreadystatechange = function() {
-			console.log('requestStateChange ' + self.request.readyState + ' ' + self.request.status);
 			if (self.request.readyState === XMLHttpRequest.DONE) {
 				if (self.request.status === 200) {
+					console.log('request ' + self.request.responseURL + ' completed');
 					if (callback) {
-						callback(self.request.response);
+						if (self.request.response) {
+							callback(self.request.response);
+						} else {
+							callback(null);
+						}
 					}
 			    } else {
 					console.log('request error');
@@ -50,5 +57,12 @@ export class ApiRequest {
 		}
 
 	    return true;
+	}
+
+	formatParams(params) {
+  		return Object.keys(params)
+        	         .map(function(key) {
+          				return key + '=' + params[key]
+        			  }).join('&');
 	}
 }

@@ -2,17 +2,35 @@ import { ApiRequest } from './api.js';
 
 export class DataHelper {
 	constructor(url) {
-		this.api = new ApiRequest(url);
-		console.log('DataHelper ' + url);
+		this.url = url;
+		this.accountType = {receipt: 0, deposit: 1, expense: 2, credit: 3, debt: 4};
 	}
 
 	accounts(callback) {
-		this.api.get('accounts', callback);
+		let api = new ApiRequest(this.url);
+		api.get('accounts', null, callback);
     }
+
+	availableAmounts(callback) {
+		let api = new ApiRequest(this.url);
+		api.get('available_amounts', null, callback);
+	}
+
+	budget(from, to, callback) {
+		let api = new ApiRequest(this.url);
+		let data = { from: from, to: to };
+		api.get('budget', data, callback);
+	}
+
+	expenses(from, to, callback) {
+		let api = new ApiRequest(this.url);
+		let data = { from: from, to: to };
+		api.get('expenses', data, callback);
+	}
 }
 
 /*	this._url = url;
-	this.accountType = {receipt: 0, deposit: 1, expense: 2, credit: 3, debt: 4};
+
 
 	this.accounts = function(type, active, callback) {
 		let request = this.makeRequest('account', { type: type, active: active }, callback);
@@ -29,25 +47,9 @@ export class DataHelper {
 		});
     }
 
-	this.budget = function(from, to, callback) {
-	    $.ajax({
-	        url: this._url,
-	        dataType: "json",
-	        data: { action: "budget", from: from, to: to },
-	    }).done(function (response) {
-			callback(response);
-		});
-	}
 
-	this.expenses = function(from, to, callback) {
-	    $.ajax({
-	        url: this._url,
-	        dataType: "json",
-	        data: { action: "expenses", from: from, to: to },
-	    }).done(function (response) {
-			callback(response);
-		});
-	}
+
+
 
 	this.expensesByDate = function(account, from, to, callback) {
 	    $.ajax({
@@ -150,16 +152,6 @@ export class DataHelper {
 			url: this._url,
 			dataType: "json",
 			data: {action: "all_tags"},
-		}).done(function(response) {
-			callback(response);
-		});
-	}
-
-	this.availableAmounts = function(callback) {
-		$.ajax({
-			url: this._url,
-			dataType: "json",
-			data: {action: "available_amounts"},
 		}).done(function(response) {
 			callback(response);
 		});
