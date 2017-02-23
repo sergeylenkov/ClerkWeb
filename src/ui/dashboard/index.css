@@ -1,0 +1,13 @@
+.container {
+    width: 100%;
+}
+
+.summaryContainer {
+    width: 100%;
+    padding: 20px 0;
+    background: rgb(24,88,156);
+}
+
+.transactionsContainer {
+    width: 100%;
+}
