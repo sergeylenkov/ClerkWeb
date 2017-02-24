@@ -56,7 +56,7 @@
 	
 	var _index2 = __webpack_require__(13);
 	
-	var _ui = __webpack_require__(16);
+	var _ui = __webpack_require__(22);
 	
 	var _ui2 = _interopRequireDefault(_ui);
 	
@@ -1454,32 +1454,31 @@
 	
 	        this._items = [];
 	
-	        var self = this;
 	        var itemDelegate = {
 	            didClick: this.didSelectItem.bind(this)
 	        };
 	
 	        var menuItem = new _item2.default("Мои счета");
 	        menuItem.setIndex(0);
-	        menuItem.appendTo(this._view);
-	
 	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
 	
 	        this._items.push(menuItem);
 	
 	        menuItem = new _item2.default("Переводы");
 	        menuItem.setIndex(1);
-	        menuItem.appendTo(this._view);
-	
 	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
 	
 	        this._items.push(menuItem);
 	
 	        menuItem = new _item2.default("Отчеты");
 	        menuItem.setIndex(2);
-	        menuItem.appendTo(this._view);
-	
 	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
 	
 	        this._items.push(menuItem);
 	    }
@@ -1643,7 +1642,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".menu___item__container {\n    height: 100%;\n    width: auto;\n    padding: 0;\n    margin: 0 30px 0 0;\n    border-bottom: 4px solid rgb(255,255,255);\n    display: flex;\n    box-sizing: border-box;\n}\n\n.menu___item__container[selected] {\n    border-bottom: 4px solid rgb(239,22,22);\n}\n\n.menu___item__text {\n    margin: auto;\n    font-size: 18px;\n    font-weight: 500;\n    cursor: pointer;\n    color: rgb(18,98,178);\n}\n\n.menu___item__text:hover {\n    color: rgb(26,140,255);\n}\n\n.menu___item__container[selected] .menu___item__text {\n    color: rgb(59,66,86);\n}\n\n.menu___item__container[selected] .menu___item__text:hover {\n    color: rgb(59,66,86);\n}\n", ""]);
+	exports.push([module.id, ".menu___item__container {\n    height: 100%;\n    width: auto;\n    padding: 0;\n    margin: 0 30px 0 0;\n    border-bottom: 4px solid rgb(255,255,255);\n    display: flex;\n    box-sizing: border-box;\n}\n\n.menu___item__container[selected] {\n    border-bottom: 4px solid rgb(239,22,22);\n}\n\n.menu___item__text {\n    margin: auto;\n    font-size: 18px;\n    font-weight: 500;\n    cursor: pointer;\n    color: rgb(18,98,178);\n}\n\n.menu___item__text:hover {\n    color: rgb(26,140,255);\n}\n\n.menu___item__container[selected] .menu___item__text {\n    color: rgb(59,66,86);\n    cursor: default;\n}\n\n.menu___item__container[selected] .menu___item__text:hover {\n    color: rgb(59,66,86);\n}\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -1967,7 +1966,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".menu___index__container {\n    width: 100%;\n    height: 80px;\n    padding: 0 60px;\n    box-sizing: border-box;\n    display: flex;\n}\n", ""]);
+	exports.push([module.id, ".menu___index__container {\n    width: 100%;\n    height: 80px;\n    padding: 0 100px;\n    box-sizing: border-box;\n    display: flex;\n}\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -1987,7 +1986,11 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _index = __webpack_require__(14);
+	var _menu = __webpack_require__(14);
+	
+	var _menu2 = _interopRequireDefault(_menu);
+	
+	var _index = __webpack_require__(20);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
@@ -2009,6 +2012,11 @@
 	        this._transactionsView = document.createElement("div");
 	        this._transactionsView.className = _index2.default.transactionsContainer;
 	        this._view.appendChild(this._transactionsView);
+	
+	        this._menu = new _menu2.default();
+	        this._menu.appendTo(this._summaryView);
+	
+	        this._menu.setSelectedItem(0, true);
 	    }
 	
 	    _createClass(Dashboard, [{
@@ -2016,27 +2024,21 @@
 	        value: function appendTo(container) {
 	            container.appendChild(this._view);
 	        }
-	    }, {
-	        key: "update",
-	        value: function update() {
-	            var self = this;
 	
-	            self.balanceList.innerHTML = '';
+	        /*update() {
+	            let self = this;
+	              self.balanceList.innerHTML = '';
 	            self.budgetList.innerHTML = '';
-	
-	            data.availableAmounts(function (accounts) {
+	              data.availableAmounts(function(accounts) {
 	                console.log('amounts');
 	                if (accounts) {
 	                    var amounts = {};
-	
-	                    for (var i = 0; i < accounts.length; i++) {
+	                      for (var i = 0; i < accounts.length; i++) {
 	                        var account = accounts[i];
-	
-	                        if (account.credit_limit > 0) {
+	                          if (account.credit_limit > 0) {
 	                            continue;
 	                        }
-	
-	                        if (amounts[account.currency_id]) {
+	                          if (amounts[account.currency_id]) {
 	                            amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
 	                        } else {
 	                            amounts[account.currency_id] = { 'balance': account.balance, 'currency': account.currency_name };
@@ -2044,17 +2046,14 @@
 	                    }
 	                    console.log(amounts);
 	                    for (var k in amounts) {
-	                        var amount = amounts[k].balance.formatAmount(false);
-	                        var currency = amounts[k].currency.replaceCurrencyNameWithSign();
-	
-	                        self.balanceList.appendChild(self.balanceItem(amount, currency));
+	                        let amount = amounts[k].balance.formatAmount(false);
+	                        let currency = amounts[k].currency.replaceCurrencyNameWithSign();
+	                          self.balanceList.appendChild(self.balanceItem(amount, currency));
 	                    }
 	                }
 	            });
-	
-	            this.budgetHeader.innerHTML = 'Бюджет за ' + monthNames[Date.today().getMonth()];
-	
-	            data.budget(Date.today().moveToFirstDayOfMonth().toString('yyyy-MM-dd'), Date.today().moveToLastDayOfMonth().toString('yyyy-MM-dd'), function (budget) {
+	              this.budgetHeader.innerHTML = 'Бюджет за ' + monthNames[Date.today().getMonth()];
+	              data.budget(Date.today().moveToFirstDayOfMonth().toString('yyyy-MM-dd'), Date.today().moveToLastDayOfMonth().toString('yyyy-MM-dd'), function(budget) {
 	                console.log('budget');
 	                console.log(budget);
 	                if (budget) {
@@ -2062,8 +2061,7 @@
 	                    self.budgetExpense.innerHTML = budget.expense.formatAmount();
 	                }
 	            });
-	
-	            data.expenses(Date.today().moveToFirstDayOfMonth().toString('yyyy-MM-dd'), Date.today().moveToLastDayOfMonth().toString('yyyy-MM-dd'), function (expenses) {
+	              data.expenses(Date.today().moveToFirstDayOfMonth().toString('yyyy-MM-dd'), Date.today().moveToLastDayOfMonth().toString('yyyy-MM-dd'), function(expenses) {
 	                console.log('expenses');
 	                console.log(expenses);
 	                if (expenses) {
@@ -2073,7 +2071,8 @@
 	                    }
 	                }
 	            });
-	        }
+	        }*/
+
 	    }]);
 
 	    return Dashboard;
@@ -2083,10 +2082,292 @@
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _menuItem = __webpack_require__(15);
+	
+	var _menuItem2 = _interopRequireDefault(_menuItem);
+	
+	var _menu = __webpack_require__(18);
+	
+	var _menu2 = _interopRequireDefault(_menu);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var DashboardMenu = function () {
+	    function DashboardMenu() {
+	        _classCallCheck(this, DashboardMenu);
+	
+	        this._view = document.createElement("div");
+	        this._view.className = _menu2.default.container;
+	
+	        this._items = [];
+	
+	        var itemDelegate = {
+	            didClick: this.didSelectItem.bind(this)
+	        };
+	
+	        var menuItem = new _menuItem2.default('favorite', 'Сводка и бюджет');
+	        menuItem.setIndex(0);
+	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
+	
+	        this._items.push(menuItem);
+	
+	        menuItem = new _menuItem2.default('card', 'Счета и карты');
+	        menuItem.setIndex(1);
+	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
+	
+	        this._items.push(menuItem);
+	
+	        menuItem = new _menuItem2.default('safe', 'Бюджет и сбережения');
+	        menuItem.setIndex(2);
+	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
+	
+	        this._items.push(menuItem);
+	
+	        menuItem = new _menuItem2.default('percent', 'Кредиты');
+	        menuItem.setIndex(3);
+	        menuItem.setDelegate(itemDelegate);
+	
+	        menuItem.appendTo(this._view);
+	
+	        this._items.push(menuItem);
+	    }
+	
+	    _createClass(DashboardMenu, [{
+	        key: "appendTo",
+	        value: function appendTo(container) {
+	            container.appendChild(this._view);
+	        }
+	    }, {
+	        key: "setSelectedItem",
+	        value: function setSelectedItem(index, selected) {
+	            for (var i = 0; i < this._items.length; i++) {
+	                this._items[i].setSelected(false);
+	            }
+	
+	            if (index < this._items.length) {
+	                this._items[index].setSelected(selected);
+	            }
+	        }
+	    }, {
+	        key: "setDelegate",
+	        value: function setDelegate(delegate) {
+	            this._delegate = delegate;
+	        }
+	    }, {
+	        key: "didSelectItem",
+	        value: function didSelectItem(sender) {
+	            var index = sender.getIndex();
+	            this.setSelectedItem(index, true);
+	
+	            if (this._delegate && this._delegate.didSelectItem) {
+	                this._delegate.didSelectItem(index);
+	            }
+	        }
+	    }]);
+	
+	    return DashboardMenu;
+	}();
+	
+	exports.default = DashboardMenu;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _menuItem = __webpack_require__(16);
+	
+	var _menuItem2 = _interopRequireDefault(_menuItem);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var DashboardMenuItem = function () {
+	    function DashboardMenuItem(icon, name) {
+	        _classCallCheck(this, DashboardMenuItem);
+	
+	        this._view = document.createElement("div");
+	        this._view.className = _menuItem2.default.container;
+	
+	        this._icon = document.createElement("div");
+	        this._icon.className = _menuItem2.default.icon;
+	
+	        this._view.appendChild(this._icon);
+	
+	        this._icon.style.backgroundImage = "url('/static/img/" + icon + ".svg')";
+	        this._title = document.createElement("div");
+	        this._title.className = _menuItem2.default.title;
+	        this._title.innerText = name;
+	
+	        this._view.appendChild(this._title);
+	
+	        this.setIndex(0);
+	
+	        var self = this;
+	
+	        this._view.addEventListener("click", function () {
+	            if (self._delegate && self._delegate.didClick) {
+	                self._delegate.didClick(self);
+	            }
+	        });
+	    }
+	
+	    _createClass(DashboardMenuItem, [{
+	        key: "appendTo",
+	        value: function appendTo(container) {
+	            container.appendChild(this._view);
+	        }
+	    }, {
+	        key: "setSelected",
+	        value: function setSelected(selected) {
+	            this._selected = selected;
+	
+	            if (selected) {
+	                this._view.setAttribute("selected", true);
+	            } else {
+	                this._view.removeAttribute("selected");
+	            }
+	        }
+	    }, {
+	        key: "setIndex",
+	        value: function setIndex(index) {
+	            this._index = index;
+	        }
+	    }, {
+	        key: "getIndex",
+	        value: function getIndex() {
+	            return this._index;
+	        }
+	    }, {
+	        key: "setDelegate",
+	        value: function setDelegate(delegate) {
+	            this._delegate = delegate;
+	        }
+	    }]);
+	
+	    return DashboardMenuItem;
+	}();
+	
+	exports.default = DashboardMenuItem;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(15);
+	var content = __webpack_require__(17);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {"sourceMap":true});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./menuItem.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./menuItem.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(9)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".dashboard___menuItem__container {\n    width: 100%;\n    display: flex;\n    margin: 20px 0 20px 0;\n    padding: 0;\n    cursor: pointer;\n}\n\n.dashboard___menuItem__icon {\n    width: 20px;\n    height: 20px;\n    margin: auto 10px auto 0;\n    background-repeat: no-repeat;\n    opacity: 0;\n    transition: opacity 0.3s;\n}\n\n.dashboard___menuItem__title {\n    font-size: 16px;\n    font-weight: 500;\n    margin: auto 0;\n    color: rgba(255,255,255,0.3);\n    transition: color 0.3s;\n}\n\n.dashboard___menuItem__container[selected] .dashboard___menuItem__icon {\n    opacity: 1;\n}\n\n.dashboard___menuItem__container[selected] .dashboard___menuItem__title {\n    color: rgb(255,255,255);\n}\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"container": "dashboard___menuItem__container",
+		"icon": "dashboard___menuItem__icon",
+		"title": "dashboard___menuItem__title"
+	};
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(19);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {"sourceMap":true});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./menu.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./menu.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(9)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".dashboard___menu__container {\n    display: flex;\n    flex-direction: column;\n    margin: 0 0 0 -30px;\n}\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"container": "dashboard___menu__container"
+	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(21);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2106,7 +2387,7 @@
 	}
 
 /***/ },
-/* 15 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2114,7 +2395,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".dashboard___index__container {\n    width: 100%;\n}\n\n.dashboard___index__summaryContainer {\n    width: 100%;\n    padding: 20px 0;\n    background: rgb(24,88,156);\n}\n\n.dashboard___index__transactionsContainer {\n    width: 100%;\n}\n", ""]);
+	exports.push([module.id, ".dashboard___index__container {\n    width: 100%;\n}\n\n.dashboard___index__summaryContainer {\n    width: 100%;\n    padding: 20px 100px;\n    background: rgb(24,88,156);\n}\n\n.dashboard___index__transactionsContainer {\n    width: 100%;\n}\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -2124,13 +2405,13 @@
 	};
 
 /***/ },
-/* 16 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(17);
+	var content = __webpack_require__(23);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2150,7 +2431,7 @@
 	}
 
 /***/ },
-/* 17 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();

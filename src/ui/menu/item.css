@@ -26,6 +26,7 @@
 
 .container[selected] .text {
     color: rgb(59,66,86);
+    cursor: default;
 }
 
 .container[selected] .text:hover {

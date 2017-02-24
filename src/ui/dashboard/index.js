@@ -1,3 +1,4 @@
+import DashboardMenu from "./menu.js";
 import styles from "./index.css";
 
 export class Dashboard {
@@ -12,13 +13,18 @@ export class Dashboard {
         this._transactionsView = document.createElement("div");
         this._transactionsView.className = styles.transactionsContainer;
         this._view.appendChild(this._transactionsView);
+
+        this._menu = new DashboardMenu();
+        this._menu.appendTo(this._summaryView);
+
+        this._menu.setSelectedItem(0, true);
     }
 
     appendTo(container) {
         container.appendChild(this._view);
     }
 
-    update() {
+    /*update() {
         let self = this;
 
         self.balanceList.innerHTML = '';
@@ -73,5 +79,5 @@ export class Dashboard {
                 }
             }
         });
-    }
+    }*/
 }

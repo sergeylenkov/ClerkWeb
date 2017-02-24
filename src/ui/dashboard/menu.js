@@ -1,7 +1,7 @@
-import MenuItem from "./item.js";
-import styles from "./index.css";
+import DashboardMenuItem from "./menuItem.js";
+import styles from "./menu.css";
 
-export class Menu {
+export default class DashboardMenu {
     constructor() {
         this._view = document.createElement("div");
         this._view.className = styles.container;
@@ -12,7 +12,7 @@ export class Menu {
             didClick: this.didSelectItem.bind(this)
         }
 
-        let menuItem = new MenuItem("Мои счета");
+        let menuItem = new DashboardMenuItem('favorite', 'Сводка и бюджет');
         menuItem.setIndex(0);
         menuItem.setDelegate(itemDelegate);
 
@@ -20,7 +20,7 @@ export class Menu {
 
         this._items.push(menuItem);
 
-        menuItem = new MenuItem("Переводы");
+        menuItem = new DashboardMenuItem('card', 'Счета и карты');
         menuItem.setIndex(1);
         menuItem.setDelegate(itemDelegate);
 
@@ -28,8 +28,16 @@ export class Menu {
 
         this._items.push(menuItem);
 
-        menuItem = new MenuItem("Отчеты");
+        menuItem = new DashboardMenuItem('safe', 'Бюджет и сбережения');
         menuItem.setIndex(2);
+        menuItem.setDelegate(itemDelegate);
+
+        menuItem.appendTo(this._view);
+
+        this._items.push(menuItem);
+
+        menuItem = new DashboardMenuItem('percent', 'Кредиты');
+        menuItem.setIndex(3);
         menuItem.setDelegate(itemDelegate);
 
         menuItem.appendTo(this._view);
