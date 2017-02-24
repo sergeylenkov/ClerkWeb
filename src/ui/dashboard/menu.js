@@ -12,7 +12,7 @@ export default class DashboardMenu {
             didClick: this.didSelectItem.bind(this)
         }
 
-        let menuItem = new DashboardMenuItem('favorite', 'Сводка и бюджет');
+        let menuItem = new DashboardMenuItem('favorite', 'Сводка и расход');
         menuItem.setIndex(0);
         menuItem.setDelegate(itemDelegate);
 

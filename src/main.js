@@ -14,7 +14,8 @@ function main() {
 
     window.dashboard = new Dashboard();
     dashboard.appendTo(document.getElementById('content'));
-    //dashboard.update();
+    
+    dashboard.update();
 }
 
 window.onload = function() {

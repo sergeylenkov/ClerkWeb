@@ -56,7 +56,7 @@
 	
 	var _index2 = __webpack_require__(13);
 	
-	var _ui = __webpack_require__(22);
+	var _ui = __webpack_require__(25);
 	
 	var _ui2 = _interopRequireDefault(_ui);
 	
@@ -71,7 +71,8 @@
 	
 	    window.dashboard = new _index2.Dashboard();
 	    dashboard.appendTo(document.getElementById('content'));
-	    //dashboard.update();
+	
+	    dashboard.update();
 	}
 	
 	window.onload = function () {
@@ -1990,7 +1991,11 @@
 	
 	var _menu2 = _interopRequireDefault(_menu);
 	
-	var _index = __webpack_require__(20);
+	var _summary = __webpack_require__(20);
+	
+	var _summary2 = _interopRequireDefault(_summary);
+	
+	var _index = __webpack_require__(23);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
@@ -2017,6 +2022,9 @@
 	        this._menu.appendTo(this._summaryView);
 	
 	        this._menu.setSelectedItem(0, true);
+	
+	        this._summary = new _summary2.default();
+	        this._summary.appendTo(this._summaryView);
 	    }
 	
 	    _createClass(Dashboard, [{
@@ -2024,7 +2032,11 @@
 	        value: function appendTo(container) {
 	            container.appendChild(this._view);
 	        }
-	
+	    }, {
+	        key: "update",
+	        value: function update() {
+	            this._summary.update();
+	        }
 	        /*update() {
 	            let self = this;
 	              self.balanceList.innerHTML = '';
@@ -2115,7 +2127,7 @@
 	            didClick: this.didSelectItem.bind(this)
 	        };
 	
-	        var menuItem = new _menuItem2.default('favorite', 'Сводка и бюджет');
+	        var menuItem = new _menuItem2.default('favorite', 'Сводка и расход');
 	        menuItem.setIndex(0);
 	        menuItem.setDelegate(itemDelegate);
 	
@@ -2364,10 +2376,206 @@
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _summary = __webpack_require__(21);
+	
+	var _summary2 = _interopRequireDefault(_summary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var DashboardSummary = function () {
+	    function DashboardSummary() {
+	        _classCallCheck(this, DashboardSummary);
+	
+	        this._view = document.createElement("div");
+	        this._view.className = _summary2.default.container;
+	
+	        this.createSummaryView();
+	    }
+	
+	    _createClass(DashboardSummary, [{
+	        key: "appendTo",
+	        value: function appendTo(container) {
+	            container.appendChild(this._view);
+	        }
+	    }, {
+	        key: "createSummaryView",
+	        value: function createSummaryView() {
+	            var summaryContainer = document.createElement("div");
+	            summaryContainer.className = _summary2.default.summaryContainer;
+	            this._view.appendChild(summaryContainer);
+	
+	            var item = document.createElement("div");
+	            item.className = _summary2.default.item;
+	
+	            summaryContainer.appendChild(item);
+	
+	            var title = document.createElement("div");
+	            title.className = _summary2.default.title;
+	            title.innerText = "СОБСТВЕННЫЕ СРЕДСТВА";
+	
+	            item.appendChild(title);
+	
+	            this._avaiableAmount = document.createElement("div");
+	            this._avaiableAmount.className = _summary2.default.amount;
+	            this._avaiableAmount.innerText = "0";
+	
+	            item.appendChild(this._avaiableAmount);
+	
+	            item = document.createElement("div");
+	            item.className = _summary2.default.item;
+	
+	            summaryContainer.appendChild(item);
+	
+	            title = document.createElement("div");
+	            title.className = _summary2.default.title;
+	            title.innerText = "КРЕДИТНЫЕ СРЕДСТВА";
+	
+	            item.appendChild(title);
+	
+	            this._creditAmount = document.createElement("div");
+	            this._creditAmount.className = _summary2.default.amount;
+	            this._creditAmount.innerText = "0";
+	
+	            item.appendChild(this._creditAmount);
+	
+	            item = document.createElement("div");
+	            item.className = _summary2.default.item;
+	
+	            summaryContainer.appendChild(item);
+	
+	            title = document.createElement("div");
+	            title.className = _summary2.default.title;
+	            title.innerText = "ВСЕГО";
+	
+	            item.appendChild(title);
+	
+	            this._totalAmount = document.createElement("div");
+	            this._totalAmount.className = _summary2.default.amount;
+	            this._totalAmount.innerText = "0";
+	
+	            item.appendChild(this._totalAmount);
+	        }
+	    }, {
+	        key: "update",
+	        value: function update() {
+	            var self = this;
+	
+	            data.availableAmounts(function (accounts) {
+	                console.log('amounts');
+	                console.log(accounts);
+	                if (accounts) {
+	                    var available = 0;
+	                    var credit = 0;
+	                    var total = 0;
+	
+	                    for (var i = 0; i < accounts.length; i++) {
+	                        var account = accounts[i];
+	
+	                        if (account.credit_limit > 0) {
+	                            credit = credit + (account.credit_limit + account.balance);
+	                        } else {
+	                            available = available + account.balance;
+	                        }
+	                    }
+	
+	                    total = available + credit;
+	
+	                    self._avaiableAmount.innerText = available.toFixed(2);
+	                    self._creditAmount.innerText = credit.toFixed(2);
+	                    self._totalAmount.innerText = total.toFixed(2);
+	
+	                    /*var amounts = {};
+	                     for (var i = 0; i < accounts.length; i++) {
+	                        var account = accounts[i];
+	                         if (account.credit_limit > 0) {
+	                            continue;
+	                        }
+	                         if (amounts[account.currency_id]) {
+	                            amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
+	                        } else {
+	                            amounts[account.currency_id] = { 'balance': account.balance, 'currency': account.currency_name };
+	                        }
+	                    }
+	                    console.log(amounts);
+	                    for (var k in amounts) {
+	                        let amount = amounts[k].balance.formatAmount(false);
+	                        let currency = amounts[k].currency.replaceCurrencyNameWithSign();
+	                         self.balanceList.appendChild(self.balanceItem(amount, currency));
+	                    }*/
+	                }
+	            });
+	        }
+	    }]);
+	
+	    return DashboardSummary;
+	}();
+	
+	exports.default = DashboardSummary;
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(21);
+	var content = __webpack_require__(22);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {"sourceMap":true});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./summary.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./summary.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(9)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".dashboard___summary__container {\n    margin: 0 0 0 60px;\n    display: flex;\n    flex-grow: 1;\n}\n\n.dashboard___summary__summaryContainer {\n    margin: 0 0 auto 0;\n    padding: 0 0 20px 0;\n    display: flex;\n    flex-grow: 1;\n    border-bottom: 1px solid rgba(255,255,255,0.2);\n    box-sizing: border-box;\n}\n\n.dashboard___summary__item {\n    display: flex;\n    flex-direction: column;\n    margin: 0 60px 0 0;\n}\n\n.dashboard___summary__title {\n    font-size: 10px;\n    color: rgba(255,255,255,0.6);\n    margin: 0 0 10px 0;\n    color: rgba(255,255,255,0.6);\n}\n\n.dashboard___summary__amount {\n    font-size: 22px;\n    color: rgb(255,255,255);\n    text-align: right;\n}\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"container": "dashboard___summary__container",
+		"summaryContainer": "dashboard___summary__summaryContainer",
+		"item": "dashboard___summary__item",
+		"title": "dashboard___summary__title",
+		"amount": "dashboard___summary__amount"
+	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(24);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2387,7 +2595,7 @@
 	}
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2395,7 +2603,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".dashboard___index__container {\n    width: 100%;\n}\n\n.dashboard___index__summaryContainer {\n    width: 100%;\n    padding: 20px 100px;\n    background: rgb(24,88,156);\n}\n\n.dashboard___index__transactionsContainer {\n    width: 100%;\n}\n", ""]);
+	exports.push([module.id, ".dashboard___index__container {\n    width: 100%;\n}\n\n.dashboard___index__summaryContainer {\n    width: 100%;\n    padding: 20px 100px;\n    background: rgb(24,88,156);\n    display: flex;\n    box-sizing: border-box;\n}\n\n.dashboard___index__transactionsContainer {\n    width: 100%;\n}\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -2405,13 +2613,13 @@
 	};
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(23);
+	var content = __webpack_require__(26);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2431,7 +2639,7 @@
 	}
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();

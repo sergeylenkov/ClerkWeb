@@ -1,4 +1,5 @@
 import DashboardMenu from "./menu.js";
+import DashboardSummary from "./summary.js";
 import styles from "./index.css";
 
 export class Dashboard {
@@ -18,12 +19,18 @@ export class Dashboard {
         this._menu.appendTo(this._summaryView);
 
         this._menu.setSelectedItem(0, true);
+
+        this._summary = new DashboardSummary();
+        this._summary.appendTo(this._summaryView);
     }
 
     appendTo(container) {
         container.appendChild(this._view);
     }
 
+    update() {
+        this._summary.update();
+    }
     /*update() {
         let self = this;
 
