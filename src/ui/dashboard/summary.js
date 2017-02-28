@@ -1,15 +1,12 @@
+import View from "../base/view.js";
 import styles from "./summary.css";
 
-export default class DashboardSummary {
+export default class DashboardSummary extends View {
     constructor() {
-        this._view = document.createElement("div");
+        super();
+
         this._view.className = styles.container;
-
         this.createSummaryView();
-    }
-
-    appendTo(container) {
-        container.appendChild(this._view);
     }
 
     createSummaryView() {
@@ -73,8 +70,6 @@ export default class DashboardSummary {
         let self = this;
 
         data.availableAmounts(function(accounts) {
-            console.log('amounts');
-            console.log(accounts);
             if (accounts) {
                 var available = 0;
                 var credit = 0;
@@ -95,29 +90,6 @@ export default class DashboardSummary {
                 self._avaiableAmount.innerText = available.toFixed(2);
                 self._creditAmount.innerText = credit.toFixed(2);
                 self._totalAmount.innerText = total.toFixed(2);
-
-                /*var amounts = {};
-
-                for (var i = 0; i < accounts.length; i++) {
-                    var account = accounts[i];
-
-                    if (account.credit_limit > 0) {
-                        continue;
-                    }
-
-                    if (amounts[account.currency_id]) {
-                        amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
-                    } else {
-                        amounts[account.currency_id] = { 'balance': account.balance, 'currency': account.currency_name };
-                    }
-                }
-                console.log(amounts);
-                for (var k in amounts) {
-                    let amount = amounts[k].balance.formatAmount(false);
-                    let currency = amounts[k].currency.replaceCurrencyNameWithSign();
-
-                    self.balanceList.appendChild(self.balanceItem(amount, currency));
-                }*/
             }
         });
     }

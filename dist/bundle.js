@@ -56,7 +56,7 @@
 	
 	var _index2 = __webpack_require__(13);
 	
-	var _ui = __webpack_require__(25);
+	var _ui = __webpack_require__(29);
 	
 	var _ui2 = _interopRequireDefault(_ui);
 	
@@ -1987,15 +1987,23 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _menu = __webpack_require__(14);
+	var _view = __webpack_require__(14);
+	
+	var _view2 = _interopRequireDefault(_view);
+	
+	var _menu = __webpack_require__(15);
 	
 	var _menu2 = _interopRequireDefault(_menu);
 	
-	var _summary = __webpack_require__(20);
+	var _summary = __webpack_require__(21);
 	
 	var _summary2 = _interopRequireDefault(_summary);
 	
-	var _index = __webpack_require__(23);
+	var _accounts = __webpack_require__(24);
+	
+	var _accounts2 = _interopRequireDefault(_accounts);
+	
+	var _index = __webpack_require__(27);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
@@ -2003,68 +2011,64 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var Dashboard = exports.Dashboard = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Dashboard = exports.Dashboard = function (_View) {
+	    _inherits(Dashboard, _View);
+	
 	    function Dashboard() {
 	        _classCallCheck(this, Dashboard);
 	
-	        this._view = document.createElement("div");
-	        this._view.className = _index2.default.container;
+	        var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
 	
-	        this._summaryView = document.createElement("div");
-	        this._summaryView.className = _index2.default.summaryContainer;
-	        this._view.appendChild(this._summaryView);
+	        var self = _this;
 	
-	        this._transactionsView = document.createElement("div");
-	        this._transactionsView.className = _index2.default.transactionsContainer;
-	        this._view.appendChild(this._transactionsView);
+	        _this._view.className = _index2.default.container;
 	
-	        this._menu = new _menu2.default();
-	        this._menu.appendTo(this._summaryView);
+	        _this._summaryView = document.createElement("div");
+	        _this._summaryView.className = _index2.default.summaryContainer;
+	        _this._view.appendChild(_this._summaryView);
 	
-	        this._menu.setSelectedItem(0, true);
+	        _this._transactionsView = document.createElement("div");
+	        _this._transactionsView.className = _index2.default.transactionsContainer;
+	        _this._view.appendChild(_this._transactionsView);
 	
-	        this._summary = new _summary2.default();
-	        this._summary.appendTo(this._summaryView);
+	        _this._menu = new _menu2.default();
+	        _this._menu.appendTo(_this._summaryView);
+	
+	        _this._menu.setSelectedItem(0, true);
+	
+	        _this._menu.setDelegate({
+	            didSelectItem: function didSelectItem(index) {
+	                self._summary.detach();
+	                self._accounts.detach();
+	
+	                if (index == 0) {
+	                    self._summary.appendTo(self._summaryView);
+	                } else if (index == 1) {
+	                    self._accounts.appendTo(self._summaryView);
+	                }
+	            }
+	        });
+	
+	        _this._summary = new _summary2.default();
+	        _this._summary.appendTo(_this._summaryView);
+	
+	        _this._accounts = new _accounts2.default();
+	        return _this;
 	    }
 	
 	    _createClass(Dashboard, [{
-	        key: "appendTo",
-	        value: function appendTo(container) {
-	            container.appendChild(this._view);
-	        }
-	    }, {
 	        key: "update",
 	        value: function update() {
 	            this._summary.update();
+	            this._accounts.update();
 	        }
+	
 	        /*update() {
-	            let self = this;
-	              self.balanceList.innerHTML = '';
-	            self.budgetList.innerHTML = '';
-	              data.availableAmounts(function(accounts) {
-	                console.log('amounts');
-	                if (accounts) {
-	                    var amounts = {};
-	                      for (var i = 0; i < accounts.length; i++) {
-	                        var account = accounts[i];
-	                          if (account.credit_limit > 0) {
-	                            continue;
-	                        }
-	                          if (amounts[account.currency_id]) {
-	                            amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
-	                        } else {
-	                            amounts[account.currency_id] = { 'balance': account.balance, 'currency': account.currency_name };
-	                        }
-	                    }
-	                    console.log(amounts);
-	                    for (var k in amounts) {
-	                        let amount = amounts[k].balance.formatAmount(false);
-	                        let currency = amounts[k].currency.replaceCurrencyNameWithSign();
-	                          self.balanceList.appendChild(self.balanceItem(amount, currency));
-	                    }
-	                }
-	            });
-	              this.budgetHeader.innerHTML = 'Бюджет за ' + monthNames[Date.today().getMonth()];
+	            this.budgetHeader.innerHTML = 'Бюджет за ' + monthNames[Date.today().getMonth()];
 	              data.budget(Date.today().moveToFirstDayOfMonth().toString('yyyy-MM-dd'), Date.today().moveToLastDayOfMonth().toString('yyyy-MM-dd'), function(budget) {
 	                console.log('budget');
 	                console.log(budget);
@@ -2088,10 +2092,53 @@
 	    }]);
 
 	    return Dashboard;
-	}();
+	}(_view2.default);
 
 /***/ },
 /* 14 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var View = function () {
+	    function View() {
+	        _classCallCheck(this, View);
+	
+	        this._view = document.createElement("div");
+	        this._parent = null;
+	    }
+	
+	    _createClass(View, [{
+	        key: "appendTo",
+	        value: function appendTo(container) {
+	            this._parent = container;
+	            this._parent.appendChild(this._view);
+	        }
+	    }, {
+	        key: "detach",
+	        value: function detach() {
+	            if (this._parent != null) {
+	                this._parent.removeChild(this._view);
+	                this._parent = null;
+	            }
+	        }
+	    }]);
+	
+	    return View;
+	}();
+	
+	exports.default = View;
+
+/***/ },
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2102,11 +2149,11 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _menuItem = __webpack_require__(15);
+	var _menuItem = __webpack_require__(16);
 	
 	var _menuItem2 = _interopRequireDefault(_menuItem);
 	
-	var _menu = __webpack_require__(18);
+	var _menu = __webpack_require__(19);
 	
 	var _menu2 = _interopRequireDefault(_menu);
 	
@@ -2199,7 +2246,7 @@
 	exports.default = DashboardMenu;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2210,7 +2257,11 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _menuItem = __webpack_require__(16);
+	var _view = __webpack_require__(14);
+	
+	var _view2 = _interopRequireDefault(_view);
+	
+	var _menuItem = __webpack_require__(17);
 	
 	var _menuItem2 = _interopRequireDefault(_menuItem);
 	
@@ -2218,42 +2269,45 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var DashboardMenuItem = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DashboardMenuItem = function (_View) {
+	    _inherits(DashboardMenuItem, _View);
+	
 	    function DashboardMenuItem(icon, name) {
 	        _classCallCheck(this, DashboardMenuItem);
 	
-	        this._view = document.createElement("div");
-	        this._view.className = _menuItem2.default.container;
+	        var _this = _possibleConstructorReturn(this, (DashboardMenuItem.__proto__ || Object.getPrototypeOf(DashboardMenuItem)).call(this));
 	
-	        this._icon = document.createElement("div");
-	        this._icon.className = _menuItem2.default.icon;
+	        _this._view.className = _menuItem2.default.container;
 	
-	        this._view.appendChild(this._icon);
+	        _this._icon = document.createElement("div");
+	        _this._icon.className = _menuItem2.default.icon;
 	
-	        this._icon.style.backgroundImage = "url('/static/img/" + icon + ".svg')";
-	        this._title = document.createElement("div");
-	        this._title.className = _menuItem2.default.title;
-	        this._title.innerText = name;
+	        _this._view.appendChild(_this._icon);
 	
-	        this._view.appendChild(this._title);
+	        _this._icon.style.backgroundImage = "url('/static/img/" + icon + ".svg')";
+	        _this._title = document.createElement("div");
+	        _this._title.className = _menuItem2.default.title;
+	        _this._title.innerText = name;
 	
-	        this.setIndex(0);
+	        _this._view.appendChild(_this._title);
 	
-	        var self = this;
+	        _this.setIndex(0);
 	
-	        this._view.addEventListener("click", function () {
+	        var self = _this;
+	
+	        _this._view.addEventListener("click", function () {
 	            if (self._delegate && self._delegate.didClick) {
 	                self._delegate.didClick(self);
 	            }
 	        });
+	        return _this;
 	    }
 	
 	    _createClass(DashboardMenuItem, [{
-	        key: "appendTo",
-	        value: function appendTo(container) {
-	            container.appendChild(this._view);
-	        }
-	    }, {
 	        key: "setSelected",
 	        value: function setSelected(selected) {
 	            this._selected = selected;
@@ -2282,18 +2336,18 @@
 	    }]);
 	
 	    return DashboardMenuItem;
-	}();
+	}(_view2.default);
 	
 	exports.default = DashboardMenuItem;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(17);
+	var content = __webpack_require__(18);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2313,7 +2367,7 @@
 	}
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2331,13 +2385,13 @@
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(19);
+	var content = __webpack_require__(20);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2357,7 +2411,7 @@
 	}
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2365,7 +2419,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".dashboard___menu__container {\n    display: flex;\n    flex-direction: column;\n    margin: 0 0 0 -30px;\n}\n", ""]);
+	exports.push([module.id, ".dashboard___menu__container {\n    display: flex;\n    flex-direction: column;\n    margin: 0 0 0 -30px;\n    flex-shrink: 0;\n}\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -2373,7 +2427,7 @@
 	};
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2384,7 +2438,11 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _summary = __webpack_require__(21);
+	var _view = __webpack_require__(14);
+	
+	var _view2 = _interopRequireDefault(_view);
+	
+	var _summary = __webpack_require__(22);
 	
 	var _summary2 = _interopRequireDefault(_summary);
 	
@@ -2392,22 +2450,24 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var DashboardSummary = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DashboardSummary = function (_View) {
+	    _inherits(DashboardSummary, _View);
+	
 	    function DashboardSummary() {
 	        _classCallCheck(this, DashboardSummary);
 	
-	        this._view = document.createElement("div");
-	        this._view.className = _summary2.default.container;
+	        var _this = _possibleConstructorReturn(this, (DashboardSummary.__proto__ || Object.getPrototypeOf(DashboardSummary)).call(this));
 	
-	        this.createSummaryView();
+	        _this._view.className = _summary2.default.container;
+	        _this.createSummaryView();
+	        return _this;
 	    }
 	
 	    _createClass(DashboardSummary, [{
-	        key: "appendTo",
-	        value: function appendTo(container) {
-	            container.appendChild(this._view);
-	        }
-	    }, {
 	        key: "createSummaryView",
 	        value: function createSummaryView() {
 	            var summaryContainer = document.createElement("div");
@@ -2471,8 +2531,6 @@
 	            var self = this;
 	
 	            data.availableAmounts(function (accounts) {
-	                console.log('amounts');
-	                console.log(accounts);
 	                if (accounts) {
 	                    var available = 0;
 	                    var credit = 0;
@@ -2493,43 +2551,24 @@
 	                    self._avaiableAmount.innerText = available.toFixed(2);
 	                    self._creditAmount.innerText = credit.toFixed(2);
 	                    self._totalAmount.innerText = total.toFixed(2);
-	
-	                    /*var amounts = {};
-	                     for (var i = 0; i < accounts.length; i++) {
-	                        var account = accounts[i];
-	                         if (account.credit_limit > 0) {
-	                            continue;
-	                        }
-	                         if (amounts[account.currency_id]) {
-	                            amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
-	                        } else {
-	                            amounts[account.currency_id] = { 'balance': account.balance, 'currency': account.currency_name };
-	                        }
-	                    }
-	                    console.log(amounts);
-	                    for (var k in amounts) {
-	                        let amount = amounts[k].balance.formatAmount(false);
-	                        let currency = amounts[k].currency.replaceCurrencyNameWithSign();
-	                         self.balanceList.appendChild(self.balanceItem(amount, currency));
-	                    }*/
 	                }
 	            });
 	        }
 	    }]);
 	
 	    return DashboardSummary;
-	}();
+	}(_view2.default);
 	
 	exports.default = DashboardSummary;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(22);
+	var content = __webpack_require__(23);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2549,7 +2588,7 @@
 	}
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2557,7 +2596,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".dashboard___summary__container {\n    margin: 0 0 0 60px;\n    display: flex;\n    flex-grow: 1;\n}\n\n.dashboard___summary__summaryContainer {\n    margin: 0 0 auto 0;\n    padding: 0 0 20px 0;\n    display: flex;\n    flex-grow: 1;\n    border-bottom: 1px solid rgba(255,255,255,0.2);\n    box-sizing: border-box;\n}\n\n.dashboard___summary__item {\n    display: flex;\n    flex-direction: column;\n    margin: 0 60px 0 0;\n}\n\n.dashboard___summary__title {\n    font-size: 10px;\n    color: rgba(255,255,255,0.6);\n    margin: 0 0 10px 0;\n    color: rgba(255,255,255,0.6);\n}\n\n.dashboard___summary__amount {\n    font-size: 22px;\n    color: rgb(255,255,255);\n    text-align: right;\n}\n", ""]);
+	exports.push([module.id, ".dashboard___summary__container {\n    margin: 0 0 0 60px;\n    display: flex;\n    flex-grow: 1;\n}\n\n.dashboard___summary__summaryContainer {\n    margin: 0 0 auto 0;\n    padding: 0 0 20px 0;\n    display: flex;\n    flex-grow: 1;\n    border-bottom: 1px solid rgba(255,255,255,0.2);\n    box-sizing: border-box;\n}\n\n.dashboard___summary__item {\n    display: flex;\n    flex-direction: column;\n    margin: 0 60px 0 0;\n}\n\n.dashboard___summary__title {\n    font-size: 10px;\n    color: rgba(255,255,255,0.6);\n    margin: 0 0 10px 0;\n    color: rgba(255,255,255,0.6);\n}\n\n.dashboard___summary__amount {\n    font-size: 22px;\n    color: rgb(255,255,255);\n    text-align: left;\n}\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -2569,13 +2608,152 @@
 	};
 
 /***/ },
-/* 23 */
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _view = __webpack_require__(14);
+	
+	var _view2 = _interopRequireDefault(_view);
+	
+	var _accounts = __webpack_require__(25);
+	
+	var _accounts2 = _interopRequireDefault(_accounts);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DashboardAccounts = function (_View) {
+	    _inherits(DashboardAccounts, _View);
+	
+	    function DashboardAccounts() {
+	        _classCallCheck(this, DashboardAccounts);
+	
+	        var _this = _possibleConstructorReturn(this, (DashboardAccounts.__proto__ || Object.getPrototypeOf(DashboardAccounts)).call(this));
+	
+	        _this._view.className = _accounts2.default.container;
+	
+	        _this._accountsList = document.createElement("div");
+	        _this._accountsList.className = _accounts2.default.list;
+	
+	        _this._view.appendChild(_this._accountsList);
+	        return _this;
+	    }
+	
+	    _createClass(DashboardAccounts, [{
+	        key: "update",
+	        value: function update() {
+	            var self = this;
+	
+	            data.availableAmounts(function (accounts) {
+	                self._accountsList.innerHTML = "";
+	
+	                if (accounts) {
+	                    for (var i = 0; i < accounts.length; i++) {
+	                        self._accountsList.appendChild(self.accountItem(accounts[i]));
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: "accountItem",
+	        value: function accountItem(account) {
+	            var item = document.createElement("div");
+	            item.className = _accounts2.default.accountItem;
+	
+	            var name = document.createElement("div");
+	            name.className = _accounts2.default.accountName;
+	            name.innerText = account.name;
+	
+	            item.appendChild(name);
+	
+	            var amount = document.createElement("div");
+	            amount.className = _accounts2.default.accountAmount;
+	
+	            if (account.credit_limit > 0) {
+	                var balance = account.credit_limit + account.balance;
+	                amount.innerText = balance.toFixed(2) + " (" + account.credit_limit.toFixed(2) + " " + account.balance.toFixed(2) + ")";
+	            } else {
+	                amount.innerText = account.balance.toFixed(2);
+	            }
+	
+	            item.appendChild(amount);
+	
+	            return item;
+	        }
+	    }]);
+	
+	    return DashboardAccounts;
+	}(_view2.default);
+	
+	exports.default = DashboardAccounts;
+
+/***/ },
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(24);
+	var content = __webpack_require__(26);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {"sourceMap":true});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./accounts.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[folder]___[name]__[local]!./accounts.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(9)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".dashboard___accounts__container {\n    margin: 0 0 0 60px;\n    display: flex;\n    flex-grow: 1;\n}\n\n.dashboard___accounts__list {\n    width: 100%;\n}\n\n.dashboard___accounts__accountItem {\n    width: 100%;\n    height: 60px;\n    float: left;\n    display: flex;\n    border-bottom: 1px solid rgba(255,255,255,0.2);\n}\n\n.dashboard___accounts__accountName {\n    margin: auto 0;\n    color: rgb(255,255,255);\n    font-size: 14px;\n}\n\n.dashboard___accounts__accountAmount {\n    margin: auto 0 auto auto;\n    color: rgb(255,255,255);\n    font-size: 22px;\n    font-weight: 300;\n}\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"container": "dashboard___accounts__container",
+		"list": "dashboard___accounts__list",
+		"accountItem": "dashboard___accounts__accountItem",
+		"accountName": "dashboard___accounts__accountName",
+		"accountAmount": "dashboard___accounts__accountAmount"
+	};
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(28);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2595,7 +2773,7 @@
 	}
 
 /***/ },
-/* 24 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();
@@ -2613,13 +2791,13 @@
 	};
 
 /***/ },
-/* 25 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(26);
+	var content = __webpack_require__(30);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(10)(content, {"sourceMap":true});
@@ -2639,7 +2817,7 @@
 	}
 
 /***/ },
-/* 26 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(9)();

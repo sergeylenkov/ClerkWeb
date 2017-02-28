@@ -1,10 +1,15 @@
+import View from "../base/view.js";
 import DashboardMenu from "./menu.js";
 import DashboardSummary from "./summary.js";
+import DashboardAccounts from "./accounts.js";
 import styles from "./index.css";
 
-export class Dashboard {
+export class Dashboard extends View {
     constructor() {
-        this._view = document.createElement("div");
+        super();
+
+        let self = this;
+
         this._view.className = styles.container;
 
         this._summaryView = document.createElement("div");
@@ -20,51 +25,31 @@ export class Dashboard {
 
         this._menu.setSelectedItem(0, true);
 
+        this._menu.setDelegate({
+            didSelectItem: function(index) {
+                self._summary.detach();
+                self._accounts.detach();
+
+                if (index == 0) {
+                    self._summary.appendTo(self._summaryView);
+                } else if (index == 1) {
+                    self._accounts.appendTo(self._summaryView);
+                }
+            }
+        })
+
         this._summary = new DashboardSummary();
         this._summary.appendTo(this._summaryView);
-    }
 
-    appendTo(container) {
-        container.appendChild(this._view);
+        this._accounts = new DashboardAccounts();
     }
 
     update() {
         this._summary.update();
+        this._accounts.update();
     }
+
     /*update() {
-        let self = this;
-
-        self.balanceList.innerHTML = '';
-        self.budgetList.innerHTML = '';
-
-        data.availableAmounts(function(accounts) {
-            console.log('amounts');
-            if (accounts) {
-                var amounts = {};
-
-                for (var i = 0; i < accounts.length; i++) {
-                    var account = accounts[i];
-
-                    if (account.credit_limit > 0) {
-                        continue;
-                    }
-
-                    if (amounts[account.currency_id]) {
-                        amounts[account.currency_id].balance = amounts[account.currency_id].balance + account.balance;
-                    } else {
-                        amounts[account.currency_id] = { 'balance': account.balance, 'currency': account.currency_name };
-                    }
-                }
-                console.log(amounts);
-                for (var k in amounts) {
-                    let amount = amounts[k].balance.formatAmount(false);
-                    let currency = amounts[k].currency.replaceCurrencyNameWithSign();
-
-                    self.balanceList.appendChild(self.balanceItem(amount, currency));
-                }
-            }
-        });
-
         this.budgetHeader.innerHTML = 'Бюджет за ' + monthNames[Date.today().getMonth()];
 
         data.budget(Date.today().moveToFirstDayOfMonth().toString('yyyy-MM-dd'), Date.today().moveToLastDayOfMonth().toString('yyyy-MM-dd'), function(budget) {

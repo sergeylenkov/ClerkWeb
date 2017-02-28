@@ -1,8 +1,10 @@
+import View from "../base/view.js";
 import styles from "./menuItem.css";
 
-export default class DashboardMenuItem {
+export default class DashboardMenuItem extends View {
     constructor(icon, name) {
-        this._view = document.createElement("div");
+        super();
+
         this._view.className = styles.container;
 
         this._icon = document.createElement("div");
@@ -26,10 +28,6 @@ export default class DashboardMenuItem {
                 self._delegate.didClick(self);
             }
         });
-    }
-
-    appendTo(container) {
-        container.appendChild(this._view);
     }
 
     setSelected(selected) {
