@@ -34,8 +34,8 @@ if ($_GET["action"] == "budget") {
 if ($_GET["action"] == "expenses") {
     $expenses = array();
 
-    foreach ($db->query("SELECT a.name AS name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC LIMIT 5") as $row) {
-        $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
+    foreach ($db->query("SELECT a.id, a.name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC LIMIT 5") as $row) {
+        $expenses[] = array("id" => $row["id"], "name" => $row["name"], "sum" => round($row["sum"], 2));
     }
 
     echo json_encode($expenses);
@@ -49,7 +49,7 @@ if ($_GET["action"] == "expenses_by_date") {
             $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
         }
     } else {
-        foreach ($db->query("SELECT tg.name AS name, SUM(t.from_account_amount) AS sum from transactions t, transactions_tags tt, tags tg WHERE t.to_account_id = " . $_GET["account"] . " AND t.deleted = 0 AND tt.transaction_id = t.id AND tg.id = tt.tag_id AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY tg.name ORDER BY sum DESC") as $row) {
+        foreach ($db->query("SELECT tg.name AS name, SUM(t.from_account_amount) AS sum FROM transactions t, transactions_tags tt, tags tg WHERE t.to_account_id = " . $_GET["account"] . " AND t.deleted = 0 AND tt.transaction_id = t.id AND tg.id = tt.tag_id AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY tg.name ORDER BY sum DESC") as $row) {
             $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
         }
     }
@@ -71,6 +71,21 @@ if ($_GET["action"] == "expenses_by_month") {
     }
 
 	echo json_encode($expenses);
+}
+
+if ($_GET["action"] == "expenses_by_account") {
+    $expenses = array();
+
+    if ($_GET["account"] == -1) {
+        foreach ($db->query("SELECT a.name AS name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC") as $row) {
+            $expenses[] = array("name" => $row["name"], "sum" => round($row["sum"], 2));
+        }
+    } else {
+        $result = $db->query("SELECT SUM(t.from_account_amount) AS sum FROM transactions t WHERE t.to_account_id = " . $_GET["account"] . " AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "'")->fetch();
+        $expenses = array("sum" => round($result["sum"], 2));
+    }
+
+    echo json_encode($expenses);
 }
 
 if ($_GET["action"] == "last_transactions") {
@@ -335,6 +350,16 @@ if ($_GET["action"] == "currencies") {
     }
 
     echo json_encode($currencies);
+}
+
+if ($_GET["action"] == "budgets") {
+    $budgets = array();
+
+    foreach ($db->query("SELECT * FROM budgets ORDER BY name") as $row) {
+	    $budgets[] = array("id" => $row["id"], "name" => $row["name"], "amount" => round($row["amount"], 2), "period" => $row["period"], "type" => $row["type"], "account_id" => $row["account_id"]);
+    }
+
+    echo json_encode($budgets);
 }
 
 ?>

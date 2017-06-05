@@ -52,6 +52,16 @@ function Data(url) {
 		});
 	}
 
+    this.expensesByAccount = function(account, from, to, callback) {
+        $.ajax({
+            url: this._url,
+            dataType: "json",
+            data: { action: "expenses_by_account", account: account, from: from, to: to },
+        }).done(function (response) {
+            callback(response);
+        })
+    }
+
 	this.lastTransactions = function(limit, callback) {
         $.ajax({
             url: this._url,
@@ -170,4 +180,14 @@ function Data(url) {
 			callback(response);
 		});
 	}
+
+    this.budgets = function(callback) {
+        $.ajax({
+            url: this._url,
+            dataType: "json",
+            data: { action: "budgets" },
+        }).done(function (response) {
+            callback(response);
+        });
+    }
 }
