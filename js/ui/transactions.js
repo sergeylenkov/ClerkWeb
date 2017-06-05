@@ -30,8 +30,8 @@ function Transactions() {
 
             var defaultDate = Date.today();
 
-            if (settings['from_date_filter']) {
-                defaultDate = Date.parse(settings['from_date_filter']);
+            if (settings["from_date_filter"]) {
+                defaultDate = Date.parse(settings["from_date_filter"]);
             }
 
             $("#from_date").pikaday({
@@ -40,7 +40,7 @@ function Transactions() {
                 onSelect: function () {
                      fromDate = new Date(this.getDate());
                      $("#from_date").val(fromDate.toString("yyyy-MM-dd"));
-                     settings['from_date_filter'] = fromDate.toString("yyyy-MM-dd");
+                     settings["from_date_filter"] = fromDate.toString("yyyy-MM-dd");
 
                      self.updateList();
                 }
@@ -87,30 +87,14 @@ function Transactions() {
         });
     }
 
-    this.initForm = function () {
+    this.initForm = function() {
         self.fillAccountsSelect();
 
         $("#button_new_transaction").click(function () {
-            var date = new Date(datePicker.getDate());
-
-            $("input[name=id]").val("");
-            $("input[name=from_id]").val("");
-            $("input[name=mode]").val("insert");
-            $("input[name=submit]").val("Добавить");
-
-            $("#transaction_to_amount").val("");
-            $("#transaction_from_amount").val("");
-            $("#transaction_tags").val("");
-            $("#transaction_tags").tagit("removeAll");
-            $("#transaction_date").val(date.toString("yyyy-MM-dd"));
-
-            $("#button_new_transaction").transition({ "opacity": 0 }, 300, function() {
-                $("#transaction_new").show();
-                $("#transaction_new").transition({ "opacity": 1 }, 300);
-            });
+            self.newTransaction();
         });
 
-        $("#button_cancel").click(function () {
+        $("#transaction_form_button_cancel").click(function() {
             $("#transaction_new").transition({ "opacity": 0 }, 300, function() {
                 $(this).hide();
 
@@ -120,11 +104,17 @@ function Transactions() {
             });
         });
 
+        $("#transaction_form_button_ok").click(function(e) {
+            e.preventDefault();
+
+            self.save();
+        });
+
         $("#transaction_from_amount").change(function () {
             var newValue = $("#transaction_from_amount").val();
 
             newValue = newValue.clearAmount();
-            newValue = eval(newValue);
+            newValue = eval(newValue).toFixed(2);
 
             if ($("#transaction_to_amount").val() == "") {
                 $("#transaction_to_amount").val(newValue);
@@ -132,74 +122,17 @@ function Transactions() {
         });
 
         datePicker = new Pikaday({
-            field: document.getElementById('transaction_date'),
+            field: $("#transaction_form_date"),
             firstDay: 1,
             defaultDate: new Date(),
             format: 'yyyy-MM-dd',
             onSelect: function () {
                 var date = new Date(this.getDate());
-                $("#transaction_date").val(date.toString("yyyy-MM-dd"));
+                $("#transaction_form_date").val(date.toString("yyyy-MM-dd"));
             }
         });
 
-        datePicker.setDate(Date.today().toString('yyyy-MM-dd'));
-
-        $("#transaction_form").submit(function(event) {
-            event.preventDefault();
-
-            var callback = function() {
-                $("#transaction_new").transition({ "opacity": 0 }, 300, function() {
-                    $(this).hide();
-
-                    $("#button_new_transaction").transition({ "opacity": 1 }, 300);
-
-                    $("#transactions_list").transition({ "opacity": 0 }, 300, function() {
-                        self.update(function() {
-                            $("#transactions_list").transition({ "opacity": 1 });
-                        });
-                    });
-                });
-            }
-
-            var fromAmount = eval(document.getElementById('transaction_from_amount').value.clearAmount());
-            var toAmount = document.getElementById('transaction_to_amount').value.clearAmount();
-
-            if (fromAmount.length == 0) {
-                return;
-            }
-
-            if (toAmount.length == 0) {
-                return;
-            }
-
-            var transaction = {};
-            transaction.id = -1;
-            transaction.from_account = document.getElementById('transaction_from_account').value;
-            transaction.to_account = document.getElementById('transaction_to_account').value;
-            transaction.from_amount = fromAmount;
-            transaction.to_amount = toAmount;
-            transaction.date = document.getElementById('transaction_date').value;
-            transaction.tags = document.getElementById('transaction_tags').value;
-            transaction.note = document.getElementById('transaction_note').value;            
-
-            data.saveTransaction(transaction, function(response) {
-                if (!response.error) {
-                    var transaction = self.transactionById($("input[name=from_id]").val());
-
-                    if (transaction) {
-                        transaction.from_account_amount = transaction.from_account_amount - fromAmout;
-                        transaction.to_account_amount = transaction.to_account_amount - toAmount;
-
-                        data.splitTransaction(transaction, function(response) {
-                            console.log(response);
-                            callback();
-                        });
-                    } else {
-                        callback();
-                    }
-                }
-            });
-        });
+        datePicker.setDate(Date.today().toString("yyyy-MM-dd"));        
 
         data.allTags(function(tags) {
             var names = [];
@@ -208,7 +141,7 @@ function Transactions() {
                 names.push(tags[i].name);
             }
 
-            $("#transaction_tags").tagit({
+            $("#transaction_form_tags").tagit({
                 availableTags: names,
                 autocomplete: {delay: 0, minLength: 2},
                 singleField: true,
@@ -397,11 +330,82 @@ function Transactions() {
         $("#transactions_expense").html(expense.formatAmount());
     }
 
+    this.save = function() {
+        var callback = function() {
+            $("#transaction_new").transition({ "opacity": 0 }, 300, function() {
+                $(this).hide();
+
+                $("#button_new_transaction").transition({ "opacity": 1 }, 300, function() {
+                    self.updateList();
+                });
+            });
+        }
+
+        var fromAmount = parseFloat(eval($("#transaction_from_amount").val().clearAmount()));
+        var toAmount = parseFloat($("#transaction_to_amount").val().clearAmount());
+
+        if (fromAmount == 0) {
+            return;
+        }
+
+        if (toAmount == 0) {
+            return;
+        }
+
+        var transaction = {};
+
+        transaction.id = $("input[name=id]").val();
+        transaction.from_account = $("#transaction_from_account").val();
+        transaction.to_account = $("#transaction_to_account").val();
+        transaction.from_amount = fromAmount;
+        transaction.to_amount = toAmount;
+        transaction.date = $("#transaction_form_date").val();
+        transaction.tags = $("#transaction_form_tags").val();
+        transaction.note = $("#transaction_note").val();
+
+        data.saveTransaction(transaction, $("input[name=mode]").val(), function(response) {
+            if (!response.error) {
+                var transaction = self.transactionById($("input[name=from_id]").val());
+
+                if (transaction) {
+                    transaction.from_account_amount = transaction.from_account_amount - fromAmount;
+                    transaction.to_account_amount = transaction.to_account_amount - toAmount;
+
+                    data.splitTransaction(transaction, function(response) {
+                        callback();
+                    });
+                } else {
+                    callback();
+                }
+            }
+        });
+    }
+
+    this.newTransaction = function() {
+        var date = new Date(datePicker.getDate());
+
+        $("input[name=id]").val("-1");
+        $("input[name=from_id]").val("");
+        $("input[name=mode]").val("insert");
+
+        $("#transaction_to_amount").val("");
+        $("#transaction_from_amount").val("");
+        $("#transaction_form_tags").val("");
+        $("#transaction_form_tags").tagit("removeAll");
+        $("#transaction_form_date").val(date.toString("yyyy-MM-dd"));
+
+        $("#transaction_form_button_ok").find("span").text("Добавить");
+
+        $("#button_new_transaction").transition({ "opacity": 0 }, 300, function() {
+            $("#transaction_new").show();
+            $("#transaction_new").transition({ "opacity": 1 }, 300);
+        });
+    }
+
     this.edit = function(transaction) {
         $("input[name=id]").val(transaction.id);
         $("input[name=from_id]").val("");
         $("input[name=mode]").val("update");
-        $("input[name=submit]").val("Изменить");
 
         $('#transaction_to_account').val(transaction.to_account_id);
         $('#transaction_from_account').val(transaction.from_account_id);
@@ -409,15 +413,17 @@ function Transactions() {
         $("#transaction_to_amount").val(transaction.to_account_amount);
         $("#transaction_from_amount").val(transaction.from_account_amount);
 
-        $("#transaction_tags").val("");
-        $("#transaction_tags").tagit("removeAll");
+        $("#transaction_form_tags").val("");
+        $("#transaction_form_tags").tagit("removeAll");
 
         for (var i = 0; i < transaction.tags.length; i++) {
-            $("#transaction_tags").tagit("createTag", transaction.tags[i].name);
+            $("#transaction_form_tags").tagit("createTag", transaction.tags[i].name);
         }
 
-        $("#transaction_date").val(transaction.paid_at);
+        $("#transaction_form_date").val(transaction.paid_at);
         $("#transaction_note").val(transaction.note);
+
+        $("#transaction_form_button_ok").find("span").text("Изменить");
 
         $("#button_new_transaction").transition({ "opacity": 0 }, 300, function() {
             $("#transaction_new").show();
@@ -427,33 +433,28 @@ function Transactions() {
 
     this.delete = function(transaction) {
         data.deleteTransaction(transaction, function(response) {
-            $("#transactions_list").find(".transaction").each(function() {
-                if ($(this).attr("index") == transaction.id) {
-                    $(this).transition({ "opacity": 0 }, 300, function() {
-                        self.update();
-                    });
-                }
-            });
+            self.updateList();
         });
     }
 
     this.split = function(transaction) {
-        $("input[name=id]").val("");
+        $("input[name=id]").val("-1");
         $("input[name=from_id]").val(transaction.id);
         $("input[name=mode]").val("insert");
-        $("input[name=submit]").val("Добавить");
 
-        $('#transaction_to_account').val(transaction.to_account_id);
-        $('#transaction_from_account').val(transaction.from_account_id);
+        $("#transaction_to_account").val(transaction.to_account_id);
+        $("#transaction_from_account").val(transaction.from_account_id);
 
-        $("#transaction_to_amount").val('');
-        $("#transaction_from_amount").val('');
+        $("#transaction_from_amount").val("");
+        $("#transaction_to_amount").val("");
 
-        $("#transaction_tags").val("");
-        $("#transaction_tags").tagit("removeAll");
+        $("#transaction_form_tags").val("");
+        $("#transaction_form_tags").tagit("removeAll");
 
-        $("#transaction_date").val(transaction.paid_at);
+        $("#transaction_form_date").val(transaction.paid_at);
         $("#transaction_note").val("");
+
+        $("#transaction_form_button_ok").find("span").text("Разбить");
 
         $("#button_new_transaction").transition({ "opacity": 0 }, 300, function() {
             $("#transaction_new").show();

@@ -78,12 +78,10 @@ function Data(url) {
         });
 	}
 
-	this.saveTransaction = function(data, callback) {
-		if (data.id == -1) {
-			data.action = 'transaction';
-            data.mode = 'insert';
-		}
-
+	this.saveTransaction = function(data, mode, callback) {
+		data.action = "transaction";
+		data.mode = mode;
+		
 		$.ajax({
 			url: this._url,
 			dataType: "json",
@@ -97,7 +95,7 @@ function Data(url) {
 		$.ajax({
 			url: this._url,
 			dataType: "json",
-			data: {action: "transaction", mode: "delete", id: transaction.id},
+			data: { action: "transaction", mode: "delete", id: transaction.id },
 		}).done(function(response) {
 			callback(response);
 		});
@@ -107,7 +105,7 @@ function Data(url) {
 		$.ajax({
 			url: this._url,
 			dataType: "json",
-			data: {action: "transaction", mode: "split", id: transaction.id, from_amount: transaction.from_account_amount, to_amount: transaction.to_account_amount},
+			data: { action: "transaction", mode: "split", id: transaction.id, from_amount: transaction.from_account_amount, to_amount: transaction.to_account_amount },
 		}).done(function(response) {
 			callback(response);
 		});
