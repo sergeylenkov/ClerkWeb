@@ -82,6 +82,9 @@ function Dashboard() {
         data.accountBalance(account, function(response) {
             var amountItem = item.find(".account_balance").first();
             var amountInfoItem = item.find(".info");
+            var progressBar = item.find(".account_progress_bar");
+            var progressFill = item.find(".account_progress_fill");
+            var percent = 0;
 
             if (account.credit_limit) {
                 var balance = account.credit_limit + response.balance;
@@ -95,13 +98,38 @@ function Dashboard() {
                 }
 
                 amountInfoItem.html("(" + account.credit_limit.formatAmount() + sign + Math.abs(response.balance).formatAmount() + ")");
+
+                percent = Math.abs(balance / account.credit_limit) * 100;
+
+                progressFill.css("width", percent + "%");
+
+                if (percent >= 80) {
+                    progressFill.addClass("green");
+                } else if (percent > 20 && percent < 70) {
+                    progressFill.addClass("yellow");
+                } else {
+                    progressFill.addClass("red");
+                }
             } else if (account.type_id == data.accountType.debt) {
                 amountItem.html(response.balance.formatAmount());
                 amountInfoItem.html("(" + response.expense.formatAmount() + " - " + Math.abs(response.receipt).formatAmount() + ")");
 
                 amountItem.addClass("minus");
+
+                percent = Math.abs(response.balance / response.expense) * 100;
+
+                progressFill.css("width", percent + "%");
+
+                if (percent <= 20) {
+                    progressFill.addClass("green");
+                } else if (percent > 20 && percent <= 70) {
+                    progressFill.addClass("yellow");
+                } else {
+                    progressFill.addClass("red");
+                }
             } else {
                 amountInfoItem.hide();
+                progressBar.hide();
                 amountItem.html(response.balance.formatAmount());
             }
         });

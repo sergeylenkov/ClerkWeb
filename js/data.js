@@ -79,6 +79,11 @@ function Data(url) {
 	}
 
 	this.saveTransaction = function(data, callback) {
+		if (data.id == -1) {
+			data.action = 'transaction';
+            data.mode = 'insert';
+		}
+
 		$.ajax({
 			url: this._url,
 			dataType: "json",

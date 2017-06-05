@@ -98,8 +98,8 @@ function Transactions() {
             $("input[name=mode]").val("insert");
             $("input[name=submit]").val("Добавить");
 
-            $("#to_amount").val("");
-            $("#from_amount").val("");
+            $("#transaction_to_amount").val("");
+            $("#transaction_from_amount").val("");
             $("#transaction_tags").val("");
             $("#transaction_tags").tagit("removeAll");
             $("#transaction_date").val(date.toString("yyyy-MM-dd"));
@@ -120,9 +120,14 @@ function Transactions() {
             });
         });
 
-        $("#from_amount").change(function () {
-            if ($("#to_amount").val() == "") {
-                $("#to_amount").val($("#from_amount").val());
+        $("#transaction_from_amount").change(function () {
+            var newValue = $("#transaction_from_amount").val();
+
+            newValue = newValue.clearAmount();
+            newValue = eval(newValue);
+
+            if ($("#transaction_to_amount").val() == "") {
+                $("#transaction_to_amount").val(newValue);
             }
         });
 
@@ -140,6 +145,8 @@ function Transactions() {
         datePicker.setDate(Date.today().toString('yyyy-MM-dd'));
 
         $("#transaction_form").submit(function(event) {
+            event.preventDefault();
+
             var callback = function() {
                 $("#transaction_new").transition({ "opacity": 0 }, 300, function() {
                     $(this).hide();
@@ -154,13 +161,34 @@ function Transactions() {
                 });
             }
 
-            data.saveTransaction($("#transaction_form").serialize(), function(response) {
+            var fromAmount = eval(document.getElementById('transaction_from_amount').value.clearAmount());
+            var toAmount = document.getElementById('transaction_to_amount').value.clearAmount();
+
+            if (fromAmount.length == 0) {
+                return;
+            }
+
+            if (toAmount.length == 0) {
+                return;
+            }
+
+            var transaction = {};
+            transaction.id = -1;
+            transaction.from_account = document.getElementById('transaction_from_account').value;
+            transaction.to_account = document.getElementById('transaction_to_account').value;
+            transaction.from_amount = fromAmount;
+            transaction.to_amount = toAmount;
+            transaction.date = document.getElementById('transaction_date').value;
+            transaction.tags = document.getElementById('transaction_tags').value;
+            transaction.note = document.getElementById('transaction_note').value;            
+
+            data.saveTransaction(transaction, function(response) {
                 if (!response.error) {
                     var transaction = self.transactionById($("input[name=from_id]").val());
-                    
+
                     if (transaction) {
-                        transaction.from_account_amount = transaction.from_account_amount - $("#from_amount").val();
-                        transaction.to_account_amount = transaction.to_account_amount - $("#to_amount").val();
+                        transaction.from_account_amount = transaction.from_account_amount - fromAmout;
+                        transaction.to_account_amount = transaction.to_account_amount - toAmount;
 
                         data.splitTransaction(transaction, function(response) {
                             console.log(response);
@@ -171,8 +199,6 @@ function Transactions() {
                     }
                 }
             });
-
-            event.preventDefault();
         });
 
         data.allTags(function(tags) {
@@ -194,31 +220,31 @@ function Transactions() {
     this.fillAccountsSelect = function () {
         data.accounts(data.accountType.receipt, true, function(accounts) {
             for (var i = 0; i < accounts.length; i++) {
-                $('#from_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                $('#transaction_from_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
             }
         });
 
         data.accounts(data.accountType.deposit, true, function(accounts) {
             for (var i = 0; i < accounts.length; i++) {
-                $('#from_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                $('#transaction_from_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
             }
         });
 
         data.accounts(data.accountType.expense, true, function(accounts) {
             for (var i = 0; i < accounts.length; i++) {
-                $('#to_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                $('#transaction_to_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
             }
         });
 
         data.accounts(data.accountType.deposit, true, function(accounts) {
             for (var i = 0; i < accounts.length; i++) {
-                $('#to_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                $('#transaction_to_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
             }
         });
 
         data.accounts(data.accountType.debt, true, function(accounts) {
             for (var i = 0; i < accounts.length; i++) {
-                $('#to_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                $('#transaction_to_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
             }
         });
     }
@@ -377,11 +403,11 @@ function Transactions() {
         $("input[name=mode]").val("update");
         $("input[name=submit]").val("Изменить");
 
-        $('#to_account').val(transaction.to_account_id);
-        $('#from_account').val(transaction.from_account_id);
+        $('#transaction_to_account').val(transaction.to_account_id);
+        $('#transaction_from_account').val(transaction.from_account_id);
 
-        $("#to_amount").val(transaction.to_account_amount);
-        $("#from_amount").val(transaction.from_account_amount);
+        $("#transaction_to_amount").val(transaction.to_account_amount);
+        $("#transaction_from_amount").val(transaction.from_account_amount);
 
         $("#transaction_tags").val("");
         $("#transaction_tags").tagit("removeAll");
@@ -403,7 +429,7 @@ function Transactions() {
         data.deleteTransaction(transaction, function(response) {
             $("#transactions_list").find(".transaction").each(function() {
                 if ($(this).attr("index") == transaction.id) {
-                    $(this).transaction({ "opacity": 0 }, 300, function() {
+                    $(this).transition({ "opacity": 0 }, 300, function() {
                         self.update();
                     });
                 }
@@ -417,11 +443,11 @@ function Transactions() {
         $("input[name=mode]").val("insert");
         $("input[name=submit]").val("Добавить");
 
-        $('#to_account').val(transaction.to_account_id);
-        $('#from_account').val(transaction.from_account_id);
+        $('#transaction_to_account').val(transaction.to_account_id);
+        $('#transaction_from_account').val(transaction.from_account_id);
 
-        $("#to_amount").val(transaction.to_account_amount);
-        $("#from_amount").val(transaction.from_account_amount);
+        $("#transaction_to_amount").val('');
+        $("#transaction_from_amount").val('');
 
         $("#transaction_tags").val("");
         $("#transaction_tags").tagit("removeAll");

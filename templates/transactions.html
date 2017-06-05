@@ -13,8 +13,8 @@
         <span id="button_new_transaction" class="button">Добавить транзакцию</span>
 
         <div id="transaction_new" style="display: none;">
-            <form id="transaction_form" action="api.php">
-                <div class="transaction_line">Счета: <select id="from_account" name="from_account"></select>&nbsp;<input id="from_amount" type="text" name="from_amount" class="amount" autocomplete="off" / >&nbsp;→&nbsp;<select id="to_account" name="to_account"></select>&nbsp;<input id="to_amount" type="text" name="to_amount" class="amount" autocomplete="off" /></div>
+            <form id="transaction_form">
+                <div class="transaction_line">Счета: <select id="transaction_from_account" name="from_account"></select>&nbsp;<input id="transaction_from_amount" type="text" name="from_amount" class="amount" autocomplete="off" / >&nbsp;→&nbsp;<select id="transaction_to_account" name="to_account"></select>&nbsp;<input id="transaction_to_amount" type="text" name="to_amount" class="amount" autocomplete="off" /></div>
                 <div class="transaction_line">Дата: <input id="transaction_date" type="text" name="date" /></div>
                 <div class="transaction_line">Теги: <input id="transaction_tags" type="text" name="tags" autocomplete="off" /></div>
                 <div class="transaction_line">Примечание: <textarea id="transaction_note" type="text" name="note" /></div>

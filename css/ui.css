@@ -155,28 +155,6 @@ html, body {
 #transaction_form textarea {
     width: 100%;
     border: 1px solid #dddddd;
-	outline: none;
-}
-
-#transaction_form input {
-    outline: none;
-    padding: 5px;
-    border: 1px solid #dddddd;
-}
-
-
-#transaction_form input.amount {
-    width: 120px;
-	text-align: right;
-}
-
-#transaction_form select {
-    border: 1px solid #dddddd;
-    border-radius: 0;
-    padding: 5px;
-    outline: none;
-    -webkit-appearance: none;
-    background: #efefef;
 }
 
 #reports {
@@ -243,9 +221,9 @@ html, body {
 }
 
 #report_tooltip_top .tooltip_line .amount {
-    font-weight: bold;
     text-align: right;
     margin: 0 0 0 auto;
+    font-weight: bold;
 }
 
 #report_tooltip_content {
@@ -263,11 +241,13 @@ html, body {
 #report_tooltip_content .tooltip_line .name {
     text-align: left;
     margin: 0 10px 0 0;
+	white-space: nowrap;
 }
 
 #report_tooltip_content .tooltip_line .amount {
     text-align: right;
     margin: 0 0 0 auto;
+	white-space: nowrap;
 }
 
 #accounts {
@@ -341,6 +321,11 @@ span.header {
 
 .fraction {
     color: #808080;
+}
+
+input.amount {
+    width: 120px;
+    text-align: right;
 }
 
 .tagit-label {
@@ -418,6 +403,31 @@ span.button.filter.active {
 
 .account_balance.minus {
     color: #f04137;
+}
+
+.account_progress_bar {
+    margin: 5px 0 0 0;
+    height: 4px;
+    width: 70%;
+    background: #bebebe;
+}
+
+.account_progress_fill {
+    width: 0;
+    height: 100%;
+    background: #c77405;
+}
+
+.account_progress_fill.red {
+    background: #b81900;
+}
+
+.account_progress_fill.yellow {
+    background: #fed22f;
+}
+
+.account_progress_fill.green {
+    background: #a5d24a;
 }
 
 .transaction_line {

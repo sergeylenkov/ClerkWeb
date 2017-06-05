@@ -36,6 +36,10 @@ Number.prototype.formatAmount = function(showFraction = true) {
 	return values[0];
 }
 
+String.prototype.clearAmount = function() {
+	return this.trim().replace(' ', '').replace(',', '.');
+}
+
 String.prototype.splice = function(start, delCount, newSubStr) {
 	return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
 };
