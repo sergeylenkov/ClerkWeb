@@ -138,7 +138,7 @@ function Reports() {
             }
 
             var html = "<div class='tooltip_line'>" + monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</div>";
-            html = html + "<div class='tooltip_line'>Расход: <span class='sum'>" + d.value.formatAmount() + "</span></div>";
+            html = html + "<div class='tooltip_line'>Расход: <span class='amount'>" + d.value.formatAmount() + "</span></div>";
 
             tooltip.find("#report_tooltip_top").html(html);
             tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
