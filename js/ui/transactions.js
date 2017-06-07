@@ -110,7 +110,7 @@ function Transactions() {
             self.save();
         });
 
-        $("#transaction_from_amount").change(function () {
+        $("#transaction_from_amount").focusout(function() {
             var newValue = $("#transaction_from_amount").val();
 
             newValue = newValue.clearAmount();
