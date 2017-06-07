@@ -64,27 +64,59 @@ function Dashboard() {
 
         var expensesBudgets = [];
         var expensesBudgetsIds = [];
+        var totalBudgets = [];
 
         data.budgets(function(budgets) {
             budgets.forEach(function(budget) {
                 if (budget.account_id != -1) {
                     expensesBudgets.push(budget);
                     expensesBudgetsIds.push(budget.account_id);
+                } else {
+                    totalBudgets.push(budget);
                 }
             });
 
             $.get("templates/dashboard-account.html", function(html) {
-                expensesBudgets.forEach(function(budget) {
+                totalBudgets.forEach(function(budget) {
                     var item = $(html);
-                    var amountInfoItem = item.find(".info");
                     var progressFill = item.find(".account_progress_fill");
                     progressFill.css("width", "0");
 
                     item.find(".account_name").text(budget.name);
+                    item.find(".info").html(" из " + budget.amount.formatAmount());
+
+                    $("#budget_list").append(item);
+
+                    if (budget.period == 1) {
+                        data.budget(Date.today().moveToFirstDayOfMonth().toString("yyyy-MM-dd"), Date.today().moveToLastDayOfMonth().toString("yyyy-MM-dd"), function(result) {
+                            var percent = (result.expense / budget.amount) * 100;
+                            progressFill.css("width", percent + "%");
+
+                            if (percent <= 20) {
+                                progressFill.addClass("green");
+                            } else if (percent > 20 && percent <= 70) {
+                                progressFill.addClass("yellow");
+                            } else {
+                                progressFill.addClass("red");
+                            }
+
+                            item.find(".account_balance").first().html(result.expense.formatAmount());                             
+                        });
+                    }
+                });
+
+                expensesBudgets.forEach(function(budget) {
+                    var item = $(html);
+                    var progressFill = item.find(".account_progress_fill");
+                    progressFill.css("width", "0");
+
+                    item.find(".account_name").text(budget.name);
+                    item.find(".info").html(" из " + budget.amount.formatAmount());
+
+                    $("#budget_list").append(item);
 
                     if (budget.period == 1) {
                         data.expensesByAccount(budget.account_id, Date.today().moveToFirstDayOfMonth().toString("yyyy-MM-dd"), Date.today().moveToLastDayOfMonth().toString("yyyy-MM-dd"), function(result) {
-                            console.log(result);
                             var percent = (result.sum / budget.amount) * 100;
                             progressFill.css("width", percent + "%");
 
@@ -96,10 +128,7 @@ function Dashboard() {
                                 progressFill.addClass("red");
                             }
 
-                            item.find(".account_balance").html(result.sum.formatAmount());
-                            amountInfoItem.html(" из " + budget.amount.formatAmount());
-
-                            $("#budget_list").append(item);
+                            item.find(".account_balance").first().html(result.sum.formatAmount());
                         });
                     }
                 });
