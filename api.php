@@ -34,7 +34,7 @@ if ($_GET["action"] == "budget") {
 if ($_GET["action"] == "expenses") {
     $expenses = array();
 
-    foreach ($db->query("SELECT a.id, a.name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC LIMIT 5") as $row) {
+    foreach ($db->query("SELECT a.id, a.name, SUM(t.from_account_amount) AS sum FROM accounts a, transactions t WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.deleted = 0 AND t.paid_at >= '" . $_GET["from"] . "' AND t.paid_at <= '" . $_GET["to"] . "' GROUP BY t.to_account_id ORDER BY sum DESC") as $row) {
         $expenses[] = array("id" => $row["id"], "name" => $row["name"], "sum" => round($row["sum"], 2));
     }
 

@@ -375,6 +375,8 @@ span.button.filter.active {
 
 .budget_item {
     margin: 0 0 10px 0;
+    display: flex;
+    width: 250px;
 }
 
 .account {
@@ -403,7 +405,7 @@ span.button.filter.active {
 }
 
 .account_balance.budget {
-    margin-left: 0;
+    margin: auto 0 auto auto;
 }
 
 .account_balance.minus {
@@ -413,7 +415,7 @@ span.button.filter.active {
 .account_progress_bar {
     margin: 5px 0 0 0;
     height: 4px;
-    width: 70%;
+    width: 300px;
     background: #bebebe;
 }
 
