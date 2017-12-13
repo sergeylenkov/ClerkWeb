@@ -90,6 +90,19 @@ function Dashboard() {
                     if (budget.period == 1) {
                         data.budget(Date.today().moveToFirstDayOfMonth().toString("yyyy-MM-dd"), Date.today().moveToLastDayOfMonth().toString("yyyy-MM-dd"), function(result) {
                             var percent = (result.expense / budget.amount) * 100;
+
+                            var balanceItem = item.find(".account_balance").first();
+                            balanceItem.html(result.expense.formatAmount());
+
+                            if (percent > 100) {
+                                percent = 100;
+
+                                var over = result.expense - budget.amount;
+
+                                balanceItem.addClass("minus");
+                                item.find(".info").html(" из " + budget.amount.formatAmount() + " + " + over.formatAmount());
+                            }
+
                             progressFill.css("width", percent + "%");
 
                             if (percent <= 20) {
@@ -100,7 +113,9 @@ function Dashboard() {
                                 progressFill.addClass("red");
                             }
 
-                            item.find(".account_balance").first().html(result.expense.formatAmount());                             
+                            
+
+
                         });
                     }
                 });
@@ -118,6 +133,19 @@ function Dashboard() {
                     if (budget.period == 1) {
                         data.expensesByAccount(budget.account_id, Date.today().moveToFirstDayOfMonth().toString("yyyy-MM-dd"), Date.today().moveToLastDayOfMonth().toString("yyyy-MM-dd"), function(result) {
                             var percent = (result.sum / budget.amount) * 100;
+
+                            var balanceItem = item.find(".account_balance").first();
+                            balanceItem.html(result.sum.formatAmount());
+
+                            if (percent > 100) {
+                                percent = 100;
+
+                                var over = result.sum - budget.amount;
+
+                                balanceItem.addClass("minus");
+                                item.find(".info").html(" из " + budget.amount.formatAmount() + " + " + over.formatAmount());
+                            }
+
                             progressFill.css("width", percent + "%");
 
                             if (percent <= 20) {
@@ -127,8 +155,6 @@ function Dashboard() {
                             } else {
                                 progressFill.addClass("red");
                             }
-
-                            item.find(".account_balance").first().html(result.sum.formatAmount());
                         });
                     }
                 });

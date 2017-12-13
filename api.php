@@ -88,6 +88,31 @@ if ($_GET["action"] == "expenses_by_account") {
     echo json_encode($expenses);
 }
 
+if ($_GET["action"] == "balance_by_month") {
+    $expenses = array();
+    $receipts = array();
+
+    if ($_GET["account"] == -1) {
+        foreach ($db->query("SELECT strftime('%Y %m', t.paid_at) AS date, COALESCE(sum(t.to_account_amount), 0) AS amount FROM transactions t WHERE t.deleted = 0 GROUP BY date ORDER BY t.paid_at") as $row) {
+               $receipts[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
+        }
+
+        foreach ($db->query("SELECT strftime('%Y %m', t.paid_at) AS date, COALESCE(sum(t.from_account_amount), 0) AS amount FROM transactions t WHERE t.deleted = 0 GROUP BY date ORDER BY t.paid_at") as $row) {
+               $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
+        }
+    } else {
+        foreach ($db->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.to_account_amount) AS amount FROM transactions t WHERE t.to_account_id='" . $_GET["account"] . "' AND t.deleted = 0 GROUP BY date ORDER BY t.paid_at") as $row) {
+               $receipts[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
+        }
+
+        foreach ($db->query("SELECT strftime('%Y %m', t.paid_at) AS date, TOTAL(t.from_account_amount) AS amount FROM transactions t WHERE t.from_account_id='" . $_GET["account"] . "' AND t.deleted = 0 GROUP BY date ORDER BY t.paid_at") as $row) {
+               $expenses[] = array("date" => $row["date"], "value" => round($row["amount"], 2));
+        }
+    }
+
+    echo json_encode(array("receipts" => $receipts, "expenses" => $expenses));
+}
+
 if ($_GET["action"] == "last_transactions") {
     $transactions = array();
 

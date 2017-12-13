@@ -1,8 +1,12 @@
 function Reports() {
     var self = this;
-    var type = 0;
+    this.type = 0;
     var lastDate = null;
-    var selectedAccount = -1;
+    this.selectedAccount = -1;
+    this.selectReportType = -1;
+    this.reportType = {receipt: 0, deposit: 1, expense: 2 };
+    this.accounts = [];
+    this.reportData = null;
 
     this.load = function(container) {
         $.get("templates/reports.html", function(html) {
@@ -17,8 +21,8 @@ function Reports() {
                 $("#reports_filter").find(".button").removeClass("active");
                 $(this).addClass("active");
 
-                self.type = data.accountType.expense;
-                self.selectReport(type, -1);
+                self.type = self.reportType.expense;
+                self.selectReport(self.type, null);
                 self.updateAccountsList();
             });
 
@@ -30,13 +34,27 @@ function Reports() {
                 $("#reports_filter").find(".button").removeClass("active");
                 $(this).addClass("active");
 
-                self.type = data.accountType.receipt;
-                self.selectReport(type, -1);
+                self.type = self.reportType.receipt;
+                self.selectReport(self.type, null);
                 self.updateAccountsList();
             });
 
+            $("#reports_filter_balance").click(function() {
+                if ($(this).hasClass("active")) {
+                    return;
+                }
+
+                $("#reports_filter").find(".button").removeClass("active");
+                $(this).addClass("active");
+
+                self.type = self.reportType.deposit;
+                self.selectReport(self.type, null);
+                self.updateAccountsList();
+            });            
+
             $("#reports_account").change(function () {
-                self.selectReport(self.type, $("#reports_account").val());
+                var account = self.accounts[$("#reports_account").val()];
+                self.selectReport(self.type, account);
             });
 
             $("#reports_filter_expenses").click();
@@ -44,14 +62,69 @@ function Reports() {
     }
 
     this.selectReport = function(type, account) {
-        selectedAccount = account;
+        self.selectedAccount = account;
+
         var fromDate = Date.today().addMonths(-6);
         var toDate = Date.today().moveToLastDayOfMonth();
 
-        data.expensesByMonth(account, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(data) {
-            //console.log(data);
-            self.fillChart(data);
-        });
+        var accountId = -1;
+
+        if (account) {
+            accountId = account.id;
+        }
+
+        if (type == self.reportType.deposit) {
+            data.balanceByMonth(accountId, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(data) {
+                console.log(data);
+                var receipts = data.receipts;
+                var expenses = data.expenses;
+                var dates = {};
+
+                for (var i = 0; i < receipts.length; i++) {
+                    dates[receipts[i].date] = { receipt: 0, expense: 0 };
+                    dates[receipts[i].date].receipt = receipts[i].value;
+                }
+
+                for (var i = 0; i < expenses.length; i++) {
+                    if (!dates[expenses[i].date]) {
+                        dates[expenses[i].date] = { receipt: 0, expense: 0 };
+                    }
+
+                    dates[expenses[i].date].expense = expenses[i].value;
+                }
+
+                self.reportData = dates;
+                var datesSorted = [];
+
+                Object.keys(dates).forEach(function(key) {
+                    datesSorted.push({ date: key, receipt: dates[key].receipt, expense: dates[key].expense });
+                });
+
+                datesSorted.sort(function(a, b) {
+                    return d3.ascending(a.date, b.date);
+                });
+
+                var reportData = [];
+                var balance = 0;
+
+                datesSorted.forEach(function(data) {
+                    if (account && account.credit_limit > 0) {
+                        balance = balance + data.receipt - data.expense;
+                        reportData.push({ date: data.date, value: account.credit_limit + balance });
+                    } else {
+                        balance = balance + data.receipt - data.expense;
+                        reportData.push({ date: data.date, value: balance });
+                    }
+                });
+
+                console.log(reportData);
+                self.fillChart(reportData);
+            });
+        } else {
+            data.expensesByMonth(accountId, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(data) {
+                self.fillChart(data);
+            });
+        }        
     }
 
     this.fillChart = function(chartData) {
@@ -136,23 +209,38 @@ function Reports() {
             if (fromDate.getFullYear() != Date.today().getFullYear()) {
                 year = " " + fromDate.getFullYear();
             }
+            console.log(self.reportData, d.date);
+            if (self.type == self.reportType.deposit) {
+                var html = "<div class='tooltip_line'>" + monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</div>";
+                html = html + "<div class='tooltip_line'>Баланс: <span class='amount'>" + d.value.formatAmount() + "</span></div>";
 
-            var html = "<div class='tooltip_line'>" + monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</div>";
-            html = html + "<div class='tooltip_line'>Расход: <span class='amount'>" + d.value.formatAmount() + "</span></div>";
+                tooltip.find("#report_tooltip_top").html(html);
 
-            tooltip.find("#report_tooltip_top").html(html);
-            tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
-            tooltip.show();
+                var data = self.reportData[d.date.toString("yyyy MM")];
 
-            data.expensesByDate(selectedAccount, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
-                html = "";
-
-                result.forEach(function(expense) {
-                    html = html + "<div class='tooltip_line'><span class='name'>" + expense.name + "</span> <span class='amount'>" + expense.sum.formatAmount() + "</span></div>";
-                });
+                html = "<div class='tooltip_line'><span class='name'>Приход</span> <span class='amount'>" + data.receipt.formatAmount() + "</span></div>";
+                html = html + "<div class='tooltip_line'><span class='name'>Расход</span> <span class='amount'>" + data.expense.formatAmount() + "</span></div>";
 
                 tooltip.find("#report_tooltip_content").html(html);
-            });
+                tooltip.show();
+            } else {
+                var html = "<div class='tooltip_line'>" + monthNames[fromDate.getMonth()].capitalizeFirstLetter() + year + "</div>";
+                html = html + "<div class='tooltip_line'>Расход: <span class='amount'>" + d.value.formatAmount() + "</span></div>";
+
+                tooltip.find("#report_tooltip_top").html(html);
+                tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
+                tooltip.show();
+
+                data.expensesByDate(self.selectedAccount.id, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
+                    html = "";
+
+                    result.forEach(function(expense) {
+                        html = html + "<div class='tooltip_line'><span class='name'>" + expense.name + "</span> <span class='amount'>" + expense.sum.formatAmount() + "</span></div>";
+                    });
+
+                    tooltip.find("#report_tooltip_content").html(html);
+                });
+            }
         }
 
         svg.append("rect")
@@ -166,18 +254,32 @@ function Reports() {
 
     this.updateAccountsList = function() {
         $('#reports_account').html("");
-        $('#reports_account').append($('<option>', {value: -1, text: "Все" }));
+        $('#reports_account').append($('<option>', { value: -1, text: "Все" }));
 
-        if (self.type == data.accountType.expense) {
+        self.accounts = [];
+
+        if (self.type == self.reportType.expense) {
             data.accounts(data.accountType.expense, true, function(accounts) {
+                self.accounts = accounts;
+
                 for (var i = 0; i < accounts.length; i++) {
-                    $('#reports_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                    $('#reports_account').append($('<option>', { value: i, text: accounts[i].name }));
                 }
             });
-        } else if (self.type == data.accountType.receipt) {
+        } else if (self.type == self.reportType.receipt) {
             data.accounts(data.accountType.receipt, true, function(accounts) {
+                self.accounts = accounts;
+
                 for (var i = 0; i < accounts.length; i++) {
-                    $('#reports_account').append($('<option>', {value: accounts[i].id, text: accounts[i].name}));
+                    $('#reports_account').append($('<option>', { value: i, text: accounts[i].name }));
+                }
+            });
+        } else if (self.type == self.reportType.deposit) {
+            data.accounts(data.accountType.deposit, true, function(accounts) {
+                self.accounts = accounts;
+
+                for (var i = 0; i < accounts.length; i++) {
+                    $('#reports_account').append($('<option>', { value: i, text: accounts[i].name }));
                 }
             });
         }

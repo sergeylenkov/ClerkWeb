@@ -62,6 +62,16 @@ function Data(url) {
         })
     }
 
+    this.balanceByMonth = function(account, fromDate, toDate, callback) {
+        $.ajax({
+            url: this._url,
+            dataType: "json",
+            data: { action: "balance_by_month" , account: account, from: fromDate, to: toDate },
+        }).done(function (response) {
+            callback(response);
+        });
+    }
+
 	this.lastTransactions = function(limit, callback) {
         $.ajax({
             url: this._url,

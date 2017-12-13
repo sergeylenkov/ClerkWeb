@@ -6,6 +6,7 @@ html, body {
     color: #333333;
     background: #ffffff;
     overflow: auto;
+    height: 100%;
 }
 
 #main {
@@ -435,6 +436,10 @@ span.button.filter.active {
 
 .account_progress_fill.green {
     background: #a5d24a;
+}
+
+.budget_over {
+    color: #f04137;
 }
 
 .transaction_line {
