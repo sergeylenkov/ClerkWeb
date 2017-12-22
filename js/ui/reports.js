@@ -216,10 +216,10 @@ function Reports() {
 
                 tooltip.find("#report_tooltip_top").html(html);
 
-                var data = self.reportData[d.date.toString("yyyy MM")];
+                var dateData = self.reportData[d.date.toString("yyyy MM")];
 
-                html = "<div class='tooltip_line'><span class='name'>Приход</span> <span class='amount'>" + data.receipt.formatAmount() + "</span></div>";
-                html = html + "<div class='tooltip_line'><span class='name'>Расход</span> <span class='amount'>" + data.expense.formatAmount() + "</span></div>";
+                html = "<div class='tooltip_line'><span class='name'>Приход</span> <span class='amount'>" + dateData.receipt.formatAmount() + "</span></div>";
+                html = html + "<div class='tooltip_line'><span class='name'>Расход</span> <span class='amount'>" + dateData.expense.formatAmount() + "</span></div>";
 
                 tooltip.find("#report_tooltip_content").html(html);
                 tooltip.show();
@@ -231,7 +231,13 @@ function Reports() {
                 tooltip.find("#report_tooltip_content").html("Загрузка транзакций...");
                 tooltip.show();
 
-                data.expensesByDate(self.selectedAccount.id, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
+                var accountId = -1;
+
+                if (self.selectedAccount) {
+                    accountId = self.selectedAccount.id;
+                }
+
+                data.expensesByDate(accountId, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(result) {
                     html = "";
 
                     result.forEach(function(expense) {
