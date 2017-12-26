@@ -1,12 +1,15 @@
 function Transactions() {
     var self = this;
-    var view;
-    var fromDate = Date.today();
-    var toDate = Date.today();
-    var accountId;
-    var settings = window['localStorage'];
-    var datePicker;
-    var transactions = [];
+
+    this.view;
+    this.fromDate = Date.today();
+    this.toDate = Date.today();
+    this.accountId;
+    this.settings = window['localStorage'];
+    this.datePicker;
+    this.transactions = [];
+    this.periodType = { custom: 0, week: 1, month: 2, prevMonth: 3 };
+    this.selectedPeriod;
 
     this.load = function(container) {
         $.get("templates/transactions.html", function(html) {
@@ -17,63 +20,69 @@ function Transactions() {
             $("#filter_period").hide();
 
             $("#transactions_filter_period").click(function() {
-                self.selectPeriod($(this), 0);
+                self.selectPeriod($(this), self.periodType.custom);
             });
 
             $("#transactions_filter_week").click(function() {
-                self.selectPeriod($(this), 1);
+                self.selectPeriod($(this), self.periodType.week);
             });
 
             $("#transactions_filter_month").click(function() {
-                self.selectPeriod($(this), 2);
+                self.selectPeriod($(this), self.periodType.month);
+            });
+
+            $("#transactions_filter_prev_month").click(function() {
+                self.selectPeriod($(this), self.periodType.prevMonth);
             });
 
             var defaultDate = Date.today();
 
-            if (settings["from_date_filter"]) {
-                defaultDate = Date.parse(settings["from_date_filter"]);
+            if (self.settings["from_date_filter"]) {
+                defaultDate = Date.parse(self.settings["from_date_filter"]);
             }
 
             $("#from_date").pikaday({
                 firstDay: 1,
                 defaultDate: defaultDate,
                 onSelect: function () {
-                     fromDate = new Date(this.getDate());
-                     $("#from_date").val(fromDate.toString("yyyy-MM-dd"));
-                     settings["from_date_filter"] = fromDate.toString("yyyy-MM-dd");
+                    self.fromDate = new Date(this.getDate());
 
-                     self.updateList();
+                    $("#from_date").val(self.fromDate.toString("yyyy-MM-dd"));
+                    self.settings["from_date_filter"] = self.fromDate.toString("yyyy-MM-dd");
+
+                    self.updateList();
                 }
             });
 
             defaultDate = Date.today();
 
-            if (settings['to_date_filter']) {
-                defaultDate = Date.parse(settings['to_date_filter']);
+            if (self.settings['to_date_filter']) {
+                defaultDate = Date.parse(self.settings['to_date_filter']);
             }
 
             $("#to_date").pikaday({
                 firstDay: 1,
                 defaultDate: defaultDate,
                 onSelect: function () {
-                    toDate = new Date(this.getDate());
-                    $("#to_date").val(toDate.toString("yyyy-MM-dd"));
-                    settings['to_date_filter'] = toDate.toString("yyyy-MM-dd");
+                    self.toDate = new Date(this.getDate());
+
+                    $("#to_date").val(self.toDate.toString("yyyy-MM-dd"));
+                    self.settings['to_date_filter'] = self.toDate.toString("yyyy-MM-dd");
 
                     self.updateList();
                 }
             });
 
-            $("#from_date").val(fromDate.toString("yyyy-MM-dd"));
+            $("#from_date").val(self.fromDate.toString("yyyy-MM-dd"));
 
-            if (settings['from_date_filter']) {
-                $("#from_date").val(settings['from_date_filter']);
+            if (self.settings['from_date_filter']) {
+                $("#from_date").val(self.settings['from_date_filter']);
             }
 
-            $("#to_date").val(toDate.toString("yyyy-MM-dd"));
+            $("#to_date").val(self.toDate.toString("yyyy-MM-dd"));
 
-            if (settings['to_date_filter']) {
-                $("#to_date").val(settings['to_date_filter']);
+            if (self.settings['to_date_filter']) {
+                $("#to_date").val(self.settings['to_date_filter']);
             }
 
             $("#transactions_filter_text").keyup(function() {
@@ -81,7 +90,19 @@ function Transactions() {
                 self.updateAmount();
             });
 
-            $("#transactions_filter_week").click();
+            if (self.settings["selectedPeriod"]) {
+                if (self.settings["selectedPeriod"] == self.periodType.week) {
+                    $("#transactions_filter_week").click();    
+                } else if (self.settings["selectedPeriod"] == self.periodType.month) {
+                    $("#transactions_filter_month").click();
+                } else if (self.settings["selectedPeriod"] == self.periodType.prevMonth) {
+                    $("#transactions_filter_prev_month").click();
+                } else {
+                    $("#transactions_filter_period").click();    
+                }
+            } else {
+                $("#transactions_filter_week").click();
+            }
 
             self.initForm();
         });
@@ -121,8 +142,8 @@ function Transactions() {
             }
         });
 
-        datePicker = new Pikaday({
-            field: $("#transaction_form_date"),
+        self.datePicker = new Pikaday({
+            field: $("#transaction_form_date")[0],
             firstDay: 1,
             defaultDate: new Date(),
             format: 'yyyy-MM-dd',
@@ -132,7 +153,7 @@ function Transactions() {
             }
         });
 
-        datePicker.setDate(Date.today().toString("yyyy-MM-dd"));        
+        self.datePicker.setDate(Date.today().toString("yyyy-MM-dd"));        
 
         data.allTags(function(tags) {
             var names = [];
@@ -183,7 +204,7 @@ function Transactions() {
     }
 
     this.update = function(callback) {
-        data.transactions(accountId, fromDate.toString("yyyy-MM-dd"), toDate.toString("yyyy-MM-dd"), function(transactions) {
+        data.transactions(self.accountId, self.fromDate.toString("yyyy-MM-dd"), self.toDate.toString("yyyy-MM-dd"), function(transactions) {
             self.transactions = transactions;
 
             self.filter();
@@ -300,12 +321,19 @@ function Transactions() {
                 splitButton.click(function() {
                     self.split(self.transactions[$(this).attr("index")]);
                 });
-
+                
                 splitButton.hide();
 
                 if (transaction.from_type_id == data.accountType.receipt || transaction.to_type_id == data.accountType.expense) {
                     splitButton.show();
                 }
+
+                var copyButton = item.find(".copy");
+
+                copyButton.attr("index", i);
+                copyButton.click(function() {
+                    self.copy(self.transactions[$(this).attr("index")]);
+                });                
 
                 $("#transactions_list").append(item);
             }
@@ -331,12 +359,45 @@ function Transactions() {
     }
 
     this.save = function() {
-        var callback = function() {
+        var callback = function(transaction) {
             $("#transaction_new").transition({ "opacity": 0 }, 300, function() {
                 $(this).hide();
 
                 $("#button_new_transaction").transition({ "opacity": 1 }, 300, function() {
-                    self.updateList();
+                    var date = Date.parse(transaction.date);
+                    
+                    if (date.between(self.fromDate, self.toDate)) {
+                        self.updateList();
+                    } else {
+                        var today = Date.today();
+
+                        var fromDate = today.moveToFirstDayOfMonth();
+                        var toDate = today.moveToLastDayOfMonth();
+
+                        if (date.between(fromDate, toDate)) {
+                            self.selectPeriod($("#transactions_filter_month"), self.periodType.month);
+                        } else {
+                            today = Date.today().addMonths(-1);
+
+                            fromDate = today.moveToFirstDayOfMonth();
+                            toDate = today.moveToLastDayOfMonth();
+
+                            if (date.between(fromDate, toDate)) {
+                                self.selectPeriod($("#transactions_filter_prev_month"), self.periodType.prevMonth);
+                            } else {
+                                self.fromDate = new Date(date).add().days(-7);
+                                self.toDate = new Date(date);
+
+                                $("#from_date").val(self.fromDate.toString("yyyy-MM-dd"));
+                                self.settings["from_date_filter"] = self.fromDate.toString("yyyy-MM-dd");
+
+                                $("#to_date").val(self.toDate.toString("yyyy-MM-dd"));
+                                self.settings['to_date_filter'] = self.toDate.toString("yyyy-MM-dd");
+
+                                self.selectPeriod($("#transactions_filter_period"), self.periodType.custom);
+                            }
+                        }
+                    }                    
                 });
             });
         }
@@ -372,10 +433,10 @@ function Transactions() {
                     transaction.to_account_amount = transaction.to_account_amount - toAmount;
 
                     data.splitTransaction(transaction, function(response) {
-                        callback();
+                        callback(transaction);
                     });
                 } else {
-                    callback();
+                    callback(transaction);
                 }
             }
         });
@@ -462,11 +523,42 @@ function Transactions() {
         });
     }
 
+    this.copy = function(transaction) {
+        var date = new Date();
+
+        $("input[name=id]").val("-1");
+        $("input[name=from_id]").val("");
+        $("input[name=mode]").val("insert");
+
+        $("#transaction_to_account").val(transaction.to_account_id);
+        $("#transaction_from_account").val(transaction.from_account_id);
+
+        $("#transaction_to_amount").val(transaction.to_account_amount);
+        $("#transaction_from_amount").val(transaction.from_account_amount);
+
+        $("#transaction_form_tags").val("");
+        $("#transaction_form_tags").tagit("removeAll");
+
+        for (var i = 0; i < transaction.tags.length; i++) {
+            $("#transaction_form_tags").tagit("createTag", transaction.tags[i].name);
+        }
+
+        $("#transaction_form_date").val(date.toString("yyyy-MM-dd"));
+        $("#transaction_note").val(transaction.note);
+
+        $("#transaction_form_button_ok").find("span").text("Сохранить");
+
+        $("#button_new_transaction").transition({ "opacity": 0 }, 300, function() {
+            $("#transaction_new").show();
+            $("#transaction_new").transition({ "opacity": 1 }, 300);
+        });
+    }
+
     this.updateList = function () {
         $("#transactions_list").transition({ "opacity": 0 }, 300, function() {
-            self.update();
-
-            $("#transactions_list").transition({ "opacity": 1 }, 300);
+            self.update(function() {
+                $("#transactions_list").transition({ "opacity": 1 }, 300);
+            });
         });
     }
 
@@ -475,30 +567,40 @@ function Transactions() {
             return;
         }
 
+        self.selectedPeriod = type;
+        self.settings["selectedPeriod"] = self.selectedPeriod;
+
         $("#transactions_filter").find(".button").removeClass("active");
         sender.addClass("active");
 
-        if (type == 0) {
+        if (type == self.periodType.custom) {
             $("#filter_period").show();
             $("#filter_period").transition({"opacity": 1}, 300);
 
-            if (settings['from_date_filter']) {
-                fromDate = Date.parse(settings['from_date_filter']);
+            if (self.settings['from_date_filter']) {
+                self.fromDate = Date.parse(self.settings['from_date_filter']);
             }
 
-            if (settings['to_date_filter']) {
-                toDate = Date.parse(settings['to_date_filter']);
+            if (self.settings['to_date_filter']) {
+                self.toDate = Date.parse(self.settings['to_date_filter']);
             }
-        } else if (type == 1) {
+        } else if (type == self.periodType.week) {
             $("#filter_period").transition({"opacity": 0}, 300);
 
-            fromDate = Date.today().previous().monday();
-            toDate = new Date(fromDate).moveToDayOfWeek(7);
-        } else if (type == 2) {
+            self.fromDate = Date.today().previous().monday();
+            self.toDate = new Date(self.fromDate).moveToDayOfWeek(7);
+        } else if (type == self.periodType.month) {
             $("#filter_period").transition({"opacity": 0}, 300);
 
-            fromDate = Date.today().moveToFirstDayOfMonth();
-            toDate = Date.today().moveToLastDayOfMonth();
+            self.fromDate = Date.today().moveToFirstDayOfMonth();
+            self.toDate = Date.today().moveToLastDayOfMonth();
+        } else if (type == self.periodType.prevMonth) {
+            $("#filter_period").transition({"opacity": 0}, 300);
+
+            var date = Date.today().addMonths(-1);
+
+            self.fromDate = date.moveToFirstDayOfMonth();
+            self.toDate = date.moveToLastDayOfMonth();
         }
 
         self.updateList();

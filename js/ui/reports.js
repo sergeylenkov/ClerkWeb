@@ -4,7 +4,7 @@ function Reports() {
     var lastDate = null;
     this.selectedAccount = -1;
     this.selectReportType = -1;
-    this.reportType = {receipt: 0, deposit: 1, expense: 2 };
+    this.reportType = { receipt: 0, deposit: 1, expense: 2 };
     this.accounts = [];
     this.reportData = null;
 
