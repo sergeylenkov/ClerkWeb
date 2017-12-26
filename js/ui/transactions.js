@@ -492,8 +492,8 @@ function Transactions() {
         } else if (type == 1) {
             $("#filter_period").transition({"opacity": 0}, 300);
 
-            fromDate = Date.today().setWeek(Date.today().getWeek());
-            toDate = Date.today().moveToDayOfWeek(0, 1);
+            fromDate = Date.today().previous().monday();
+            toDate = new Date(fromDate).moveToDayOfWeek(7);
         } else if (type == 2) {
             $("#filter_period").transition({"opacity": 0}, 300);
 
