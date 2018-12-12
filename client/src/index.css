@@ -12,7 +12,7 @@ body {
   left: 0;
   bottom: 0;
   width: 80px;
-  background-color: #262626;  
+  background-color: #303741;  
 }
 
 .menu-button {
@@ -32,18 +32,43 @@ body {
 }
 
 .menu-button-active {
-  background-color: #303030;
+  background-color: #272c32;
 }
 
 .menu-button-icon {
   margin: auto auto 10px auto;
   width: 24px;
   height: 24px;
-  fill: #eaeaea;
+  fill: #b0b7c1;
 }
 
 .menu-button-label {
   margin: 0 auto auto auto;
   font-size: 12px;
-  color: #eaeaea;
+  color: #b0b7c1;
+}
+
+.menu-button-active .menu-button-icon {
+  fill: #f4f7fc;
+}
+
+.menu-button-active .menu-button-label {
+  color: #f4f7fc;
+}
+
+.pages {
+  position: absolute;
+  top: 0;
+  left: 80px;
+  right: 0;
+  bottom: 0;
+  background-color: #f2f3f7;
+}
+
+.dashboard {  
+  padding: 20px;
+}
+
+.dashboard-budget-panel {
+  
 }
