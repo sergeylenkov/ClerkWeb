@@ -20,6 +20,11 @@ export class DashboardBudget extends React.Component {
                 isLoaded: true,
                 items: data.items
             });
+        }).catch((error) => {
+            console.log(error);
+            this.setState({
+                error: error
+            });
         });
     }
 
@@ -31,12 +36,17 @@ export class DashboardBudget extends React.Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
-            return (
-                <div className="dashboard-budget-panel">                
-                {items.map((item, i) => {
-                    return (<div>{item.amount} {item.currency}</div>); 
-                })}
-            </div>
+            return (                
+                <div className="dashboard-budget-panel">
+                    <div>Own funds</div>
+                    {items.map((item, i) => {
+                        const amount = (item.receipt - item.expense).toFixed(2);
+
+                        return (<div key={item.id}>{item.name} {amount} {item.currency}</div>); 
+                    })}
+
+                    <div>Credit funds</div>
+                </div>
             );
         }
     }

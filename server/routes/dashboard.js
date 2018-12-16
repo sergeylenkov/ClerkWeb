@@ -1,4 +1,6 @@
 const express = require('express');
+const db = require('../db');
+const data = require('../models/dashboard');
 
 let router = express.Router();
 
@@ -7,12 +9,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/balance', (req, res) => {
-    const items = [
-        { amount: 1000, currency: '$' },
-        { amount: 2000, currency: 'р.' },
-    ];
-
-    return res.json({ items: items });
+    data.getBalance().then((items) => {
+        return res.json({ items: items });
+    }).catch((error) => {
+        res.status(500).send({ error: error });
+    });
 });
 
 module.exports = router;
