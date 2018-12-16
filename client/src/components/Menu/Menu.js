@@ -23,6 +23,7 @@ export class Menu extends React.Component {
 
     handleClick(i) {        
         this.setState({activeItem: i});
+        this.props.onChange(i);
     }
 
     render() {
