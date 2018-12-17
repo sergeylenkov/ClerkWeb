@@ -7,7 +7,10 @@ export class AccountsList extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            expenses: [],
+            deposits: [],
+            receipts: [],
+            credits: []
         };
     }
 
@@ -16,9 +19,17 @@ export class AccountsList extends React.Component {
             return response.json();
         }).then((data) => {
             console.log(data);
+            const expenses = data.items.filter(el => el.type === 2);
+            const receipts = data.items.filter(el => el.type === 0);
+            const deposits = data.items.filter(el => el.type === 1);
+            const credits = data.items.filter(el => el.type === 4);
+
             this.setState({
                 isLoaded: true,
-                items: data.items
+                expenses: expenses,
+                receipts: receipts,
+                deposits: deposits,
+                credits: credits
             });
         }).catch((error) => {
             console.log(error);
@@ -29,7 +40,7 @@ export class AccountsList extends React.Component {
     }
 
     render() {
-        const { error, isLoaded, items } = this.state;
+        const { error, isLoaded, receipts, expenses, deposits, credits } = this.state;
 
         if (error) {
             return <div>Error: {error.message}</div>;
@@ -38,8 +49,28 @@ export class AccountsList extends React.Component {
         } else {
             return (                
                 <div className="account-list">
-                    {items.map((item, i) => {
-                        return (<div key={item.id}>{item.name}</div>); 
+                    <div className="account-list-header">Receipts</div>
+
+                    {receipts.map((item, i) => {
+                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
+                    })}
+
+                    <div className="account-list-header">Deposits</div>
+                    
+                    {deposits.map((item, i) => {
+                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
+                    })}
+
+                    <div className="account-list-header">Expenses</div>
+                    
+                    {expenses.map((item, i) => {
+                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
+                    })}
+
+                    <div className="account-list-header">Credits</div>
+                    
+                    {credits.map((item, i) => {
+                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
                     })}
                 </div>
             );

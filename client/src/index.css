@@ -69,8 +69,12 @@ body {
   padding: 20px;
 }
 
-.dashboard-budget-panel {
-  
+.dashboard-balance-panel {  
+}
+
+.dashboard-balance-header {
+  font-weight: bold;
+  margin: 10px 0;
 }
 
 .accounts {
@@ -79,4 +83,14 @@ body {
 
 .accounts-list-panel {
   width: 200px;
+}
+
+.account-list-header {
+  padding: 10px 5px;
+  background-color: #868894;
+  color: #ffffff;
+}
+
+.account-list-item {
+  padding: 5px 5px 5px 15px;
 }

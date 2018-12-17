@@ -1,8 +1,8 @@
 import React from 'react';
-import { DashboardBudget } from './dashboard/Budget.js';
+import { DashboardBalance } from './dashboard/Balance';
 
 export class Dashboard extends React.Component {
     render() {
-        return <div className="dashboard"><DashboardBudget/></div>
+        return <div className="dashboard"><DashboardBalance/></div>
     }
 }
