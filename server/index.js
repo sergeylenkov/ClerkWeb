@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const dashboard = require('./routes/dashboard');
 const accounts = require('./routes/accounts');
+const transactions = require('./routes/transactions');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(function(req, res, next) {
   
 app.use('/dashboard', dashboard);
 app.use('/accounts', accounts);
+app.use('/transactions', transactions);
 
 app.get('*', (req, res) =>{
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

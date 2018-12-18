@@ -1,4 +1,6 @@
 import React from 'react';
+import { AccountButton } from './Button.js';
+import { AccountsIcons } from "./Icons.js";
 
 export class AccountsList extends React.Component {
     constructor(props) {
@@ -10,7 +12,8 @@ export class AccountsList extends React.Component {
             expenses: [],
             deposits: [],
             receipts: [],
-            credits: []
+            credits: [],
+            activeItem: 0
         };
     }
 
@@ -29,7 +32,7 @@ export class AccountsList extends React.Component {
                 expenses: expenses,
                 receipts: receipts,
                 deposits: deposits,
-                credits: credits
+                credits: credits                
             });
         }).catch((error) => {
             console.log(error);
@@ -37,6 +40,18 @@ export class AccountsList extends React.Component {
                 error: error
             });
         });
+    }
+
+    handleClick(id) {
+
+    }
+
+    getIcon(id) {
+        if (AccountsIcons[id]) {
+            return AccountsIcons[id];
+        }
+
+        return AccountsIcons.default;
     }
 
     render() {
@@ -48,29 +63,41 @@ export class AccountsList extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (                
-                <div className="account-list">
-                    <div className="account-list-header">Receipts</div>
+                <div className="accounts-list">                    
+                    <div className="accounts-list-header">Receipts</div>
 
                     {receipts.map((item, i) => {
-                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
-                    })}
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
 
-                    <div className="account-list-header">Deposits</div>
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
+                    })}                    
+
+                    <div className="accounts-list-header">Deposits</div>
                     
                     {deposits.map((item, i) => {
-                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}
 
-                    <div className="account-list-header">Expenses</div>
+                    <div className="accounts-list-header">Expenses</div>
                     
                     {expenses.map((item, i) => {
-                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}
 
-                    <div className="account-list-header">Credits</div>
+                    <div className="accounts-list-header">Credits</div>
                     
                     {credits.map((item, i) => {
-                        return (<div className="account-list-item" key={item.id}>{item.name}</div>); 
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+                        
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}
                 </div>
             );
