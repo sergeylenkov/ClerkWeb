@@ -1,5 +1,11 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const db = new sqlite3.Database('C:/Users/Sergey/AppData/Roaming/Clerk/Database.sqlite');
+let name = 'C:/Users/Sergey/AppData/Roaming/Clerk/Database.sqlite';
+
+if (process.env.API_TEST) {
+    name = 'test/test.sqlite';
+}
+
+const db = new sqlite3.Database(name);
 
 module.exports = db;
