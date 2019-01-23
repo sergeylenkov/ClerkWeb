@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class DashboardBudget extends React.Component {
+export class TransactionsList extends React.Component {
     constructor(props) {
         super(props);
 
@@ -12,7 +12,7 @@ export class DashboardBudget extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/dashboard/balance").then((response) => {
+        fetch("http://localhost:5000/transactions").then((response) => {
             return response.json();
         }).then((data) => {
             console.log(data);
@@ -37,15 +37,10 @@ export class DashboardBudget extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (                
-                <div className="dashboard-budget-panel">
-                    <div>Own funds</div>
+                <div className="transactions-list">                    
                     {items.map((item, i) => {
-                        const amount = (item.receipt - item.expense).toFixed(2);
-
-                        return (<div key={item.id}>{item.name} {amount} {item.currency}</div>); 
+                        return (<div className="transactions-list-item" key={item.id}>{item.fromName} {item.toName}</div>); 
                     })}
-
-                    <div>Credit funds</div>
                 </div>
             );
         }

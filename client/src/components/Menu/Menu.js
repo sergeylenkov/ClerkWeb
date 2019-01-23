@@ -1,6 +1,6 @@
 import React from 'react';
-import { MenuButton } from './MenuButton.js';
-import { MenuIcons } from './MenuIcons.js';
+import { MenuButton } from './Button.js';
+import { MenuIcons } from './Icons.js';
 
 export class Menu extends React.Component {
     constructor(props) {

@@ -1,4 +1,6 @@
 import React from 'react';
+import { AccountButton } from './Button.js';
+import { AccountsIcons } from "./Icons.js";
 
 export class AccountsList extends React.Component {
     constructor(props) {
@@ -7,7 +9,11 @@ export class AccountsList extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            expenses: [],
+            deposits: [],
+            receipts: [],
+            credits: [],
+            activeItem: 0
         };
     }
 
@@ -16,9 +22,17 @@ export class AccountsList extends React.Component {
             return response.json();
         }).then((data) => {
             console.log(data);
+            const expenses = data.items.filter(el => el.type === 2);
+            const receipts = data.items.filter(el => el.type === 0);
+            const deposits = data.items.filter(el => el.type === 1);
+            const credits = data.items.filter(el => el.type === 4);
+
             this.setState({
                 isLoaded: true,
-                items: data.items
+                expenses: expenses,
+                receipts: receipts,
+                deposits: deposits,
+                credits: credits                
             });
         }).catch((error) => {
             console.log(error);
@@ -28,8 +42,20 @@ export class AccountsList extends React.Component {
         });
     }
 
+    handleClick(id) {
+
+    }
+
+    getIcon(id) {
+        if (AccountsIcons[id]) {
+            return AccountsIcons[id];
+        }
+
+        return AccountsIcons.default;
+    }
+
     render() {
-        const { error, isLoaded, items } = this.state;
+        const { error, isLoaded, receipts, expenses, deposits, credits } = this.state;
 
         if (error) {
             return <div>Error: {error.message}</div>;
@@ -37,9 +63,41 @@ export class AccountsList extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (                
-                <div className="account-list">
-                    {items.map((item, i) => {
-                        return (<div key={item.id}>{item.name}</div>); 
+                <div className="accounts-list">                    
+                    <div className="accounts-list-header">Receipts</div>
+
+                    {receipts.map((item, i) => {
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
+                    })}                    
+
+                    <div className="accounts-list-header">Deposits</div>
+                    
+                    {deposits.map((item, i) => {
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
+                    })}
+
+                    <div className="accounts-list-header">Expenses</div>
+                    
+                    {expenses.map((item, i) => {
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
+                    })}
+
+                    <div className="accounts-list-header">Credits</div>
+                    
+                    {credits.map((item, i) => {
+                        const active = (item.id === this.state.activeItem);
+                        const icon = this.getIcon(item.icon);
+                        
+                        return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}
                 </div>
             );
