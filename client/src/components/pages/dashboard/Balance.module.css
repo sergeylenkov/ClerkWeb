@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #999999;
+}
+
+.item {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}

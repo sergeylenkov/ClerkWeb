@@ -2,6 +2,8 @@ import React from 'react';
 import { AccountButton } from './Button.js';
 import { AccountsIcons } from "./Icons.js";
 
+import styles from './List.module.css';
+
 export class AccountsList extends React.Component {
     constructor(props) {
         super(props);
@@ -63,8 +65,8 @@ export class AccountsList extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (                
-                <div className="accounts-list">                    
-                    <div className="accounts-list-header">Receipts</div>
+                <div className={styles.container}>                    
+                    <div className={styles.header}>Приход</div>
 
                     {receipts.map((item, i) => {
                         const active = (item.id === this.state.activeItem);
@@ -73,7 +75,7 @@ export class AccountsList extends React.Component {
                         return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}                    
 
-                    <div className="accounts-list-header">Deposits</div>
+                    <div className={styles.header}>Депозиты</div>
                     
                     {deposits.map((item, i) => {
                         const active = (item.id === this.state.activeItem);
@@ -82,7 +84,7 @@ export class AccountsList extends React.Component {
                         return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}
 
-                    <div className="accounts-list-header">Expenses</div>
+                    <div className={styles.header}>Расходы</div>
                     
                     {expenses.map((item, i) => {
                         const active = (item.id === this.state.activeItem);
@@ -91,7 +93,7 @@ export class AccountsList extends React.Component {
                         return (<AccountButton key={item.id} icon={icon} title={item.name} isActive={active} onClick={() => this.handleClick(item.id)} />)
                     })}
 
-                    <div className="accounts-list-header">Credits</div>
+                    <div className={styles.header}>Кредиты</div>
                     
                     {credits.map((item, i) => {
                         const active = (item.id === this.state.activeItem);

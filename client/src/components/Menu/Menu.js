@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuButton } from './Button.js';
-import { MenuIcons } from './Icons.js';
+
+import styles from './Menu.module.css';
 
 export class Menu extends React.Component {
     constructor(props) {
@@ -8,32 +9,36 @@ export class Menu extends React.Component {
 
         this.state = {
             items: [
-                { icon: MenuIcons.dashboard, title: 'Dashboard', selected: false },
-                { icon: MenuIcons.accounts, title: 'Accounts', selected: false },
-                { icon: MenuIcons.budgets, title: 'Budgets', selected: false },
-                { icon: MenuIcons.goals, title: 'Goals', selected: false },
-                { icon: MenuIcons.schedulers, title: 'Schedulers', selected: false },
-                { icon: MenuIcons.reports, title: 'Reports', selected: false },
-                { icon: MenuIcons.tags, title: 'Tags', selected: false },
-                { icon: MenuIcons.trash, title: 'Trash', selected: false }
+                { title: 'Обзор', selected: false },
+                { title: 'Счета', selected: false },
+                { title: 'Бюджет и цели', selected: false },                
+                { title: 'Планируемые транзакции', selected: false },
+                { title: 'Отчеты', selected: false },
+                { title: 'Теги', selected: false }                
             ],
-            activeItem: 0
+            selectedItem: 0
         };
     }
 
     handleClick(i) {        
-        this.setState({activeItem: i});
+        this.setState({
+            selectedItem: i
+        });
+
         this.props.onChange(i);
     }
 
     render() {
         return (
-            <div className="menu">                
-                {this.state.items.map((item, i) => {
-                    const active = (i === this.state.activeItem);
-
-                    return (<MenuButton key={i} icon={item.icon} title={item.title} isActive={active} onClick={() => this.handleClick(i)} />) 
-                })}
+            <div className={styles.container}>
+                <div className={styles.buttons}>
+                    {
+                        this.state.items.map((item, i) => {
+                            const selected = (i === this.state.selectedItem);
+                            return (<MenuButton key={i} title={item.title} isSelected={selected} onClick={() => this.handleClick(i)} />) 
+                        })
+                    }
+                </div>
             </div>
         );        
     }

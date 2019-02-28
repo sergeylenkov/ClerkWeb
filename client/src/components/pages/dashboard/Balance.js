@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from './Balance.module.css';
+
 export class DashboardBalance extends React.Component {
     constructor(props) {
         super(props);
@@ -59,18 +61,22 @@ export class DashboardBalance extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (                
-                <div className="dashboard-balance-panel">
-                    <div className="dashboard-balance-header">Own funds</div>
+                <div className={styles.container}>
+                    <div className={styles.header}>Собственный средства</div>
 
-                    {own.map((item, i) => {
-                        return (<div key={item.id}>{item.amount.toFixed(2)} {item.currency}₽</div>); 
-                    })}
+                    {
+                        own.map((item, i) => {
+                            return (<div key={item.id} className={styles.item}>{item.amount.toFixed(2)} {item.currency}</div>); 
+                        })
+                    }
 
-                    <div className="dashboard-balance-header">Credit funds</div>
+                    <div className={styles.header}>Кредитные средства</div>
 
-                    {credits.map((item, i) => {
-                        return (<div key={item.id}>{(item.credit + item.amount).toFixed(2)} {item.currency}</div>); 
-                    })}
+                    {
+                        credits.map((item, i) => {
+                            return (<div key={item.id} className={styles.item}>{(item.credit + item.amount).toFixed(2)} {item.currency}</div>); 
+                        })
+                    }
                 </div>
             );
         }

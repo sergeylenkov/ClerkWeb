@@ -1,18 +1,18 @@
 import React from 'react';
-import { Icon } from '../../Icon.js';
+
+import styles from './Button.module.css';
 
 export class AccountButton extends React.Component {
     render() {
-        let className = 'account-button';
+        let className = styles.container;
 
-        if (this.props.isActive) {
-            className += ' account-button-active';
+        if (this.props.isSelected) {
+            className += ` ${styles.selected}`;
         }
 
         return (
-            <button className={className} onClick={() => this.props.onClick()}>
-                <div className="account-button-icon"><Icon svg={this.props.icon}/></div>
-                <div className="account-button-label">{this.props.title}</div>
+            <button className={className} onClick={() => this.props.onClick()}>                
+                <div className={styles.label}>{this.props.title}</div>
             </button>
         );        
     }

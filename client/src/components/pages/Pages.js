@@ -2,6 +2,8 @@ import React from 'react';
 import { Dashboard } from './Dashboard.js';
 import { Accounts } from './Accounts.js';
 
+import styles from './Pages.module.css';
+
 export class Pages extends React.Component {
     constructor(props) {
         super(props);
@@ -12,12 +14,27 @@ export class Pages extends React.Component {
     }
 
     render() {
-        if (this.props.activePage === 0) {
-            return <div className="pages"><Dashboard/></div>
-        } else if (this.props.activePage === 1) {
-            return <div className="pages"><Accounts/></div>
+        let page;
+
+        switch (this.props.activePage) {
+            case 0:
+                page = <Dashboard/>
+                break;
+
+            case 1:
+                page = <Accounts/>
+                break;
+
+            default:
+                break;
         }
 
-        return <div className="pages"></div>
+        return (
+            <div className={styles.container}>
+                <div className={styles.pages}>
+                    {page}
+                </div>
+            </div>
+        );
     }
 }
