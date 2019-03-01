@@ -5,8 +5,8 @@
 }
 
 .header {
-    margin: 10px 0;
-    font-size: 14px;
-    font-weight: 700;
-    color: #333333;
+    margin: 10px 0 10px 5px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #000000;
 }
