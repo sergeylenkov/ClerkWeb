@@ -1,7 +1,7 @@
 html, body {
 	margin: 0;
   	padding: 0;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 button {
@@ -9,4 +9,8 @@ button {
 	border: 0;
 	background: none;
 	outline: none;
+}
+
+.fraction {
+	color: #969696;
 }
