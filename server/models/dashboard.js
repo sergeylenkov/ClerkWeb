@@ -21,3 +21,23 @@ module.exports.getBalance = function() {
         });
     });
 }
+
+module.exports.getExpenses = function(from, to) {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT a.id, a.name, TOTAL(t.to_account_amount) as sum FROM transactions t, accounts a\
+                 WHERE a.type_id = 2 AND t.to_account_id = a.id AND t.paid_at >= ? AND t.paid_at <= ? AND t.deleted = 0 GROUP BY a.name ORDER BY sum DESC', [from, to], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                let items = [];
+    
+                rows.forEach((row) => {
+                    let item = { id: row.id, name: row.name, amount: row.sum };
+                    items.push(item);
+                });
+    
+                resolve(items);
+            }
+        });
+    });
+}
