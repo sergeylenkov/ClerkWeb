@@ -1,7 +1,9 @@
 import React from 'react';
+import moment from 'moment';
+import { DataHelper } from '../../data/Data.js';
 import { DashboardBalance } from './dashboard/Balance';
 import { DashboardDeposits } from './dashboard/Deposits.js';
-import { DataHelper } from '../../data/Data.js';
+import { DashboardExpenses } from './dashboard/Expenses.js';
 
 import styles from './Dashboard.module.css';
 
@@ -12,7 +14,8 @@ export class Dashboard extends React.Component {
         this.state = {
             own: [],
             credits: [],
-            accounts: []
+            accounts: [],
+            expenses: []
         }
     }
 
@@ -41,20 +44,27 @@ export class Dashboard extends React.Component {
                 return res;
             }, {});
     
-            this.setState({
-                isLoaded: true,
-                own: group,
-                credits: credits,
-                accounts: items
-            });
+            const from = new moment().startOf('month');
+            const to = new moment().endOf('month');
+
+            data.expenses(from, to).then((expenses) => {
+                this.setState({
+                    isLoaded: true,
+                    own: group,
+                    credits: credits,
+                    accounts: items,
+                    expenses: expenses
+                });
+            });            
         });
     }
 
     render() {
         return (
             <div className={styles.container}>
-                <DashboardBalance own={this.state.own} credits={this.state.credits}/>
+                <DashboardBalance own={this.state.own} credits={this.state.credits} />
                 <DashboardDeposits accounts={this.state.accounts} />
+                <DashboardExpenses expenses={this.state.expenses} />
             </div>
         );
     }
