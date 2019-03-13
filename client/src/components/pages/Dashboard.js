@@ -4,6 +4,7 @@ import { DataHelper } from '../../data/Data.js';
 import { DashboardBalance } from './dashboard/Balance';
 import { DashboardDeposits } from './dashboard/Deposits.js';
 import { DashboardExpenses } from './dashboard/Expenses.js';
+import { DashboardBudgets } from './dashboard/Budgets.js';
 
 import styles from './Dashboard.module.css';
 
@@ -15,7 +16,8 @@ export class Dashboard extends React.Component {
             own: [],
             credits: [],
             accounts: [],
-            expenses: []
+            expenses: [],
+            budgets: []
         }
     }
 
@@ -48,12 +50,15 @@ export class Dashboard extends React.Component {
             const to = new moment().endOf('month');
 
             data.expenses(from, to).then((expenses) => {
-                this.setState({
-                    isLoaded: true,
-                    own: group,
-                    credits: credits,
-                    accounts: items,
-                    expenses: expenses
+                data.budgets(from, to).then((budgets) => {
+                    this.setState({
+                        isLoaded: true,
+                        own: group,
+                        credits: credits,
+                        accounts: items,
+                        expenses: expenses,
+                        budgets: budgets
+                    });
                 });
             });            
         });
@@ -65,6 +70,7 @@ export class Dashboard extends React.Component {
                 <DashboardBalance own={this.state.own} credits={this.state.credits} />
                 <DashboardDeposits accounts={this.state.accounts} />
                 <DashboardExpenses expenses={this.state.expenses} />
+                <DashboardBudgets budgets={this.state.budgets} />
             </div>
         );
     }
