@@ -10,4 +10,6 @@
     border-right: 1px solid #c9d3d8;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

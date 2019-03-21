@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-shrink: 0;
+}
+
+.fromName {
+    margin: auto 0;
+    font-size: 14px;
+}
+
+.toName {
+    margin: auto 0 auto 30px;
+    font-size: 14px;
+}
+
+.amount {
+    margin: auto 0 auto auto;
+    font-size: 14px;
+}

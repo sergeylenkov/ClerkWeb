@@ -11,14 +11,16 @@ export default class App extends React.Component {
 
     	this.state = {
         	activePage: 0
-    	}
+		}
+		
+		this.pageDidChanged = this.pageDidChanged.bind(this)
 	}
 
 	render() {
     	return (
     	  	<div className={styles.container}>
 			  	<Toolbar />
-        		<Menu onChange={(i) => this.pageDidChanged(i)}/>
+        		<Menu onChange={this.pageDidChanged}/>
         		<Pages activePage={this.state.activePage}/>
       		</div>
     	);

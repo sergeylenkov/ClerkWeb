@@ -8,7 +8,7 @@ import { DashboardBudgets } from './dashboard/Budgets.js';
 
 import styles from './Dashboard.module.css';
 
-export class Dashboard extends React.Component {
+export class DashboardPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -52,7 +52,6 @@ export class Dashboard extends React.Component {
             data.expenses(from, to).then((expenses) => {
                 data.budgets(from, to).then((budgets) => {
                     this.setState({
-                        isLoaded: true,
                         own: group,
                         credits: credits,
                         accounts: items,

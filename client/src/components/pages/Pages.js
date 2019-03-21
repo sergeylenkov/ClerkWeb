@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dashboard } from './Dashboard.js';
-import { Accounts } from './Accounts.js';
+import { DashboardPage } from './Dashboard.js';
+import { AccountsPage } from './Accounts.js';
 
 import styles from './Pages.module.css';
 
@@ -18,11 +18,11 @@ export class Pages extends React.Component {
 
         switch (this.props.activePage) {
             case 0:
-                page = <Dashboard/>
+                page = <DashboardPage />
                 break;
 
             case 1:
-                page = <Accounts/>
+                page = <AccountsPage />
                 break;
 
             default:

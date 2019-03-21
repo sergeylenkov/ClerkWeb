@@ -2,23 +2,9 @@
     margin: 0;
     width: 100%;
     height: 30px;
-    display: flex;   
+    display: flex;
+    flex-shrink: 0;
     cursor: pointer;
-}
-
-.expandButton {
-    margin: auto 0;
-    width: 20px;
-    height: 20px;
-}
-
-.arrow {
-    margin: auto;
-    width: 0; 
-    height: 0; 
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;  
-    border-left: 5px solid #6f6f6f;
 }
 
 .icon {
@@ -40,9 +26,4 @@
 
 .selected .label {
     color: #3187e1;
-}
-
-
-.expandable .icon {
-    margin: auto 10px auto 0;
 }
