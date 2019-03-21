@@ -1,18 +1,48 @@
 .container {
-    margin: auto 30px auto 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    width: 100%;
+    height: 30px;
+    display: flex;   
     cursor: pointer;
-    border-bottom: 2px solid #ffffff;
 }
 
-.selected {
-    border-bottom: 2px solid #256aa3;
+.expandButton {
+    margin: auto 0;
+    width: 20px;
+    height: 20px;
+}
+
+.arrow {
+    margin: auto;
+    width: 0; 
+    height: 0; 
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;  
+    border-left: 5px solid #6f6f6f;
+}
+
+.icon {
+    margin: auto 10px auto 20px;
+    width: 20px;
+    height: 20px;
+    fill: #6f6f6f;
 }
 
 .label {
-    margin: auto auto 15px auto;
+    margin: auto auto auto 0;
     font-size: 14px;
-    color: #256aa3;
+    color: #6f6f6f;
+}
+
+.selected .icon {
+    fill: #3187e1;
+}
+
+.selected .label {
+    color: #3187e1;
+}
+
+
+.expandable .icon {
+    margin: auto 10px auto 0;
 }

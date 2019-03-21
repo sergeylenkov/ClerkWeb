@@ -1,8 +1,7 @@
 .container {
-    width: 100%;
-}
-
-.pages {
-    margin: 0 auto;
-    width: 1200px;
+    position: absolute;
+    top: 60px;
+    left: 260px;
+    right: 0;
+    bottom: 0;
 }

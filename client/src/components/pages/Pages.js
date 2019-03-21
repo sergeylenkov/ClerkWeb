@@ -31,9 +31,7 @@ export class Pages extends React.Component {
 
         return (
             <div className={styles.container}>
-                <div className={styles.pages}>
-                    {page}
-                </div>
+                {page}
             </div>
         );
     }
