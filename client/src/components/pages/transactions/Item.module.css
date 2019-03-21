@@ -5,6 +5,12 @@
     flex-shrink: 0;
 }
 
+.date {
+    margin: auto 0 auto 0;
+    width: 100px;
+    font-size: 14px;
+}
+
 .fromName {
     margin: auto 0;
     font-size: 14px;

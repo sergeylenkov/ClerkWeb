@@ -11,7 +11,7 @@ module.exports.getTransactions = function() {
                 let items = [];
 
                 rows.forEach((row) => {
-                    let item = { id: row.id, fromName: row.from_account_name, fromAmount: row.from_account_amount, toName: row.to_account_name, toAmount: row.to_account_amount, date: row.paid_at };
+                    let item = { id: row.id, date: row.paid_at, fromName: row.from_account_name, fromAmount: row.from_account_amount, toName: row.to_account_name, toAmount: row.to_account_amount, date: row.paid_at };
                     items.push(item);
                 });
 
