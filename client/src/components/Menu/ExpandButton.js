@@ -39,6 +39,6 @@ export class MenuExpandButton extends React.Component {
     }
 
     onClick() {
-        this.props.onClick();
+        this.props.onClick(this.props.value);
     }
 }

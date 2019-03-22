@@ -20,6 +20,6 @@ export class MenuButton extends React.Component {
     }
 
     onClick() {
-        this.props.onClick();
+        this.props.onClick(this.props.value);
     }
 }

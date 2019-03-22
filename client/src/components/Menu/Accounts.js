@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuButton } from './Button.js';
 import { MenuExpandButton } from './ExpandButton.js';
 import { MenuIcons } from './Icons.js';
+import { MenuTypes } from './Menu.js';
 
 import styles from './Accounts.module.css';
 
@@ -59,55 +60,55 @@ export class MenuAccounts extends React.Component {
     render() {
         return (
             <div className={styles.container}>
-                <MenuExpandButton icon={this.props.icon} title={this.props.title} isSelected={this.props.isSelected} onClick={this.onAccountsSelect} onExpand={this.onAccountsExpand}/>
+                <MenuExpandButton value={MenuTypes.Accounts} icon={this.props.icon} title={this.props.title} isSelected={this.props.selection === MenuTypes.Accounts} onClick={this.onAccountsSelect} onExpand={this.onAccountsExpand}/>
 
                 <div className={`${styles.group} ${this.state.isAccountExpanded ? styles.expanded : ''}`}>
-                    <MenuExpandButton icon={MenuIcons.accounts} title={'Receipts'} onClick={this.onAccountsSelect} onExpand={this.onReceiptsExpand}/>
+                    <MenuExpandButton value={MenuTypes.Receipts} icon={MenuIcons.accounts} title={'Receipts'} isSelected={this.props.selection === MenuTypes.Receipts} onClick={this.onAccountsSelect} onExpand={this.onReceiptsExpand}/>
 
                     <div className={`${styles.group} ${this.state.isReceiptsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.receipts.map((item, i) => {
-                                return (<MenuButton key={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton icon={MenuIcons.accounts} title={'Deposits'} onClick={this.onAccountsSelect} onExpand={this.onDepositsExpand}/>
+                    <MenuExpandButton value={MenuTypes.Deposits} icon={MenuIcons.accounts} title={'Deposits'} isSelected={this.props.selection === MenuTypes.Deposits} onClick={this.onAccountsSelect} onExpand={this.onDepositsExpand}/>
 
                     <div className={`${styles.group} ${this.state.isDepositsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.deposits.map((item, i) => {
-                                return (<MenuButton key={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton icon={MenuIcons.accounts} title={'Expenses'} onClick={this.onAccountsSelect} onExpand={this.onExpensesExpand}/>
+                    <MenuExpandButton value={MenuTypes.Expenses} icon={MenuIcons.accounts} title={'Expenses'} isSelected={this.props.selection === MenuTypes.Expenses} onClick={this.onAccountsSelect} onExpand={this.onExpensesExpand}/>
 
                     <div className={`${styles.group} ${this.state.isExpensesExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.expenses.map((item, i) => {
-                                return (<MenuButton key={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton icon={MenuIcons.accounts} title={'Credits'} onClick={this.onAccountsSelect} onExpand={this.onCreditsExpand}/>
+                    <MenuExpandButton value={MenuTypes.Credits} icon={MenuIcons.accounts} title={'Credits'} isSelected={this.props.selection === MenuTypes.Credits} onClick={this.onAccountsSelect} onExpand={this.onCreditsExpand}/>
 
                     <div className={`${styles.group} ${this.state.isCreditsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.credits.map((item, i) => {
-                                return (<MenuButton key={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton icon={MenuIcons.accounts} title={'Virtual'} onClick={this.onAccountsSelect} onExpand={this.onVirtualExpand}/>
+                    <MenuExpandButton value={MenuTypes.Virtual} icon={MenuIcons.accounts} title={'Virtual'} isSelected={this.props.selection === MenuTypes.Virtual} onClick={this.onAccountsSelect} onExpand={this.onVirtualExpand}/>
 
                     <div className={`${styles.group} ${this.state.isVirtualExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.virtual.map((item, i) => {
-                                return (<MenuButton key={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
@@ -152,11 +153,11 @@ export class MenuAccounts extends React.Component {
         });
     }
 
-    onAccountsSelect() {
-        this.props.onAccountsSelect();
+    onAccountsSelect(type) {
+        this.props.onAccountsSelect(type);
     }
 
     onAccountSelect(id) {
-        console.log(id);
+        this.props.onAccountSelect(id);
     }
 }

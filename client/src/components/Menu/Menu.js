@@ -13,7 +13,12 @@ export const MenuTypes = {
     Schedulers: 4,
     Reports: 5,
     Tags: 6,
-    Trash: 7
+    Trash: 7,
+    Receipts: 8,
+    Deposits: 9,
+    Expenses: 10,
+    Credits: 11,
+    Virtual: 12
 }
 
 export class Menu extends React.Component {
@@ -34,7 +39,9 @@ export class Menu extends React.Component {
             selectedItem: MenuTypes.Dashboard
         };
 
-        this.onAccountsSelect = this.onAccountsSelect.bind(this)
+        this.onMenuSelect = this.onMenuSelect.bind(this);
+        this.onAccountsSelect = this.onAccountsSelect.bind(this);
+        this.onAccountSelect = this.onAccountSelect.bind(this);
     }
 
     render() {
@@ -42,12 +49,11 @@ export class Menu extends React.Component {
             <div className={styles.container}>
                 {
                     this.state.items.map((item, i) => {
-                        const selected = (item.type === this.state.selectedItem);
-
                         if (item.type === MenuTypes.Accounts) {
-                            return (<MenuAccounts key={i} icon={item.icon} title={item.title} isSelected={selected} onAccountsSelect={this.onAccountsSelect} />)
+                            return (<MenuAccounts key={i} icon={item.icon} title={item.title} selection={this.state.selectedItem} onAccountsSelect={this.onAccountsSelect} onAccountSelect={this.onAccountSelect} />)
                         } else {
-                            return (<MenuButton key={i} icon={item.icon} title={item.title} isSelected={selected} onClick={() => this.handleClick(i)} />)
+                            const selected = (item.type === this.state.selectedItem);
+                            return (<MenuButton key={i} value={item.type} icon={item.icon} title={item.title} isSelected={selected} onClick={this.onMenuSelect} />)
                         }
                     })
                 }
@@ -55,19 +61,24 @@ export class Menu extends React.Component {
         );        
     }
 
-    handleClick(i) {        
+    onMenuSelect(type) {        
         this.setState({
-            selectedItem: i
+            selectedItem: type
         });
 
-        this.props.onChange(i);
+        this.props.onChange(type);
     }
 
-    onAccountsSelect() {
+    onAccountsSelect(type) {
+        console.log(type);
         this.setState({
-            selectedItem: MenuTypes.Accounts
+            selectedItem: type
         });
 
-        this.props.onChange(MenuTypes.Accounts)
+        this.props.onChange(type)
+    }
+
+    onAccountSelect(id) {
+        console.log(id);
     }
 }
