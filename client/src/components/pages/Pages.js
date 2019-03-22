@@ -1,27 +1,40 @@
 import React from 'react';
+import { MenuTypes } from '../menu/Menu.js';
 import { DashboardPage } from './Dashboard.js';
 import { AccountsPage } from './Accounts.js';
 
 import styles from './Pages.module.css';
 
 export class Pages extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            activePage: 0
-        }
-    }
-
     render() {
         let page;
 
         switch (this.props.activePage) {
-            case 0:
+            case MenuTypes.Dashboard:
                 page = <DashboardPage />
                 break;
 
-            case 1:
+            case MenuTypes.Accounts:
+                page = <AccountsPage />
+                break;
+
+            case MenuTypes.Receipts:
+                page = <AccountsPage />
+                break;
+
+            case MenuTypes.Deposits:
+                page = <AccountsPage />
+                break;
+
+            case MenuTypes.Expenses:
+                page = <AccountsPage />
+                break;
+
+            case MenuTypes.Credits:
+                page = <AccountsPage />
+                break;
+
+            case MenuTypes.Virtual:
                 page = <AccountsPage />
                 break;
 

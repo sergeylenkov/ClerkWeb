@@ -1,7 +1,7 @@
 import React from 'react';
-import { Menu } from './components/menu/Menu.js';
+import { Menu, MenuTypes } from './components/menu/Menu.js';
 import { Pages } from './components/pages/Pages.js';
-import { Toolbar } from './components/Toolbar/Toolbar.js';
+import { Toolbar } from './components/toolbar/Toolbar.js';
 
 import styles from './App.module.css';
 
@@ -10,7 +10,7 @@ export default class App extends React.Component {
    		super(props);
 
     	this.state = {
-        	activePage: 0
+        	activePage: MenuTypes.Dashboard
 		}
 		
 		this.pageDidChanged = this.pageDidChanged.bind(this)
@@ -26,7 +26,7 @@ export default class App extends React.Component {
     	);
   	}
 
-  	pageDidChanged(i) {
-    	this.setState({activePage: i});
+  	pageDidChanged(type) {
+    	this.setState({activePage: type});
   	}
 }
