@@ -2,7 +2,7 @@ const db = require('../db');
 
 module.exports.getAccounts = function() {
     return new Promise((resolve, reject) => {
-        db.all('SELECT a.id, a.name, a.type_id, a.icon_id FROM accounts a WHERE a.active = 1', [], (err, rows) => {
+        db.all('SELECT a.id, a.name, a.type_id, a.icon_id FROM accounts a WHERE a.active = 1 ORDER BY a.order_id', [], (err, rows) => {
             if (err) {                
                 reject(err);
             } else {

@@ -8,7 +8,7 @@
 }
 
 .icon {
-    margin: auto 10px auto 20px;
+    margin: auto 10px auto 0;
     width: 20px;
     height: 20px;
     fill: #6f6f6f;
@@ -20,10 +20,38 @@
     color: #6f6f6f;
 }
 
+.expandButton {
+    margin: auto 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+
+.arrow {
+    margin: auto;
+    width: 0; 
+    height: 0; 
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;  
+    border-left: 5px solid #6f6f6f;
+    transition: transform 0.2s ease-in;
+}
+
 .selected .icon {
     fill: #3187e1;
 }
 
 .selected .label {
     color: #3187e1;
+}
+
+.expandable .expandButton {
+    visibility: visible;
+}
+
+.expanded .arrow {
+    transform: rotate(90deg);
 }

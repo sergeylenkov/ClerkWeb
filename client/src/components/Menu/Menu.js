@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuButton } from './Button.js';
-import { MenuIcons } from './Icons.js';
+import { MenuIcons } from '../Icon.js';
 import { MenuAccounts } from './Accounts.js';
 
 import styles from './Menu.module.css';
@@ -53,7 +53,7 @@ export class Menu extends React.Component {
                             return (<MenuAccounts key={i} icon={item.icon} title={item.title} selection={this.state.selectedItem} onAccountsSelect={this.onAccountsSelect} onAccountSelect={this.onAccountSelect} />)
                         } else {
                             const selected = (item.type === this.state.selectedItem);
-                            return (<MenuButton key={i} value={item.type} icon={item.icon} title={item.title} isSelected={selected} onClick={this.onMenuSelect} />)
+                            return (<MenuButton key={i} value={item.type} icon={item.icon} title={item.title} isSelected={selected} isExpandable={false} onClick={this.onMenuSelect} />)
                         }
                     })
                 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { MenuButton } from './Button.js';
-import { MenuExpandButton } from './ExpandButton.js';
-import { MenuIcons } from './Icons.js';
+import { MenuIcons, AccountsIcons } from '../Icon.js';
 import { MenuTypes } from './Menu.js';
 
 import styles from './Accounts.module.css';
@@ -60,61 +59,69 @@ export class MenuAccounts extends React.Component {
     render() {
         return (
             <div className={styles.container}>
-                <MenuExpandButton value={MenuTypes.Accounts} icon={this.props.icon} title={this.props.title} isSelected={this.props.selection === MenuTypes.Accounts} onClick={this.onAccountsSelect} onExpand={this.onAccountsExpand}/>
+                <MenuButton value={MenuTypes.Accounts} icon={this.props.icon} title={this.props.title} isSelected={this.props.selection === MenuTypes.Accounts} isExpandable={true} onClick={this.onAccountsSelect} onExpand={this.onAccountsExpand}/>
 
                 <div className={`${styles.group} ${this.state.isAccountExpanded ? styles.expanded : ''}`}>
-                    <MenuExpandButton value={MenuTypes.Receipts} icon={MenuIcons.accounts} title={'Receipts'} isSelected={this.props.selection === MenuTypes.Receipts} onClick={this.onAccountsSelect} onExpand={this.onReceiptsExpand}/>
+                    <MenuButton value={MenuTypes.Receipts} icon={MenuIcons.receipts} title={'Receipts'} isSelected={this.props.selection === MenuTypes.Receipts} isExpandable={true} onClick={this.onAccountsSelect} onExpand={this.onReceiptsExpand}/>
 
                     <div className={`${styles.group} ${this.state.isReceiptsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.receipts.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton value={MenuTypes.Deposits} icon={MenuIcons.accounts} title={'Deposits'} isSelected={this.props.selection === MenuTypes.Deposits} onClick={this.onAccountsSelect} onExpand={this.onDepositsExpand}/>
+                    <MenuButton value={MenuTypes.Deposits} icon={MenuIcons.account} title={'Deposits'} isSelected={this.props.selection === MenuTypes.Deposits} isExpandable={true} onClick={this.onAccountsSelect} onExpand={this.onDepositsExpand}/>
 
                     <div className={`${styles.group} ${this.state.isDepositsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.deposits.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton value={MenuTypes.Expenses} icon={MenuIcons.accounts} title={'Expenses'} isSelected={this.props.selection === MenuTypes.Expenses} onClick={this.onAccountsSelect} onExpand={this.onExpensesExpand}/>
+                    <MenuButton value={MenuTypes.Expenses} icon={MenuIcons.expenses} title={'Expenses'} isSelected={this.props.selection === MenuTypes.Expenses} isExpandable={true} onClick={this.onAccountsSelect} onExpand={this.onExpensesExpand}/>
 
                     <div className={`${styles.group} ${this.state.isExpensesExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.expenses.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton value={MenuTypes.Credits} icon={MenuIcons.accounts} title={'Credits'} isSelected={this.props.selection === MenuTypes.Credits} onClick={this.onAccountsSelect} onExpand={this.onCreditsExpand}/>
+                    <MenuButton value={MenuTypes.Credits} icon={MenuIcons.account} title={'Credits'} isSelected={this.props.selection === MenuTypes.Credits} isExpandable={true} onClick={this.onAccountsSelect} onExpand={this.onCreditsExpand}/>
 
                     <div className={`${styles.group} ${this.state.isCreditsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.credits.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
 
-                    <MenuExpandButton value={MenuTypes.Virtual} icon={MenuIcons.accounts} title={'Virtual'} isSelected={this.props.selection === MenuTypes.Virtual} onClick={this.onAccountsSelect} onExpand={this.onVirtualExpand}/>
+                    <MenuButton value={MenuTypes.Virtual} icon={MenuIcons.account} title={'Virtual'} isSelected={this.props.selection === MenuTypes.Virtual} isExpandable={true} onClick={this.onAccountsSelect} onExpand={this.onVirtualExpand}/>
 
                     <div className={`${styles.group} ${this.state.isVirtualExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.virtual.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={MenuIcons.accounts} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
                 </div>
             </div>
         );        
+    }
+
+    getIcon(id) {
+        if (AccountsIcons[id]) {
+            return AccountsIcons[id];
+        }
+
+        return AccountsIcons.default;
     }
 
     onAccountsExpand(expanded) {

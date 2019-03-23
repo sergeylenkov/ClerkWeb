@@ -14,11 +14,17 @@
 .fromName {
     margin: auto 0;
     font-size: 14px;
+    flex-basis: 15%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .toName {
     margin: auto 0 auto 30px;
     font-size: 14px;
+    flex-basis: 15%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .amount {
