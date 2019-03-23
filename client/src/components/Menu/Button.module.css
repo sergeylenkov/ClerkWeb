@@ -12,12 +12,16 @@
     width: 20px;
     height: 20px;
     fill: #6f6f6f;
+    flex-shrink: 0;
 }
 
 .label {
     margin: auto auto auto 0;
     font-size: 14px;
     color: #6f6f6f;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .expandButton {
@@ -25,10 +29,10 @@
     width: 20px;
     height: 20px;
     display: flex;
+    flex-shrink: 0;
     cursor: pointer;
-    visibility: hidden;
+    visibility: hidden;    
 }
-
 
 .arrow {
     margin: auto;
