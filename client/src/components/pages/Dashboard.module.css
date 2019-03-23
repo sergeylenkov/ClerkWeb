@@ -4,3 +4,8 @@
     box-sizing: border-box;
     display: flex;
 }
+
+.balance {
+    display: flex;
+    flex-direction: column;
+}

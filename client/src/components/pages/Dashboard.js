@@ -66,8 +66,10 @@ export class DashboardPage extends React.Component {
     render() {
         return (
             <div className={styles.container}>
-                <DashboardBalance own={this.state.own} credits={this.state.credits} />
-                <DashboardDeposits accounts={this.state.accounts} />
+                <div className={styles.balance}>
+                    <DashboardBalance own={this.state.own} credits={this.state.credits} />
+                    <DashboardDeposits accounts={this.state.accounts} />
+                </div>                
                 <DashboardExpenses expenses={this.state.expenses} />
                 <DashboardBudgets budgets={this.state.budgets} />
             </div>
