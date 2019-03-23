@@ -1,4 +1,5 @@
 import React from 'react';
+import { DataHelper, AccountsTypes } from '../../data/Data.js';
 import { MenuButton } from './Button.js';
 import { MenuIcons, AccountsIcons } from '../Icon.js';
 import { MenuTypes } from './Menu.js';
@@ -34,15 +35,14 @@ export class MenuAccounts extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/accounts").then((response) => {
-            return response.json();
-        }).then((data) => {
-            console.log(data);
-            const expenses = data.items.filter(el => el.type === 2);
-            const receipts = data.items.filter(el => el.type === 0);
-            const deposits = data.items.filter(el => el.type === 1);
-            const credits = data.items.filter(el => el.type === 4);
-            const virtual = data.items.filter(el => el.type === 5);
+        const data = new DataHelper();
+
+        data.accounts().then((items => {
+            const expenses = items.filter(el => el.type === AccountsTypes.Expenses);
+            const receipts = items.filter(el => el.type === AccountsTypes.Receipts);
+            const deposits = items.filter(el => el.type === AccountsTypes.Deposits);
+            const credits = items.filter(el => el.type === AccountsTypes.Credits);
+            const virtual = items.filter(el => el.type === AccountsTypes.Virtaul);
 
             this.setState({
                 expenses: expenses,
@@ -51,9 +51,7 @@ export class MenuAccounts extends React.Component {
                 credits: credits,
                 virtual: virtual
             });
-        }).catch((error) => {
-            console.log(error);           
-        });
+        }));
     }
 
     render() {

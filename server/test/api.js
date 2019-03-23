@@ -14,8 +14,11 @@ describe('GET /accounts', () => {
 });
 
 describe('GET /transactions', () => {
-    it('should get all transactions', (done) => {
-      	request(app).get('/transactions')
+	const from = new Date('2018-01-01T00:00:00');
+	const to = new Date('2019-12-12T00:00:00');
+
+    it('should get transactions', (done) => {
+      	request(app).get(`/transactions?from=${from.toISOString()}&to=${to.toISOString()}`)
         .expect(200)
         .end(function(err, res) {
         	assert( res.body.items.length > 0, 'must be more then 0');

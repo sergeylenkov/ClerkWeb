@@ -11,12 +11,13 @@
 .date {
     margin: auto 0 auto 0;
     width: 100px;
-    font-size: 14px;
+    font-size: 13px;
+    color: #585858;
 }
 
 .fromName {
     margin: auto 0;
-    font-size: 14px;
+    font-size: 13px;
     flex-basis: 15%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -24,10 +25,25 @@
 
 .toName {
     margin: auto 0 auto 30px;
-    font-size: 14px;
+    font-size: 13px;
     flex-basis: 15%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.tags {
+    margin: auto 0;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tag {
+    margin: 0 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 2px;
+    color: #151515;
+    background-color: #dcf0ff;
 }
 
 .amount {
@@ -50,4 +66,12 @@
 
 .container:hover .options {
     visibility: visible;
+}
+
+.receipts .tag {
+    background-color: #e0ffd7;
+}
+
+.expenses .tag {
+    background-color: #ffefd4;
 }
