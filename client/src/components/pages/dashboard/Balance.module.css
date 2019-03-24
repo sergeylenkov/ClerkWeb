@@ -1,7 +1,9 @@
 .container {
     margin: 20px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.2);
 }
 
 .header {
