@@ -65,3 +65,14 @@ describe('GET /dashboard/budgets', () => {
       	});
   	});
 });
+
+describe('GET /dashboard/goals', () => {
+	it('should get goals', (done) => {
+	  request(app).get('/dashboard/goals')
+		.expect(200)
+		.end(function(err, res) {        
+		  assert( res.body.items.length > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});

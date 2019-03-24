@@ -5,6 +5,7 @@ import { DashboardBalance } from './dashboard/Balance';
 import { DashboardDeposits } from './dashboard/Deposits.js';
 import { DashboardExpenses } from './dashboard/Expenses.js';
 import { DashboardBudgets } from './dashboard/Budgets.js';
+import  {DashboardGoals } from './dashboard/Goals.js';
 
 import styles from './Dashboard.module.css';
 
@@ -17,7 +18,8 @@ export class DashboardPage extends React.Component {
             credits: [],
             accounts: [],
             expenses: [],
-            budgets: []
+            budgets: [],
+            goals: []
         }
     }
 
@@ -46,21 +48,33 @@ export class DashboardPage extends React.Component {
                 return res;
             }, {});
     
-            const from = new moment().startOf('month');
-            const to = new moment().endOf('month');
-
-            data.expenses(from, to).then((expenses) => {
-                data.budgets(from, to).then((budgets) => {
-                    this.setState({
-                        own: group,
-                        credits: credits,
-                        accounts: items,
-                        expenses: expenses,
-                        budgets: budgets
-                    });
-                });
-            });            
+            this.setState({
+                own: group,
+                credits: credits,
+                accounts: items
+            });       
         });
+
+        const from = new moment().startOf('month');
+        const to = new moment().endOf('month');
+
+        data.expenses(from, to).then((expenses) => {
+            this.setState({
+                expenses: expenses
+            });
+        });
+
+        data.budgets(from, to).then((budgets) => {
+            this.setState({            
+                budgets: budgets
+            });
+        });
+
+        data.goals().then((goals) => {
+            this.setState({            
+                goals: goals
+            });
+        });  
     }
 
     render() {
@@ -72,6 +86,7 @@ export class DashboardPage extends React.Component {
                 </div>                
                 <DashboardExpenses expenses={this.state.expenses} />
                 <DashboardBudgets budgets={this.state.budgets} />
+                <DashboardGoals goals={this.state.goals} />
             </div>
         );
     }

@@ -7,7 +7,7 @@ export class DashboardExpenses extends React.Component {
     render() {
         return (                
             <div className={styles.container}>
-                <div className={styles.header}>Расходы</div>
+                <div className={styles.header}>Expenses</div>
 
                 {
                     this.props.expenses.map((item, i) => {

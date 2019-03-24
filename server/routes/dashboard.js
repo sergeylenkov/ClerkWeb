@@ -37,4 +37,13 @@ router.get('/budgets', (req, res) => {
     });
 });
 
+router.get('/goals', (req, res) => {
+
+    data.getGoals().then((items) => {
+        return res.json({ items: items });
+    }).catch((error) => {
+        res.status(500).send({ error: error });
+    });
+});
+
 module.exports = router;

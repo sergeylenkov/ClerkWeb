@@ -1,18 +1,18 @@
 import React from 'react';
 import { formatAmount } from '../../Utils.js';
 
-import styles from './Budgets.module.css';
+import styles from './Goals.module.css';
 
-export class DashboardBudgets extends React.Component {
+export class DashboardGoals extends React.Component {
     render() {
         return (                
             <div className={styles.container}>
-                <div className={styles.header}>Budgets</div>
+                <div className={styles.header}>Goals</div>
 
                 {
-                    this.props.budgets.map((item, i) => {
+                    this.props.goals.map((item, i) => {
                         const total = item.amount;
-                        const current = item.expense;
+                        const current = item.balance;
                         const remains = total - current;
                         let percent = current / (total / 100);
 

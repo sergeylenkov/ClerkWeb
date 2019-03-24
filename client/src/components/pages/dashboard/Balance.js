@@ -7,7 +7,7 @@ export class DashboardBalance extends React.Component {
     render() {
         return (                
             <div className={styles.container}>
-                <div className={styles.header}>Собственный средства</div>
+                <div className={styles.header}>Own funds</div>
 
                 {
                     this.props.own.map((item, i) => {
@@ -15,7 +15,7 @@ export class DashboardBalance extends React.Component {
                     })
                 }
 
-                <div className={styles.header}>Кредитные средства</div>
+                <div className={styles.header}>Credit funds</div>
 
                 {
                     this.props.credits.map((item, i) => {

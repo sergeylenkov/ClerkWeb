@@ -28,7 +28,8 @@ export function formatAmount(value, currency='RUB') {
     }
 
     formatted = formatted.split('').reverse().join('');
-
+    formatted = formatted.replace('- ', '-');
+    
     const sign = currencySign[currency];
     
     return <span><span>{formatted}</span><span className='fraction'>.{fraction}</span> {sign}</span>;

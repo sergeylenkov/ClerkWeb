@@ -7,7 +7,7 @@ export class DashboardDeposits extends React.Component {
     render() {
         return (                
             <div className={styles.container}>
-                <div className={styles.header}>Счета</div>
+                <div className={styles.header}>Balance</div>
 
                 {
                     this.props.accounts.map((item, i) => {

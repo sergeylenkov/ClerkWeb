@@ -2,10 +2,10 @@ const db = require('../db');
 
 module.exports.getBalance = () => {
     return new Promise((resolve, reject) => {
-        db.all('SELECT a.id, a.name, a.credit_limit, c.short_name AS currency_name,\
+        db.all('SELECT a.id, a.name, a.credit_limit, c.short_name AS currency_name, a.type_id,\
                     (SELECT COALESCE(SUM(to_account_amount), 0) AS sum FROM transactions WHERE to_account_id = a.id AND deleted = 0) AS receipt,\
                     (SELECT COALESCE(SUM(from_account_amount), 0) AS sum FROM transactions WHERE from_account_id = a.id AND deleted = 0) AS expense\
-                FROM accounts a, currencies c WHERE a.type_id = 1 AND a.active = 1 AND a.currency_id = c.id', [], (err, rows) => {
+                FROM accounts a, currencies c WHERE (a.type_id = 1 OR a.type_id = 5) AND a.active = 1 AND a.currency_id = c.id', [], (err, rows) => {
             if (err) {
                 reject(err);
             } else {
@@ -63,6 +63,27 @@ module.exports.getBudgets = (from, to) => {
     });
 }
 
+module.exports.getGoals = () => {
+    return new Promise((resolve, reject) => {
+        _getGoals().then((items) => {
+            let promises = [];
+
+            items.forEach((item) => {
+                const promise = _getGoalBalance(item.ids).then((balance) => {
+                    item.balance = balance;
+                });
+                promises.push(promise);
+            });
+
+            Promise.all(promises).then(() => {
+                resolve(items);
+            });            
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
 function _getBudgets() {
     return new Promise((resolve, reject) => {
         db.all('SELECT b.id, b.name, b.amount, b.account_ids FROM budgets b', [], (err, rows) => {
@@ -89,6 +110,48 @@ function _getBudgetExpense(ids, from, to) {
                 reject(err);
             } else {
                 resolve(row.sum);
+            }
+        });
+    });
+}
+
+function _getGoals() {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT g.id, g.name, g.date, g.amount, g.account_ids FROM goals g', [], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                let items = [];
+    
+                rows.forEach((row) => {
+                    let item = { id: row.id, name: row.name, amount: row.amount, ids: row.account_ids, balance: 0 };
+                    items.push(item);
+                });
+    
+                resolve(items);
+            }
+        });
+    });
+}
+
+function _getGoalBalance(ids) {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT TOTAL(to_account_amount) AS sum FROM transactions WHERE to_account_id IN(${ids}) AND deleted = 0`, [], (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                const receipt = row.sum;
+                
+                db.get(`SELECT TOTAL(from_account_amount) AS sum FROM transactions WHERE from_account_id IN(${ids}) AND deleted = 0`, [], (err, row) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        const expense = row.sum;
+                        const balance = receipt - expense;
+
+                        resolve(balance);
+                    }
+                });
             }
         });
     });

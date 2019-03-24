@@ -24,4 +24,6 @@
 .amount {
     margin: auto 0;
     font-size: 14px;
+    width: 120px;
+    text-align: right;
 }
