@@ -76,3 +76,14 @@ describe('GET /dashboard/goals', () => {
 		});
 	});
 });
+
+describe('GET /dashboard/credits', () => {
+	it('should get credits', (done) => {
+	  request(app).get('/dashboard/credits')
+		.expect(200)
+		.end(function(err, res) {        
+		  assert( res.body.items.length > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});

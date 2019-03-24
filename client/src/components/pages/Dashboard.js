@@ -5,7 +5,8 @@ import { DashboardBalance } from './dashboard/Balance';
 import { DashboardDeposits } from './dashboard/Deposits.js';
 import { DashboardExpenses } from './dashboard/Expenses.js';
 import { DashboardBudgets } from './dashboard/Budgets.js';
-import  {DashboardGoals } from './dashboard/Goals.js';
+import { DashboardGoals } from './dashboard/Goals.js';
+import { DashboardCredits } from './dashboard/Credits.js';
 
 import styles from './Dashboard.module.css';
 
@@ -14,12 +15,13 @@ export class DashboardPage extends React.Component {
         super(props);
 
         this.state = {
-            own: [],
-            credits: [],
+            ownFunds: [],
+            creditFunds: [],
             accounts: [],
             expenses: [],
             budgets: [],
-            goals: []
+            goals: [],
+            credits: []
         }
     }
 
@@ -49,8 +51,8 @@ export class DashboardPage extends React.Component {
             }, {});
     
             this.setState({
-                own: group,
-                credits: credits,
+                ownFunds: group,
+                creditFunds: credits,
                 accounts: items
             });       
         });
@@ -74,19 +76,26 @@ export class DashboardPage extends React.Component {
             this.setState({            
                 goals: goals
             });
-        });  
+        });
+
+        data.credits().then((credits) => {
+            this.setState({
+                credits: credits
+            });
+        });
     }
 
     render() {
         return (
             <div className={styles.container}>
                 <div className={styles.balance}>
-                    <DashboardBalance own={this.state.own} credits={this.state.credits} />
+                    <DashboardBalance own={this.state.ownFunds} credits={this.state.creditFunds} />
                     <DashboardDeposits accounts={this.state.accounts} />
                 </div>                
                 <DashboardExpenses expenses={this.state.expenses} />
                 <DashboardBudgets budgets={this.state.budgets} />
                 <DashboardGoals goals={this.state.goals} />
+                <DashboardCredits credits={this.state.credits} />
             </div>
         );
     }
