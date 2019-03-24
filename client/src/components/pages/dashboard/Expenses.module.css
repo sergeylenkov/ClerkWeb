@@ -13,6 +13,19 @@
 }
 
 .item {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px 0;    
+    display: flex;
+    flex-direction: row;
+}
+
+.name {
+    margin: auto auto auto 0;
     font-size: 14px;
+}
+
+.amount {
+    margin: auto 0;
+    width: 120px;
+    font-size: 14px;
+    text-align: right;
 }

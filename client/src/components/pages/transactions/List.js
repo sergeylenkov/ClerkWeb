@@ -1,48 +1,41 @@
 import React from 'react';
+import moment from 'moment';
+import { DataHelper } from '../../../data/Data.js';
+import { TransactionsListItem } from './Item.js';
+
+import styles from './List.module.css';
 
 export class TransactionsList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            error: null,
-            isLoaded: false,
-            items: []
+        this.state = {            
+            transactions: []
         };
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/transactions").then((response) => {
-            return response.json();
-        }).then((data) => {
-            console.log(data);
+        const data = new DataHelper();
+
+        const from = new moment().startOf('month');
+        const to = new moment().endOf('month');
+
+        data.transactions(from, to).then((items) => {
             this.setState({
-                isLoaded: true,
-                items: data.items
-            });
-        }).catch((error) => {
-            console.log(error);
-            this.setState({
-                error: error
+                transactions: items
             });
         });
     }
 
     render() {
-        const { error, isLoaded, items } = this.state;
-
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
-            return <div>Loading...</div>;
-        } else {
-            return (                
-                <div className="transactions-list">                    
-                    {items.map((item, i) => {
-                        return (<div className="transactions-list-item" key={item.id}>{item.fromName} {item.toName}</div>); 
-                    })}
-                </div>
-            );
-        }
+        return (                
+            <div className={styles.container}>                    
+                {
+                    this.state.transactions.map((item, i) => {
+                        return (<TransactionsListItem key={item.id} item={item} />); 
+                    })
+                }
+            </div>
+        );
     }
 }

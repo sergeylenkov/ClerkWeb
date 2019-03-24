@@ -1,0 +1,10 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    border-bottom: 1px solid #c9d3d8;
+    box-sizing: border-box;
+}
