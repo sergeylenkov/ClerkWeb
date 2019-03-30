@@ -14,10 +14,12 @@
     margin: 0 auto 0 20px;
     height: 100%;
     display: flex;
+    position: relative;
 }
 
 .alarm {
     margin: 0 20px 0 auto;
     height: 100%;
     display: flex;
+    position: relative;
 }

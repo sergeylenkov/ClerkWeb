@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon, Icons } from '../Icon';
+import { Icon, Icons } from '../../Icon';
 
-import styles from './AddButton.module.css';
+import styles from './Button.module.css';
 
 export class ToolbarAddButton extends React.Component {
     constructor(props) {
