@@ -48,7 +48,7 @@ function _getTransactions(from, to) {
     return new Promise((resolve, reject) => {
         db.all('SELECT a1.name AS from_account_name, a1.type_id AS from_type_id, a2.name AS to_account_name, a2.type_id AS to_type_id, t.*\
                   FROM transactions t, accounts a1, accounts a2\
-                WHERE t.deleted = 0 AND a1.id = t.from_account_id AND a2.id = t.to_account_id AND t.paid_at >= ? AND t.paid_at <= ? ORDER BY t.paid_at DESC, t.created_at', [from, to], (err, rows) => {
+                WHERE t.deleted = 0 AND a1.id = t.from_account_id AND a2.id = t.to_account_id AND t.paid_at >= ? AND t.paid_at <= ? ORDER BY t.paid_at DESC, t.created_at DESC', [from, to], (err, rows) => {
             if (err) {
                 reject(err);
             } else {

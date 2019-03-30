@@ -28,7 +28,7 @@ export class DashboardPage extends React.Component {
     componentDidMount() {
         const data = new DataHelper();
 
-        data.balance().then((items) => {
+        data.dashboardBalance().then((items) => {
             const own = items.filter(el => !el.credit);
             const credits = items.filter(el => el.credit);
     
@@ -60,25 +60,25 @@ export class DashboardPage extends React.Component {
         const from = new moment().startOf('month');
         const to = new moment().endOf('month');
 
-        data.expenses(from, to).then((expenses) => {
+        data.dashboardExpenses(from, to).then((expenses) => {
             this.setState({
                 expenses: expenses
             });
         });
 
-        data.budgets(from, to).then((budgets) => {
+        data.dashboardBudgets(from, to).then((budgets) => {
             this.setState({            
                 budgets: budgets
             });
         });
 
-        data.goals().then((goals) => {
+        data.dashboardGoals().then((goals) => {
             this.setState({            
                 goals: goals
             });
         });
 
-        data.credits().then((credits) => {
+        data.dashboardCredits().then((credits) => {
             this.setState({
                 credits: credits
             });

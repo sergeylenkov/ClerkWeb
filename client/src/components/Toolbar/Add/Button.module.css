@@ -1,7 +1,7 @@
 .container {
     margin: auto 0;
     display: flex;    
-    height: 40px;
+    height: 34px;
     border-radius: 2px;
     border: 1px solid #d4d4d4;
 }
@@ -15,7 +15,7 @@
 
 .label {
     margin: auto 10px auto 0;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .expandButton {

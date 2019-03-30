@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataHelper, AccountsTypes } from '../../data/Data.js';
+import { DataHelper, AccountTypes } from '../../data/Data.js';
 import { MenuButton } from './Button.js';
 import { MenuIcons, AccountsIcons } from '../Icon.js';
 import { MenuTypes } from './Menu.js';
@@ -38,11 +38,11 @@ export class MenuAccounts extends React.Component {
         const data = new DataHelper();
 
         data.accounts().then((items => {
-            const expenses = items.filter(el => el.type === AccountsTypes.Expenses);
-            const receipts = items.filter(el => el.type === AccountsTypes.Receipts);
-            const deposits = items.filter(el => el.type === AccountsTypes.Deposits);
-            const credits = items.filter(el => el.type === AccountsTypes.Credits);
-            const virtual = items.filter(el => el.type === AccountsTypes.Virtaul);
+            const expenses = items.filter(el => el.type === AccountTypes.Expenses);
+            const receipts = items.filter(el => el.type === AccountTypes.Receipts);
+            const deposits = items.filter(el => el.type === AccountTypes.Deposits);
+            const credits = items.filter(el => el.type === AccountTypes.Credits);
+            const virtual = items.filter(el => el.type === AccountTypes.Virtaul);
 
             this.setState({
                 expenses: expenses,

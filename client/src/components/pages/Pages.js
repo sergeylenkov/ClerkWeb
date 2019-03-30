@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuTypes } from '../menu/Menu.js';
 import { DashboardPage } from './Dashboard.js';
 import { AccountsPage } from './Accounts.js';
+import { BudgetsPage } from './Budgets.js';
 
 import styles from './Pages.module.css';
 
@@ -36,6 +37,10 @@ export class Pages extends React.Component {
 
             case MenuTypes.Virtual:
                 page = <AccountsPage />
+                break;
+
+            case MenuTypes.Budgets:
+                page = <BudgetsPage />
                 break;
 
             default:

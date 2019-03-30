@@ -38,6 +38,7 @@
     margin: 0 5px;
     padding: 2px 5px;
     font-size: 11px;
+    white-space: nowrap;
     border-radius: 2px;
     color: #151515;
     background-color: #dcf0ff;
