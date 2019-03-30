@@ -10,17 +10,3 @@
     flex-direction: column;
     z-index: 1;
 }
-
-.item {
-    display: flex;
-}
-
-.icon {
-    margin: auto 0;
-    fill: #6f6f6f;
-}
-
-.label {
-    margin: auto 0;
-    font-size: 14px;
-}

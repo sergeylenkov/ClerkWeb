@@ -1,8 +1,9 @@
 import React from 'react';
+import { DataHelper } from '.././../data/Data.js';
 import { ToolbarAlarmButton } from './Alarm/Button.js';
 import { ToolbarAlarmPanel } from './Alarm/Panel.js';
 import { ToolbarAddButton } from './Add/Button.js';
-import { ToolbarAddPanel } from './Add/Panel.js';
+import { ToolbarAddPanel } from './Add/Panel/Panel.js';
 
 import styles from './Toolbar.module.css';
 
@@ -12,13 +13,26 @@ export class Toolbar extends React.Component {
 
 		this.state = {
 			isAlarmPanelVisible: false,
-			isAddPanelVisible: false
+			isAddPanelVisible: false,
+			recent: []
 		}
 
 		this.onAlarm = this.onAlarm.bind(this)
 		this.onAdd = this.onAdd.bind(this)
 		this.onAddExpand = this.onAddExpand.bind(this)
+		this.onTransactionSelect = this.onTransactionSelect.bind(this)
 	}
+
+	componentDidMount() {
+        const data = new DataHelper();
+
+        data.recentTransactions(10).then((items => {
+            this.setState({
+                recent: items
+            });
+        }));
+    }
+
 
 	render() {
 		let alarmPanel = null;
@@ -29,7 +43,7 @@ export class Toolbar extends React.Component {
 		}
 
 		if (this.state.isAddPanelVisible) {
-			addPanel = <ToolbarAddPanel />
+			addPanel = <ToolbarAddPanel items={this.state.recent} onSelect={this.onTransactionSelect} />
 		}
 
     	return (
@@ -55,7 +69,9 @@ export class Toolbar extends React.Component {
 	}
 
 	onAdd() {
-
+		this.setState({
+			isAddPanelVisible: false
+		});
 	}
 
 	onAddExpand() {
@@ -63,6 +79,12 @@ export class Toolbar extends React.Component {
 
 		this.setState({
 			isAddPanelVisible: visible
+		});
+	}
+
+	onTransactionSelect(id) {
+		this.setState({
+			isAddPanelVisible: false
 		});
 	}
 }

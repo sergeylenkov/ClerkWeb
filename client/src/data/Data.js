@@ -94,4 +94,16 @@ export class DataHelper {
             });
         });
     }
+
+    recentTransactions(limit) {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/transactions/recent?limit=${limit}`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                console.log(error);            
+            });
+        });
+    }
 }

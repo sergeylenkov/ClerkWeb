@@ -15,7 +15,7 @@ export class DashboardBalance extends React.Component {
                     })
                 }
 
-                <div className={styles.header}>Credit funds</div>
+                <div className={styles.subheader}>Credit funds</div>
 
                 {
                     this.props.credits.map((item, i) => {

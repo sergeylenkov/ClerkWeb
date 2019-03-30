@@ -20,8 +20,21 @@ describe('GET /transactions', () => {
     it('should get transactions', (done) => {
       	request(app).get(`/transactions?from=${from.toISOString()}&to=${to.toISOString()}`)
         .expect(200)
-        .end(function(err, res) {
+        .end((err, res) => {
         	assert( res.body.items.length > 0, 'must be more then 0');
+          	done();
+        });
+    });
+});
+
+describe('GET /transactions/recent', () => {
+	const limit = 10;
+
+    it('should get recent transactions', (done) => {
+      	request(app).get(`/transactions/recent?limit=${limit}`)
+        .expect(200)
+        .end((err, res) => {
+        	assert( res.body.items.length == 10, 'must be 10');
           	done();
         });
     });
