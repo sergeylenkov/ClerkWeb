@@ -1,0 +1,25 @@
+.container {
+    margin: auto;
+    width: 26px;
+    height: 26px;
+    position: relative;
+    cursor: pointer;
+}
+
+.icon {
+    fill: #6f6f6f;
+}
+
+.badge {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;    
+    font-size: 10px;
+    line-height: 16px;
+    background: #ff2f2f;
+    border: 2px solid #ffffff;
+    color: #f3f3f3;
+}
