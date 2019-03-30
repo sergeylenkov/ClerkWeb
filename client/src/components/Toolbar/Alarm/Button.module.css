@@ -16,10 +16,15 @@
     right: -4px;
     width: 16px;
     height: 16px;
-    border-radius: 50%;    
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.badgeCount {
     font-size: 10px;
     line-height: 16px;
     background: #ff2f2f;
-    border: 2px solid #ffffff;
     color: #f3f3f3;
 }

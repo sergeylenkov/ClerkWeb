@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Icons } from '../../Icon';
+import { Icon, Icons } from '../../Icon.js';
 
 import styles from './Button.module.css';
 

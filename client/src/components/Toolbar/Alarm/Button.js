@@ -14,7 +14,7 @@ export class ToolbarAlarmButton extends React.Component {
         let badge = null;
 
         if (this.props.badgeCount > 0) {
-            badge = <div className={styles.badge}>{this.props.badgeCount}</div>
+            badge = <div className={styles.badge}><div className={styles.badgeCount}>{this.props.badgeCount}</div></div>
         }
 
         return (
