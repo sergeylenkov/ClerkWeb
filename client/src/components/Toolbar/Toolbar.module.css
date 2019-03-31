@@ -7,4 +7,19 @@
     display: flex;
     border-bottom: 1px solid #c9d3d8;
     box-sizing: border-box;
+    display: flex;
+}
+
+.add {
+    margin: 0 auto 0 20px;
+    height: 100%;
+    display: flex;
+    position: relative;
+}
+
+.alarm {
+    margin: 0 20px 0 auto;
+    height: 100%;
+    display: flex;
+    position: relative;
 }

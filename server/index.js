@@ -3,6 +3,10 @@ const path = require('path');
 const dashboard = require('./routes/dashboard');
 const accounts = require('./routes/accounts');
 const transactions = require('./routes/transactions');
+const budgets = require('./routes/budgets');
+const goals = require('./routes/goals');
+const schedulers = require('./routes/schedulers');
+const tags = require('./routes/tags');
 
 const app = express();
 
@@ -16,6 +20,10 @@ app.use(function(req, res, next) {
 app.use('/dashboard', dashboard);
 app.use('/accounts', accounts);
 app.use('/transactions', transactions);
+app.use('/budgets', budgets);
+app.use('/goals', goals);
+app.use('/schedulers', schedulers);
+app.use('/tags', tags);
 
 app.get('*', (req, res) =>{
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

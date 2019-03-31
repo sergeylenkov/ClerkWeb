@@ -12,7 +12,7 @@ export class DashboardBudgets extends React.Component {
                 {
                     this.props.budgets.map((item, i) => {
                         const total = item.amount;
-                        const current = item.expense;
+                        const current = item.balance;
                         const remains = total - current;
                         let percent = current / (total / 100);
 

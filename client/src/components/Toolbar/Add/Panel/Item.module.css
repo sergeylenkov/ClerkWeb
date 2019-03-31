@@ -1,0 +1,49 @@
+.container {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.fromName {
+    margin: auto 0;
+    width: 160px;    
+    font-size: 12px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.toName {
+    margin: auto 0 auto 30px;
+    width: 160px;    
+    font-size: 12px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tags {
+    margin: auto 0;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tag {
+    margin: 0 5px;
+    padding: 2px 5px;
+    font-size: 11px;
+    white-space: nowrap;
+    border-radius: 2px;
+    color: #151515;
+    background-color: #dcf0ff;
+}
+
+.container:hover {
+    background: #f7f7f7;
+}

@@ -12,6 +12,11 @@
     color: #999999;
 }
 
+.subheader {
+    composes: header;
+    margin: 20px 0;
+}
+
 .item {
     margin: 0 0 10px 0;
     font-size: 14px;

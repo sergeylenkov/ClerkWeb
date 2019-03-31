@@ -1,0 +1,38 @@
+.container {
+    margin: auto 0;
+    display: flex;    
+    height: 34px;
+    border-radius: 2px;
+    border: 1px solid #d4d4d4;
+}
+
+.icon {
+    margin: auto 5px auto 10px;
+    width: 20px;
+    height: 20px;
+    fill: #6f6f6f;
+}
+
+.label {
+    margin: auto 10px auto 0;
+    font-size: 12px;
+}
+
+.expandButton {
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    border-left: 1px solid #dedede;
+    display: flex;
+    cursor: pointer;
+}
+
+.arrow {
+    margin: auto;
+    width: 0; 
+    height: 0; 
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;  
+    border-left: 5px solid #6f6f6f;  
+    transform: rotate(90deg);
+}

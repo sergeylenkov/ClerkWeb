@@ -1,9 +1,16 @@
-export const AccountsTypes = {
+export const AccountTypes = {
     Receipts: 0,
     Deposits: 1,
     Expenses: 2,
     Credits: 4,
     Virtaul: 5
+}
+
+export const BudgetTypes = {
+    Week:  0,
+	Month: 1,
+	Year: 2,
+	Custom: 3
 }
 
 export class DataHelper {
@@ -23,7 +30,55 @@ export class DataHelper {
         });
     }
 
-    balance() {
+    budgets(from, to) {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+    
+    goals() {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/goals`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    schedulers() {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/schedulers`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    tags() {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/tags`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    dashboardBalance() {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/balance`).then((response) => {
                 return response.json();
@@ -35,7 +90,7 @@ export class DataHelper {
         });
     }
 
-    expenses(from, to) {
+    dashboardExpenses(from, to) {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/expenses?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
                 return response.json();
@@ -47,7 +102,7 @@ export class DataHelper {
         });
     }
 
-    budgets(from, to) {
+    dashboardBudgets(from, to) {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
                 return response.json();
@@ -59,7 +114,7 @@ export class DataHelper {
         });
     }
 
-    goals() {
+    dashboardGoals() {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/goals`).then((response) => {
                 return response.json();
@@ -71,7 +126,7 @@ export class DataHelper {
         });
     }
 
-    credits() {
+    dashboardCredits() {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/credits`).then((response) => {
                 return response.json();
@@ -94,4 +149,16 @@ export class DataHelper {
             });
         });
     }
+
+    recentTransactions(limit) {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/transactions/recent?limit=${limit}`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                console.log(error);            
+            });
+        });
+    }    
 }

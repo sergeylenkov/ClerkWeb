@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatAmount } from '../../Utils.js';
-import { AccountsTypes } from '../../../data/Data.js';
+import { AccountTypes } from '../../../data/Data.js';
 
 import styles from './Credits.module.css';
 
@@ -16,7 +16,7 @@ export class DashboardCredits extends React.Component {
                         let current = item.balance;
                         let remains = total - current;
 
-                        if (item.type === AccountsTypes.Deposits) {
+                        if (item.type === AccountTypes.Deposits) {
                             current = item.amount + item.balance;
                             remains = item.balance;
                         }
