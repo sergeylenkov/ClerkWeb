@@ -54,6 +54,30 @@ export class DataHelper {
         });
     }
 
+    schedulers() {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/schedulers`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    tags() {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/tags`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
     dashboardBalance() {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/balance`).then((response) => {

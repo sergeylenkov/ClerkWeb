@@ -125,3 +125,25 @@ describe('GET /goals', () => {
 		});
 	});
 });
+
+describe('GET /schedulers', () => {
+	it('should get all schedulers', (done) => {
+	  	request(app).get('/schedulers')
+		.expect(200)
+		.end((err, res) => {
+		  assert( res.body.items.length > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});
+
+describe('GET /tags', () => {
+	it('should get all tags', (done) => {
+	  	request(app).get('/tags')
+		.expect(200)
+		.end((err, res) => {
+		  assert( res.body.items.length > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});
