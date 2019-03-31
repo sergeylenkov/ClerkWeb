@@ -30,9 +30,9 @@ export class DataHelper {
         });
     }
 
-    budgets() {
+    budgets(from, to) {
         return new Promise((resolve, reject) => {
-            fetch(`${this.url}/budgets`).then((response) => {
+            fetch(`${this.url}/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
                 return response.json();
             }).then((data) => {
                 resolve(data.items);
@@ -42,6 +42,18 @@ export class DataHelper {
         });
     }
     
+    goals() {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/goals`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data.items);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
     dashboardBalance() {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/dashboard/balance`).then((response) => {

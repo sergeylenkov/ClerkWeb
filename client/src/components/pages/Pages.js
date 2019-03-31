@@ -3,6 +3,7 @@ import { MenuTypes } from '../menu/Menu.js';
 import { DashboardPage } from './Dashboard.js';
 import { AccountsPage } from './Accounts.js';
 import { BudgetsPage } from './Budgets.js';
+import { GoalsPage } from './Goals.js';
 
 import styles from './Pages.module.css';
 
@@ -41,6 +42,10 @@ export class Pages extends React.Component {
 
             case MenuTypes.Budgets:
                 page = <BudgetsPage />
+                break;
+
+            case MenuTypes.Goals:
+                page = <GoalsPage />
                 break;
 
             default:
