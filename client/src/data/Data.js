@@ -145,7 +145,7 @@ export class DataHelper {
             }).then((data) => {
                 resolve(data.items);
             }).catch((error) => {
-                console.log(error);            
+                reject(error);            
             });
         });
     }
@@ -157,8 +157,26 @@ export class DataHelper {
             }).then((data) => {
                 resolve(data.items);
             }).catch((error) => {
-                console.log(error);            
+                reject(error);            
             });
         });
-    }    
+    }
+
+    saveTransaction(transaction) {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.url}/transactions/`, {
+                method: 'POST',
+                body: JSON.stringify(transaction),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                resolve(data);
+            }).catch((error) => {
+                console.log(error);
+            });
+        });
+    }
 }

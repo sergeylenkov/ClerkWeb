@@ -1,0 +1,40 @@
+.container {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    border: 1px solid #dcdcdc;
+}
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin: 5px 0 5px 10px;
+    font-size: 10px;
+    color: #6f6f6f;
+}
+
+.name {
+    margin: 0 0 5px 10px;
+    font-size: 12px;
+}
+
+.expandButton {
+    margin: 0 0 0 auto;
+    width: 30px;
+    height: 100%;
+    display: flex;
+    cursor: pointer;
+}
+
+.arrow {
+    margin: auto;
+    width: 0; 
+    height: 0; 
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;  
+    border-left: 5px solid #6f6f6f;  
+    transform: rotate(90deg);
+}

@@ -7,7 +7,7 @@ export class AccountsPage extends React.Component {
     render() {
         return (
             <div className={styles.container}>                
-                <TransactionsList/>
+                <TransactionsList />
             </div>
         )
     }
