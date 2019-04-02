@@ -47,17 +47,29 @@ export class TransactionForm extends React.Component {
         }));
     }
 
-    render() {        
+    render() {
+        let fromAccounts = [];
+
+        fromAccounts = fromAccounts.concat(this.state.receipts);
+        fromAccounts = fromAccounts.concat(this.state.deposits);
+
+        let toAccounts = [];
+
+        toAccounts = toAccounts.concat(this.state.deposits)
+        toAccounts = toAccounts.concat(this.state.virtual);
+        toAccounts = toAccounts.concat(this.state.expenses);
+        toAccounts = toAccounts.concat(this.state.credits);
+
         return (                
             <div className={styles.overlay} onClick={this.onClose}>
                 <div className={styles.container} onClick={this.onFormClick}>
                     <div className={styles.fields}>
                         <div className={styles.accounts}>
                             <div className={styles.fromAccount}>
-                                <TransactionAccountField title={'From account'} account={this.state.fromAccount} listAccounts={this.state.receipts} />
+                                <TransactionAccountField title={'From account'} account={this.state.fromAccount} listAccounts={fromAccounts} />
                             </div>
                             <div className={styles.toAccount}>
-                                <TransactionAccountField title={'To account'} account={this.state.toAccount} listAccounts={this.state.expenses} />
+                                <TransactionAccountField title={'To account'} account={this.state.toAccount} listAccounts={toAccounts} />
                             </div>
                         </div>
 
