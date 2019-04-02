@@ -101,6 +101,7 @@ export class TransactionForm extends React.Component {
         const data = new DataHelper();
 
         const transaction = {
+            id: -1,
             fromAccount: this.state.fromAccount.id,
             toAccount: this.state.toAccount.id,
             fromAmount: 0,
@@ -109,7 +110,7 @@ export class TransactionForm extends React.Component {
             date: new moment().format("YYYY-MM-DD")
         }
 
-        data.saveTransaction({ transaction }).then((result) => {
+        data.saveTransaction(transaction).then((result) => {
             console.log(result);
         });
     }

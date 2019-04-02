@@ -147,3 +147,25 @@ describe('GET /tags', () => {
 		});
 	});
 });
+
+describe('POST /transactions', () => {
+	const transaction = {
+		id: -1,
+		fromAccount: 1,
+		toAccount: 2,
+		fromAmount: 100,
+		toAmount: 100,
+		tags: ['1', '2'],
+		date: new Date('2019-01-01')
+	}
+
+	it('should add new transaction', (done) => {
+		request(app).post('/transactions')
+		.send(transaction)  
+		.expect(200)
+		.end((err, res) => {
+		  assert( res.body.id > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});

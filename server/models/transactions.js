@@ -44,6 +44,13 @@ module.exports.getRecentTransactions = (limit) => {
     });
 }
 
+module.exports.saveTransaction = (transaction) => {
+    return new Promise((resolve, reject) => {
+        transaction.id = 100;
+        resolve(transaction);
+    });
+}
+
 function _getTransactions(from, to) {
     return new Promise((resolve, reject) => {
         db.all('SELECT a1.name AS from_account_name, a1.type_id AS from_type_id, a2.name AS to_account_name, a2.type_id AS to_type_id, t.*\
