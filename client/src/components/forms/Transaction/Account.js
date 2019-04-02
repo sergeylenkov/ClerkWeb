@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Icons } from '../../Icon.js';
+import { Icon, getAccountIcon } from '../../Icon.js';
+import { TransactionAccountsList } from'./List.js';
 
 import styles from './Account.module.css';
 
@@ -8,7 +9,8 @@ export class TransactionAccountField extends React.Component {
         super(props);
         
         this.state = {
-            isExpanded: false
+            isExpanded: false,
+            account: null
         }
 
         this.onExpand = this.onExpand.bind(this);
@@ -16,18 +18,34 @@ export class TransactionAccountField extends React.Component {
     }
 
     render() {
+        let list = null;
+
+        if (this.state.isExpanded) {
+            list = <TransactionAccountsList accounts={this.props.listAccounts} onSelect={this.onSelect}/>
+        }
+
+        let account = this.props.account;
+
+        if (this.state.account) {
+            account = this.state.account;
+        }
+
         return (
             <div className={styles.container}>
                 <div className={styles.placeholder}>
                     <div className={styles.title}>{this.props.title}</div>
-                    <div className={styles.name}>{this.props.account.name}</div>
+                    <div className={styles.account}>
+                        <div className={styles.icon}><Icon svg={getAccountIcon(account.icon)}/></div>
+                        <div className={styles.name}>{account.name}</div>
+                    </div>
                 </div>
                 <div className={styles.expandButton} onClick={this.onExpand}>
                     <div className={styles.arrow}></div>
                 </div>
+                {list}
             </div>
         );
-    }
+    }    
 
     onExpand(e) {
         e.stopPropagation();
@@ -39,7 +57,10 @@ export class TransactionAccountField extends React.Component {
         });
     }
 
-    onSelect() {
-        this.props.onSelect();
+    onSelect(account) {
+        this.setState({
+            isExpanded: false,
+            account: account
+        });
     }
 }

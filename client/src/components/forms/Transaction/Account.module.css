@@ -3,6 +3,7 @@
     width: 100%;
     display: flex;
     border: 1px solid #dcdcdc;
+    position: relative;
 }
 
 .placeholder {
@@ -16,9 +17,21 @@
     color: #6f6f6f;
 }
 
-.name {
+.account {
     margin: 0 0 5px 10px;
+    display: flex;
+}
+
+.name {
+    margin: auto 0;    
     font-size: 12px;
+}
+
+.icon {
+    margin: auto 5px auto 0;
+    width: 20px;
+    height: 20px;
+    fill: #6f6f6f;
 }
 
 .expandButton {

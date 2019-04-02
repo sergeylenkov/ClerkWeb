@@ -31,15 +31,38 @@
 }
 
 .fromAccount {
-    margin: 0 10px 0 0;
+    margin: 0 5px 0 0;
     flex-basis: 50%;
     display: flex;
 }
 
 .toAccount {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 5px;
     flex-basis: 50%;
     display: flex;
+}
+
+.amounts {
+    margin: 20px 0 0 0;
+    display: flex;
+}
+
+.fromAmount {
+    margin: 0;
+    flex-basis: 25%;
+    display: flex;
+}
+
+.toAmount {
+    margin: 0;
+    flex-basis: 25%;
+    display: flex;
+}
+
+.amountDivider {
+    margin: auto 10px;
+    font-size: 16px;
+    color: #a7a7a7;
 }
 
 .buttons {

@@ -105,6 +105,15 @@ export const MenuIcons = {
     }
 }
 
+export function getAccountIcon(id) {
+    if (AccountsIcons[id]) {
+        return AccountsIcons[id];
+    }
+
+    return AccountsIcons.default;
+
+}
+
 export class Icon extends React.Component {
     render() {
         return (            

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataHelper, AccountTypes } from '../../data/Data.js';
 import { MenuButton } from './Button.js';
-import { MenuIcons, AccountsIcons } from '../Icon.js';
+import { MenuIcons, getAccountIcon } from '../Icon.js';
 import { MenuTypes } from './Menu.js';
 
 import styles from './Accounts.module.css';
@@ -65,7 +65,7 @@ export class MenuAccounts extends React.Component {
                     <div className={`${styles.group} ${this.state.isReceiptsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.receipts.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={getAccountIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
@@ -75,7 +75,7 @@ export class MenuAccounts extends React.Component {
                     <div className={`${styles.group} ${this.state.isDepositsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.deposits.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={getAccountIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
@@ -85,7 +85,7 @@ export class MenuAccounts extends React.Component {
                     <div className={`${styles.group} ${this.state.isExpensesExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.expenses.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={getAccountIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
@@ -95,7 +95,7 @@ export class MenuAccounts extends React.Component {
                     <div className={`${styles.group} ${this.state.isCreditsExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.credits.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={getAccountIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
@@ -105,21 +105,13 @@ export class MenuAccounts extends React.Component {
                     <div className={`${styles.group} ${this.state.isVirtualExpanded ? styles.expanded : ''}`}>
                         {
                             this.state.virtual.map((item, i) => {
-                                return (<MenuButton key={item.id} value={item.id} icon={this.getIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
+                                return (<MenuButton key={item.id} value={item.id} icon={getAccountIcon(item.icon)} title={item.name} onClick={this.onAccountSelect} />)
                             })
                         }
                     </div>
                 </div>
             </div>
         );        
-    }
-
-    getIcon(id) {
-        if (AccountsIcons[id]) {
-            return AccountsIcons[id];
-        }
-
-        return AccountsIcons.default;
     }
 
     onAccountsExpand(expanded) {
