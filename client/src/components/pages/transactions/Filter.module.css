@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+}
+
+.button {
+    margin: 0;
+    padding: 0 5px;
+    height: 20px;
+    display: flex;    
+    background: #3568ff;
+    border-radius: 2px;
+}
+
+.label {
+    margin: auto 0;
+    font-size: 12px;
+    color: #ffffff;
+}

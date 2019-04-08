@@ -3,7 +3,6 @@
     max-height: 100%;
     padding: 0;
     display: flex;
-    box-sizing: border-box;
-    overflow-x: hidden;        
-    overflow-y: auto;
+    flex-direction: column;
+    box-sizing: border-box;    
 }
