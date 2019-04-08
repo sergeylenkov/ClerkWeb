@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuTypes } from '../menu/Menu.js';
 import { DashboardPage } from './Dashboard.js';
+import { TransactionsPage } from './Transactions.js';
 import { AccountsPage } from './Accounts.js';
 import { BudgetsPage } from './Budgets.js';
 import { GoalsPage } from './Goals.js';
@@ -18,27 +19,11 @@ export class Pages extends React.Component {
                 page = <DashboardPage />
                 break;
 
+            case MenuTypes.Transactions:
+                page = <TransactionsPage />
+                break;
+
             case MenuTypes.Accounts:
-                page = <AccountsPage />
-                break;
-
-            case MenuTypes.Receipts:
-                page = <AccountsPage />
-                break;
-
-            case MenuTypes.Deposits:
-                page = <AccountsPage />
-                break;
-
-            case MenuTypes.Expenses:
-                page = <AccountsPage />
-                break;
-
-            case MenuTypes.Credits:
-                page = <AccountsPage />
-                break;
-
-            case MenuTypes.Virtual:
                 page = <AccountsPage />
                 break;
 

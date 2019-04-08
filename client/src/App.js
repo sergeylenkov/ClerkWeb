@@ -15,7 +15,7 @@ export default class App extends React.Component {
 			transactionFormVisible: false
 		}
 		
-		this.pageDidChanged = this.pageDidChanged.bind(this)
+		this.onMenuChange = this.onMenuChange.bind(this)
 		this.onAddTransaction = this.onAddTransaction.bind(this)
 		this.onCloseTransaction = this.onCloseTransaction.bind(this)
 	}
@@ -29,15 +29,15 @@ export default class App extends React.Component {
 
     	return (
     	  	<div className={styles.container}>
-			  	<Toolbar onAddTransaction={this.onAddTransaction}/>
-        		<Menu onChange={this.pageDidChanged}/>
-        		<Pages activePage={this.state.activePage}/>
+			  	<Toolbar onAddTransaction={this.onAddTransaction} />
+        		<Menu onChange={this.onMenuChange} />
+        		<Pages activePage={this.state.activePage} />
 				{transactionForm}
       		</div>
     	);
   	}
 
-  	pageDidChanged(type) {
+  	onMenuChange(type) {
     	this.setState({
 			activePage: type
 		});
