@@ -65,6 +65,22 @@
     color: #a7a7a7;
 }
 
+.date {
+    margin: 20px 0 0 0;
+    display: flex;
+}
+
+.dateLabel {
+    margin: auto 10px auto 0;
+    font-size: 14px;
+}
+
+.dateField {
+    margin: auto 0;
+    font-size: 14px;
+    outline: none;
+}
+
 .buttons {
     margin: auto 0 0 0;
     width: 100%;

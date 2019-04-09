@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 import { DataHelper, AccountTypes } from '../../../data/Data.js';
 import { TransactionAccountField } from './Account.js';
 import { TransactionAmountField } from './Amount.js';
@@ -15,14 +17,15 @@ export class TransactionForm extends React.Component {
             toAccount: { id: -1, name: '' },
             fromAmount: 0,
             toAmount: 0,
+            date: undefined,
             tags: []
         }
 
-        this.onClose = this.onClose.bind(this)
-        this.onFormClick = this.onFormClick.bind(this)
-        this.onCancel = this.onCancel.bind(this)
-        this.onSave = this.onSave.bind(this)
-        this.onExpandFrom = this.onExpandFrom.bind(this)
+        this.onClose = this.onClose.bind(this);
+        this.onFormClick = this.onFormClick.bind(this);
+        this.onCancel = this.onCancel.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onDayChange = this.onDayChange.bind(this);
     }
 
     componentDidMount() {
@@ -55,7 +58,7 @@ export class TransactionForm extends React.Component {
 
         let toAccounts = [];
 
-        toAccounts = toAccounts.concat(this.state.deposits)
+        toAccounts = toAccounts.concat(this.state.deposits);
         toAccounts = toAccounts.concat(this.state.virtual);
         toAccounts = toAccounts.concat(this.state.expenses);
         toAccounts = toAccounts.concat(this.state.credits);
@@ -82,6 +85,11 @@ export class TransactionForm extends React.Component {
                                 <TransactionAmountField title={'To Amount'} value={0} />
                             </div>
                         </div>
+
+                        <div className={styles.date}>
+                            <div className={styles.dateLabel}>{'Date'}</div>
+                            <DayPickerInput inputProps={{ className: styles.dateField }} value={this.state.date} dayPickerProps={{ selectedDays: this.state.date, todayButton: 'Today', }} onDayChange={this.handleDayChange} />
+                        </div>
                     </div>
 
                     <div className={styles.buttons}>
@@ -93,8 +101,10 @@ export class TransactionForm extends React.Component {
         )
     }
 
-    onExpandFrom() {
-
+    onDayChange(date) {
+        this.setState({
+            date: date
+        });
     }
 
     onClose() {
