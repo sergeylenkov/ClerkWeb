@@ -5,6 +5,10 @@ import styles from './Expenses.module.css';
 
 export class DashboardExpenses extends React.Component {
     render() {
+        if (this.props.expenses.length === 0) {
+            return null;
+        }
+
         return (                
             <div className={styles.container}>
                 <div className={styles.header}>Expenses</div>

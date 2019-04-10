@@ -72,6 +72,8 @@ export class Toolbar extends React.Component {
 		this.setState({
 			isAddPanelVisible: false
 		});
+
+		this.props.onAddTransaction();
 	}
 
 	onAddExpand() {
@@ -86,5 +88,7 @@ export class Toolbar extends React.Component {
 		this.setState({
 			isAddPanelVisible: false
 		});
+
+		this.props.onAddTransaction(id);
 	}
 }

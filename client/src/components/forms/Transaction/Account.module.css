@@ -1,0 +1,53 @@
+.container {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    border: 1px solid #dcdcdc;
+    position: relative;
+}
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin: 5px 0 5px 10px;
+    font-size: 10px;
+    color: #6f6f6f;
+}
+
+.account {
+    margin: 0 0 5px 10px;
+    display: flex;
+}
+
+.name {
+    margin: auto 0;    
+    font-size: 12px;
+}
+
+.icon {
+    margin: auto 5px auto 0;
+    width: 20px;
+    height: 20px;
+    fill: #6f6f6f;
+}
+
+.expandButton {
+    margin: 0 0 0 auto;
+    width: 30px;
+    height: 100%;
+    display: flex;
+    cursor: pointer;
+}
+
+.arrow {
+    margin: auto;
+    width: 0; 
+    height: 0; 
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;  
+    border-left: 5px solid #6f6f6f;  
+    transform: rotate(90deg);
+}

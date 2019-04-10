@@ -24,4 +24,12 @@ router.get('/recent', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+    data.saveTransaction(req.body).then((transaction) => {
+        return res.json(transaction);
+    }).catch((error) => {
+        res.status(500).send({ error: error });
+    });
+});
+
 module.exports = router;
