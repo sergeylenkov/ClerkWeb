@@ -1,12 +1,13 @@
 import React from 'react';
 import moment from 'moment';
-import { DataHelper } from '../../data/Data.js';
-import { DashboardBalance } from './dashboard/Balance';
-import { DashboardDeposits } from './dashboard/Deposits.js';
-import { DashboardExpenses } from './dashboard/Expenses.js';
-import { DashboardBudgets } from './dashboard/Budgets.js';
-import { DashboardGoals } from './dashboard/Goals.js';
-import { DashboardCredits } from './dashboard/Credits.js';
+import { DataHelper } from '../../../data/Data.js';
+import { DashboardBalance } from './Balance';
+import { DashboardDeposits } from './Deposits.js';
+import { DashboardExpenses } from './Expenses.js';
+import { DashboardBudgets } from './Budgets.js';
+import { DashboardGoals } from './Goals.js';
+import { DashboardCredits } from './Credits.js';
+import { DashboardSchedulers } from './Schedulers.js';
 
 import styles from './Dashboard.module.css';
 
@@ -21,7 +22,8 @@ export class DashboardPage extends React.Component {
             expenses: [],
             budgets: [],
             goals: [],
-            credits: []
+            credits: [],
+            schedulers: []
         }
     }
 
@@ -57,8 +59,9 @@ export class DashboardPage extends React.Component {
             });       
         });
 
-        const from = new moment().startOf('month');
-        const to = new moment().endOf('month');
+        let from = moment().startOf('month');
+        let to = moment().endOf('month');
+        
 
         data.dashboardExpenses(from, to).then((expenses) => {
             this.setState({
@@ -83,19 +86,27 @@ export class DashboardPage extends React.Component {
                 credits: credits
             });
         });
+
+        from = moment();
+        to = moment().add(31, 'd');
+
+        data.dashboardSchedulers(from, to).then((schedulers) => {
+            this.setState({
+                schedulers: schedulers
+            });
+        });
     }
 
     render() {
         return (
             <div className={styles.container}>
-                <div className={styles.balance}>
-                    <DashboardBalance own={this.state.ownFunds} credits={this.state.creditFunds} />
-                    <DashboardDeposits accounts={this.state.accounts} />
-                </div>                
+                <DashboardBalance own={this.state.ownFunds} credits={this.state.creditFunds} />
+                <DashboardDeposits accounts={this.state.accounts} />
                 <DashboardExpenses expenses={this.state.expenses} />
                 <DashboardBudgets budgets={this.state.budgets} />
                 <DashboardGoals goals={this.state.goals} />
                 <DashboardCredits credits={this.state.credits} />
+                <DashboardSchedulers schedulers={this.state.schedulers} />
             </div>
         );
     }

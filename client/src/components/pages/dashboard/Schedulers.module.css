@@ -1,0 +1,94 @@
+.container {
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;    
+    border: 2px solid #e4e4e4;
+    background: #ffffff;
+}
+
+.header {
+    margin: 20px 0 20px 0;
+    font-size: 18px;
+    color: #000000;
+}
+
+.calendar {
+    width: 100%;
+    display: flex;
+}
+
+.item {
+    margin: 0;
+    min-width: 16px;
+    flex-basis: 3.3%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.progress {
+    margin: 0 auto;
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+
+.fill {
+    margin: auto auto 0 auto;
+    width: 4px;
+    background: #0ac775;
+}
+
+.line {
+    margin: 0;
+    width: 100%;
+    height: 1px;
+    background: #d5d5d5;
+}
+
+.tick {
+    margin: 0 auto;
+    height: 4px;
+    width: 2px;
+    background: #d5d5d5;
+}
+
+.day {
+    margin: 0 auto;
+    font-size: 11px;
+    color: #979797;
+}
+
+.day.weekDay {
+    color: #d5d5d5;
+}
+
+.list {
+    margin: 20px 0 0 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.listItem {
+    width: 100%;
+    height: 30px;
+    display: flex;
+}
+
+.itemDate {
+    margin: auto 0;
+    width: 80px;
+    font-size: 14px;
+}
+
+.itemName {
+    margin: auto 0;
+    font-size: 14px;
+}
+
+.itemAmount {
+    margin: auto 0 auto auto;
+    font-size: 14px;
+}

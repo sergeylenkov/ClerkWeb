@@ -101,6 +101,20 @@ describe('GET /dashboard/credits', () => {
 	});
 });
 
+describe('GET /dashboard/schedulers', () => {
+	const from = new Date('2019-01-01T00:00:00');
+	const to = new Date('2019-02-31T00:00:00');
+
+  	it(`should get dashboard schedulers from ${from.toDateString()} to ${to.toDateString()}`, (done) => {
+    	request(app).get(`/dashboard/schedulers?from=${from.toISOString()}&to=${to.toISOString()}`)
+      	.expect(200)
+      	.end((err, res) => {
+        	assert( res.body.items.length > 0, 'must be more then 0');
+        	done();
+      	});
+  	});
+});
+
 describe('GET /budgets', () => {
 	const from = new Date('2018-01-01T00:00:00');
 	const to = new Date('2019-12-12T00:00:00');

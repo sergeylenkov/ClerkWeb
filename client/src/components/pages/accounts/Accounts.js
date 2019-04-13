@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccountsList } from './accounts/List.js';
+import { AccountsList } from './List.js';
 
 import styles from './Accounts.module.css';
 
