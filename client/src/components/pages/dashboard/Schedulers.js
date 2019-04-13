@@ -9,10 +9,12 @@ export class DashboardSchedulers extends React.Component {
         const from = moment();
         const days = [];
         const daysSum = {};
+        const months = {};
         let max = 0;
 
-        for (let i = 0; i <= 30; i++) {            
-            days.push(from.clone().add(i, 'd'));
+        for (let i = 0; i <= 30; i++) {
+            const day = from.clone().add(i, 'd');
+            days.push(day);
         }
         
         this.props.schedulers.forEach(item => {
@@ -36,9 +38,14 @@ export class DashboardSchedulers extends React.Component {
                     {
                         days.map((day, i) => {                            
                             let weekDay = false;
-                            
+                            let today = false;
+
                             if (day.day() === 6 || day.day() === 0) {
                                 weekDay = true;
+                            }
+
+                            if (day.isSame(moment())) {
+                                today = true;
                             }
 
                             let progress = null;
@@ -53,25 +60,34 @@ export class DashboardSchedulers extends React.Component {
                                 progress = <div className={styles.fill} style={{ height: `${height}px` }}></div>
                             }
                             
+                            let month = null;
+
+                            if (!months[day.format('YYYY-MM')]) {
+                                months[day.format('YYYY-MM')] = true;
+
+                                month = <div className={styles.month}>{day.format('MMM')}</div>
+                            }
+
                             return (<div key={i} className={styles.item}>
                                         <div className={styles.progress}>{progress}</div>
                                         <div className={styles.line}></div>
-                                        <div className={styles.dayTick}></div>
-                                        <div className={`${styles.day} ${weekDay ? styles.weekDay : ''}`}>{day.date()}</div>
+                                        <div className={styles.tick}></div>
+                                        <div className={`${styles.day} ${weekDay ? styles.weekDay : ''} ${today ? styles.today : ''}`}>{day.date()}</div>
+                                        {month}
                                     </div>)
                         })
                     }                    
                 </div>
-                <div className={styles.list}>
+                <div className={styles.table}>
                 {
                     this.props.schedulers.map(item => {
                         const date = moment(item.date);
-                        let formattedDate = date.format('MMM D');
+                        let formattedDate = date.format('ddd, MMM D');
 
-                        return (<div key={item.id} className={styles.listItem}>
-                            <div className={styles.itemDate}>{formattedDate}</div>
-                            <div className={styles.itemName}>{item.name}</div>
-                            <div className={styles.itemAmount}>{formatAmount(item.toAmount)}</div>
+                        return (<div key={item.id} className={styles.row}>
+                            <div className={styles.cell}><div className={styles.itemDate}>{formattedDate}</div></div>
+                            <div className={`${styles.cell} ${styles.name}`}><div className={styles.itemName}>{item.name}</div></div>
+                            <div className={styles.cell}><div className={styles.itemAmount}>{formatAmount(item.toAmount)}</div></div>
                         </div>)
                     })
                 }
