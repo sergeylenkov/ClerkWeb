@@ -91,7 +91,6 @@
     font-weight: bold;
     bottom: -14px;
     white-space: nowrap;
-    transform: translateX(-50%);
 }
 
 .progress {

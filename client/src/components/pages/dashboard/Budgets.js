@@ -10,6 +10,7 @@ export class DashboardBudgets extends React.Component {
 
         this.tableElement = null;
         this.headerElement = null;
+        this.currentElements = {};
 
         this.refTableCallback = element => {
             this.tableElement = element;
@@ -28,18 +29,19 @@ export class DashboardBudgets extends React.Component {
         let today = moment().date();
         let progressOffset = 0;
         let dayLineOffset = 0;
+        let headerWidth = 0;
 
         if (this.headerElement && this.tableElement) {
             const rect = this.tableElement.getBoundingClientRect();
-            const headerRect = this.headerElement.getBoundingClientRect();
-            
+            const headerRect = this.headerElement.getBoundingClientRect();            
             const dayPercent = (today / daysInMonth) * 100;
 
+            headerWidth = headerRect.width;            
             progressOffset = (headerRect.left - rect.left) + 10;
-            dayLineOffset = headerRect.width * (dayPercent / 100);
+            dayLineOffset = headerWidth * (dayPercent / 100);
 
-            if (dayLineOffset > headerRect.width) {
-                dayLineOffset = headerRect.width;
+            if (dayLineOffset > headerWidth) {
+                dayLineOffset = headerWidth;
             }
         }
 
@@ -76,19 +78,6 @@ export class DashboardBudgets extends React.Component {
                         const progressStyle = {
                             width: `${percent}%`
                         }
-
-                        let currentStyle = {}
-
-                        if (percent < 85) {
-                            currentStyle = {
-                                left: `${percent}%`
-                            }
-                        } else {
-                            currentStyle = {
-                                right: '0',
-                                transform: 'none'
-                            }
-                        }
                         
                         let className = '';
 
@@ -97,12 +86,39 @@ export class DashboardBudgets extends React.Component {
                         } else if (percent >= 90) {
                             className += ` ${styles.over}`;
                         }
+                        
+                        let currentStyle = {
+                            left: '0'
+                        }
+
+                        if (this.currentElements[item.id]) {
+                            const element = this.currentElements[item.id];
+                            const rect = element.getBoundingClientRect();
+
+                            let offset = headerWidth * (percent / 100);
+                            offset = offset - (rect.width / 2);
+
+                            if (offset < 0) {
+                                offset = 0;
+                            } else if (offset + rect.width > headerWidth) {
+                                offset = headerWidth - rect.width;
+                            }
+
+                            currentStyle = {
+                                left: `${offset}px`
+                            }
+                        }
 
                         return (
                             <div key={item.id} className={`${styles.row} ${className}`}>
                                 <div className={styles.cell}><div className={styles.name}>{item.name}</div></div>
                                 <div className={styles.cell}>
-                                    <div className={styles.progress}><div className={styles.fill} style={progressStyle}></div><div className={styles.current} style={currentStyle}>{formatAmount(current, '', false)}</div></div>
+                                    <div className={styles.progress}>
+                                        <div className={styles.fill} style={progressStyle}></div>
+                                        <div className={styles.current} style={currentStyle} ref={element => {
+                                            this.currentElements[item.id] = element;
+                                        }}>{formatAmount(current, '', false)}</div>
+                                    </div>
                                 </div>
                                 <div className={styles.cell}><div className={styles.amount}>{formatAmount(total, '', false)}</div></div>
                                 <div className={styles.cell}><div className={styles.remain}>{formatAmount(remain, '', false)}</div></div>
