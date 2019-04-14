@@ -87,7 +87,7 @@ export class DashboardSchedulers extends React.Component {
                         return (<div key={item.id} className={styles.row}>
                             <div className={styles.cell}><div className={styles.itemDate}>{formattedDate}</div></div>
                             <div className={`${styles.cell} ${styles.name}`}><div className={styles.itemName}>{item.name}</div></div>
-                            <div className={styles.cell}><div className={styles.itemAmount}>{formatAmount(item.toAmount)}</div></div>
+                            <div className={styles.cell}><div className={styles.itemAmount}>{formatAmount(item.toAmount, '', false)}</div></div>
                         </div>)
                     })
                 }

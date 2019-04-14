@@ -7,7 +7,7 @@ const currencySign = {
     'EUR': '€'
 }
 
-export function formatAmount(value, currency='RUB') {    
+export function formatAmount(value, currency='RUB', withFraction=true) {    
     value = value.toFixed(2).toString();
     value = value.trim().replace(' ', '').replace(',', '.');
     
@@ -32,7 +32,11 @@ export function formatAmount(value, currency='RUB') {
     
     const sign = currencySign[currency];
     
-    return <span><span>{formatted}</span><span className='fraction'>.{fraction}</span> {sign}</span>;
+    if (withFraction) {
+        return <span><span>{formatted}</span><span className='fraction'>.{fraction}</span> {sign}</span>
+    }
+
+    return <span><span>{formatted}</span> {sign}</span>
 }
 
 export function formatDate(date) {
