@@ -4,12 +4,15 @@
     padding: 0;
     box-sizing: border-box;
     display: flex;
-    flex-wrap: wrap;
-    overflow-x: hidden;
-    overflow-y: auto;
+    flex-wrap: wrap;    
 }
 
-.balance {
+.left {
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
     display: flex;
     flex-direction: column;
 }

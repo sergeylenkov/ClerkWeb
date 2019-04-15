@@ -1,6 +1,6 @@
 import React from 'react';
-import { TransactionsList } from './transactions/List.js';
-import { TransactionsFilter } from './transactions/Filter.js';
+import { TransactionsList } from './List.js';
+import { TransactionsFilter } from './Filter.js';
 
 import styles from './Transactions.module.css';
 

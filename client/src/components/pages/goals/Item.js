@@ -6,7 +6,7 @@ import styles from './Item.module.css';
 
 export class GoalsListItem extends React.Component {
     render() {
-        let date = moment(this.props.item.date);
+        let date = moment(this.props.item.date, 'YYYY-MM-DD');
 
         return (                
             <div className={styles.container}>

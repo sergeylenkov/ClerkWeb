@@ -1,5 +1,5 @@
 import React from 'react';
-import { SchedulersList } from './schedulers/List.js';
+import { SchedulersList } from './List.js';
 
 import styles from './Schedulers.module.css';
 

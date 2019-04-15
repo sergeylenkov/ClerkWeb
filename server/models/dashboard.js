@@ -114,6 +114,25 @@ module.exports.getCredits = () => {
     });
 }
 
+module.exports.getSchedulers = function(from, to) {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT s.id, s.name, s.from_account_amount, s.to_account_amount, s.next_date FROM schedulers s WHERE s.next_date >= ? AND s.next_date <= ? AND s.active = 1 ORDER BY s.id', [from, to], (err, rows) => {
+            if (err) {                
+                reject(err);
+            } else {
+                let items = [];
+
+                rows.forEach((row) => {
+                    let item = { id: row.id, name: row.name, date: row.next_date, fromAmount: row.from_account_amount, toAmount: row.to_account_amount };
+                    items.push(item);
+                });
+
+                resolve(items);
+            }
+        });
+    });
+}
+
 function _getBudgets() {
     return new Promise((resolve, reject) => {
         db.all('SELECT b.id, b.name, b.amount, b.account_ids FROM budgets b', [], (err, rows) => {
