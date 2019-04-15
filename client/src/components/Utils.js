@@ -40,8 +40,6 @@ export function formatAmount(value, currency='RUB', withFraction=true) {
 }
 
 export function formatDate(date) {
-    date = moment(date);
-
     const now = moment();
     const week = moment().startOf('week');
     
@@ -59,4 +57,12 @@ export function formatDate(date) {
     }
 
     return <span>{formatted}</span>
+}
+
+export function isSameDate(date1, date2) {
+    if (date1.year() === date2.year() && date1.month() === date2.month() && date1.date() === date2.date()) {
+        return true;
+    }
+
+    return false;
 }

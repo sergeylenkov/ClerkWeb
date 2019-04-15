@@ -22,10 +22,7 @@ export class DashboardBudgets extends React.Component {
     }
 
     render() {
-        let from = moment().startOf('month');
-        let to = moment().endOf('month');
-
-        let daysInMonth = to.subtract(from).date();
+        let daysInMonth = moment().endOf('month').date();
         let today = moment().date();
         let progressOffset = 0;
         let dayLineOffset = 0;

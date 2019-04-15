@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { formatAmount } from '../../Utils.js';
+import { formatAmount, isSameDate } from '../../Utils.js';
 
 import styles from './Schedulers.module.css';
 
@@ -43,8 +43,8 @@ export class DashboardSchedulers extends React.Component {
                             if (day.day() === 6 || day.day() === 0) {
                                 weekDay = true;
                             }
-
-                            if (day.isSame(moment())) {
+                            
+                            if (isSameDate(day, moment())) {
                                 today = true;
                             }
 
@@ -80,8 +80,8 @@ export class DashboardSchedulers extends React.Component {
                 </div>
                 <div className={styles.table}>
                 {
-                    this.props.schedulers.map(item => {
-                        const date = moment(item.date);
+                    this.props.schedulers.map(item => {                        
+                        const date = moment(item.date, 'YYYY-MM-DD');
                         let formattedDate = date.format('ddd, MMM D');
 
                         return (<div key={item.id} className={styles.row}>
