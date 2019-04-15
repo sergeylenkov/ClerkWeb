@@ -8,7 +8,7 @@
 }
 
 .header {
-    margin: 20px 0 20px 0;
+    margin: 20px 0 10px 0;
     font-size: 18px;
     color: #000000;
 }
@@ -19,7 +19,7 @@
 
 .table {
     position: relative;
-    margin: 20px 0 0 0;
+    margin: 20px 0;
     width: 100%;
     display: table;
     border-collapse: collapse;
@@ -107,18 +107,10 @@
     background: #6bcc83;
 }
 
-.over .fill {
-    background: #e24a0e;
-}
-
-.over .remain {
-    color: #e24a0e;
-}
-
 .dayLine {
     position: absolute;
     top: 40px;
-    bottom: -10px;
+    bottom: -5px;
     width: 1px;
     background: #cccccc;
     z-index: 1;
@@ -126,11 +118,23 @@
 
 .day {
     position: absolute;
-    bottom: -30px;
+    bottom: -25px;
     padding: 2px 5px;    
     font-size: 10px;
     color: #ffffff;
     background: #999999;
     text-transform: uppercase;
     transform: translateX(-50%);
+}
+
+.half {
+
+}
+
+.over .fill {
+    background: #e24a0e;
+}
+
+.over .remain {
+    color: #e24a0e;
 }

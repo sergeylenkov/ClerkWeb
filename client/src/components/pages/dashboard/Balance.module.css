@@ -8,17 +8,28 @@
 }
 
 .header {
-    margin: 0 0 20px 0;
-    font-size: 14px;
-    color: #999999;
+    margin: 20px 0 20px 0;
+    font-size: 18px;
+    color: #000000;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+}
+
+.group {
+    width: 50%;
 }
 
 .subheader {
-    composes: header;
-    margin: 20px 0;
+    margin: 20px 0 10px 0;
+    font-size: 12px;
+    color: #8f8f8f;
+    text-transform: uppercase;
 }
 
 .item {
     margin: 0 0 10px 0;
-    font-size: 14px;
+    font-size: 16px;
 }

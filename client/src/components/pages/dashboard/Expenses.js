@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { formatAmount } from '../../Utils.js';
 
 import styles from './Expenses.module.css';
@@ -11,7 +12,7 @@ export class DashboardExpenses extends React.Component {
 
         return (                
             <div className={styles.container}>
-                <div className={styles.header}>Expenses</div>
+                <div className={styles.header}>Expenses <span className={styles.month}>{moment().format('MMMM')}</span></div>
 
                 {
                     this.props.expenses.map((item, i) => {
