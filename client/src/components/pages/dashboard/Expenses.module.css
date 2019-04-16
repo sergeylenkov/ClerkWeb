@@ -20,17 +20,28 @@
 .item {
     margin: 0 0 10px 0;    
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.info {
+    margin: 0 0 5px 0;
+    display: flex;
 }
 
 .name {
     margin: auto auto auto 0;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .amount {
     margin: auto 0;
     width: 120px;
-    font-size: 14px;
+    font-size: 12px;
     text-align: right;
+}
+
+.progress {    
+    width: 0;
+    height: 2px;
+    background: #6bcc83;
 }
