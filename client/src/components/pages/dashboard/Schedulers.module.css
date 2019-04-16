@@ -2,9 +2,7 @@
     margin: 20px;
     padding: 20px;
     display: flex;
-    flex-direction: column;    
-    border: 2px solid #e4e4e4;
-    background: #ffffff;
+    flex-direction: column;
 }
 
 .header {
