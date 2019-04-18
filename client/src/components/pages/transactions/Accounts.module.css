@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin: 20px 10px 10px 10px;
+    display: flex;
+    height: 40px;
+    background: #f7f7f7;
+}
+
+.headerLabel {
+    margin: auto 0;
+    font-size: 14px;
+    font-weight: bold;  
+}
+
+.item {
+    margin: 5px 10px;
+    display: flex;
+}
+
+.label {
+    margin: auto 0;
+    font-size: 12px;
+}

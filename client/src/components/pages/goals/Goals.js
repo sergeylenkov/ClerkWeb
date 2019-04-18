@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoalsList } from './goals/List.js';
+import { GoalsList } from './List.js';
 
 import styles from './Goals.module.css';
 

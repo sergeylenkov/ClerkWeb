@@ -1,5 +1,5 @@
 import React from 'react';
-import { BudgetsList } from './budgets/List.js';
+import { BudgetsList } from './List.js';
 
 import styles from './Budgets.module.css';
 

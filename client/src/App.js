@@ -1,8 +1,6 @@
 import React from 'react';
 import { Menu, MenuTypes } from './components/menu/Menu.js';
 import { Pages } from './components/pages/Pages.js';
-import { Toolbar } from './components/toolbar/Toolbar.js';
-import { TransactionForm } from './components/forms/Transaction/Transaction.js';
 
 import styles from './App.module.css';
 
@@ -12,27 +10,21 @@ export default class App extends React.Component {
 
     	this.state = {
 			activePage: MenuTypes.Dashboard,
-			transactionFormVisible: false
 		}
 		
-		this.onMenuChange = this.onMenuChange.bind(this)
-		this.onAddTransaction = this.onAddTransaction.bind(this)
-		this.onCloseTransaction = this.onCloseTransaction.bind(this)
+		this.onMenuChange = this.onMenuChange.bind(this);		
 	}
 
 	render() {
-		let transactionForm = null;
-
-		if (this.state.transactionFormVisible) {
-			transactionForm = <TransactionForm onClose={this.onCloseTransaction} />
-		}
-
     	return (
     	  	<div className={styles.container}>
-			  	<Toolbar onAddTransaction={this.onAddTransaction} />
-        		<Menu onChange={this.onMenuChange} />
-        		<Pages activePage={this.state.activePage} />
-				{transactionForm}
+			  	<div className={styles.navigation}>
+				  	<img className={styles.logo} src="logo.png" alt="Logo" />
+        			<div className={styles.menu}><Menu onChange={this.onMenuChange} /></div>
+				</div>
+        		<div className={styles.content}>
+					<Pages activePage={this.state.activePage} />
+				</div>
       		</div>
     	);
   	}
@@ -40,18 +32,6 @@ export default class App extends React.Component {
   	onMenuChange(type) {
     	this.setState({
 			activePage: type
-		});
-	}
-	  
-	onAddTransaction(id) {
-		this.setState({
-			transactionFormVisible: true
-		});
-	}
-
-	onCloseTransaction() {
-		this.setState({
-			transactionFormVisible: false
 		});
 	}
 }

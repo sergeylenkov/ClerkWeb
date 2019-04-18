@@ -1,12 +1,10 @@
 import React from 'react';
 import { MenuTypes } from '../menu/Menu.js';
-import { DashboardPage } from './Dashboard.js';
-import { TransactionsPage } from './Transactions.js';
-import { AccountsPage } from './Accounts.js';
-import { BudgetsPage } from './Budgets.js';
-import { GoalsPage } from './Goals.js';
-import { SchedulersPage } from './Schedulers.js';
-import { TagsPage } from './Tags.js';
+import { DashboardPage } from './dashboard/Dashboard.js';
+import { TransactionsPage } from './transactions/Transactions.js';
+import { BudgetsPage } from './budgets/Budgets.js';
+import { GoalsPage } from './goals/Goals.js';
+import { SchedulersPage } from './schedulers/Schedulers.js';
 
 import styles from './Pages.module.css';
 
@@ -23,10 +21,6 @@ export class Pages extends React.Component {
                 page = <TransactionsPage />
                 break;
 
-            case MenuTypes.Accounts:
-                page = <AccountsPage />
-                break;
-
             case MenuTypes.Budgets:
                 page = <BudgetsPage />
                 break;
@@ -37,10 +31,6 @@ export class Pages extends React.Component {
 
             case MenuTypes.Schedulers:
                 page = <SchedulersPage />
-                break;
-            
-            case MenuTypes.Tags:
-                page = <TagsPage />
                 break;
 
             default:

@@ -1,99 +1,138 @@
 .container {
     margin: 20px;
-    padding: 20px;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.2);
 }
 
 .header {
-    margin: 0 0 20px 0;
-    font-size: 14px;
-    color: #999999;
+    margin: 20px 0 10px 0;
+    font-size: 18px;
+    color: #000000;
 }
 
-.item {
-    margin: 0 0 30px 0;    
-    display: flex;
-    flex-direction: row;
-    min-width: 350px;
+.month {
+    color: #979797;
 }
 
-.left {
-    margin: 0;
-    flex-grow: 1;
-    flex-direction: column;
+.table {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    display: table;
+    border-collapse: collapse;
 }
 
-.right {
-    margin: 0 0 0 auto;
-    width: 120px;
-    flex-direction: column;
+.row {
+    width: 100%;
+    display: table-row;    
 }
 
-.top {
+.row.header {
+    border-bottom: 1px dotted #cccccc;
+}
+
+.cell {
+    display: table-cell;
+    padding: 10px 0;
+}
+
+.cell.name {
+    width: 100%;
+}
+
+.amountHeader {
+    font-size: 12px;
+    color: #979797;
+    text-align: right;
+}
+
+.progressHeader {
     width: 100%;
     display: flex;
-    flex-wrap: nowrap;
+}
+
+.progressHeader0 {
+    margin: auto auto auto 0;
+    font-size: 10px;
+    color: #979797;
+}
+
+.progressHeader100 {
+    margin: auto 0 auto auto;
+    font-size: 10px;
+    color: #979797;
 }
 
 .name {
-    margin: auto auto auto 0;
-    padding: 0 30px 0 0;
-    font-size: 14px;
-    white-space: nowrap;
+    padding: 0 20px 0 0;
+    font-size: 12px;
 }
 
-.total {
-    margin: auto 0 0 10px;
+.amount {
+    padding: 0 0 0 20px;
     font-size: 12px;
     white-space: nowrap;
+    text-align: right;
+}
+
+.remain {
+    padding: 0 0 0 20px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: right;
 }
 
 .current {
-    margin: auto 0 0 auto;
-    font-size: 12px;
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    bottom: -14px;
     white-space: nowrap;
 }
 
 .progress {
-    margin: 10px 0 0 0;
-    height: 2px;
+    position: relative;
+    height: 6px;
     width: 100%;
-    background: #dcdcdc;
+    min-width: 150px;
+    background: #d8d8d8;
 }
 
 .fill {
     width: 0;
-    height: 2px;
+    height: 6px;
     background: #6bcc83;
 }
 
-.remains {
-    font-size: 14px;
-    text-align: right;
+.dayLine {
+    position: absolute;
+    top: 40px;
+    bottom: -5px;
+    width: 1px;
+    background: #cccccc;
+    z-index: 1;
 }
 
-.half .current {
-    color: #eaa60a;
+.day {
+    position: absolute;
+    bottom: -25px;
+    padding: 2px 5px;    
+    font-size: 10px;
+    color: #ffffff;
+    background: #999999;
+    text-transform: uppercase;
+    transform: translateX(-50%);
 }
 
-.half .remains {
-    color: #eaa60a;
-}
+.half {
 
-.half .fill {
-    background: #ffdc8c;
-}
-
-.over .remains {
-    color: #e24a0e;
-}
-
-.over .current {
-    color: #e24a0e;
 }
 
 .over .fill {
     background: #e24a0e;
+}
+
+.over .remain {
+    color: #e24a0e;
 }

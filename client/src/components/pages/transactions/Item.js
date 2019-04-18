@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Icon, Icons } from '../../Icon.js';
 import { TransactionsListItemMenu } from './Menu.js';
 
@@ -21,10 +22,10 @@ export class TransactionsListItem extends React.Component {
         this.onDelete = this.onDelete.bind(this);
     }
 
-    render() {
-        return (                
+    render() {        
+        return (            
             <div className={styles.container}>
-                <div className={styles.date}>{formatDate(this.props.item.date)}</div>
+                <div className={styles.date}>{formatDate(moment(this.props.item.date, 'YYYY-MM-DD'))}</div>
                 <div className={styles.fromName}>{this.props.item.fromName}</div>
                 <div className={styles.toName}>{this.props.item.toName}</div>
                 <div className={styles.tags}>

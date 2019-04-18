@@ -6,7 +6,7 @@ import styles from './Item.module.css';
 
 export class SchedulersListItem extends React.Component {
     render() {
-        let date = moment(this.props.item.nextDate);
+        let date = moment(this.props.item.nextDate, 'YYYY-MM-DD');
 
         return (                
             <div className={styles.container}>
