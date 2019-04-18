@@ -11,7 +11,8 @@
     flex-direction: column;
     border-right: 1px solid #e8e8e8;
     margin: 0 20px 0 0;
-    padding: 0 20px 0 0;
+    padding: 0;
+    min-width: 200px;
 }
 
 .right {
