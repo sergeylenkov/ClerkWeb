@@ -109,7 +109,7 @@ export class DashboardBudgets extends React.Component {
                         return (
                             <div key={item.id} className={`${styles.row} ${className}`}>
                                 <div className={styles.cell}><div className={styles.name}>{item.name}</div></div>
-                                <div className={styles.cell}>
+                                <div className={styles.cellProgress}>
                                     <div className={styles.progress}>
                                         <div className={styles.fill} style={progressStyle}></div>
                                         <div className={styles.current} style={currentStyle} ref={element => {
