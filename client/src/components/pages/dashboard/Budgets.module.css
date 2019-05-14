@@ -37,7 +37,8 @@
     padding: 10px 0;
 }
 
-.cell.name {
+.cellProgress {
+    composes: cell;
     width: 100%;
 }
 
@@ -67,6 +68,7 @@
 .name {
     padding: 0 20px 0 0;
     font-size: 12px;
+    white-space: nowrap;
 }
 
 .amount {
