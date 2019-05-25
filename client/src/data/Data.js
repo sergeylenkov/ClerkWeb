@@ -2,8 +2,8 @@ export const AccountTypes = {
     Receipts: 0,
     Deposits: 1,
     Expenses: 2,
-    Credits: 4,
-    Virtaul: 5
+    Debts: 4,
+    Virtaul: 4
 }
 
 export const BudgetTypes = {
@@ -126,9 +126,9 @@ export class DataHelper {
         });
     }
 
-    dashboardCredits() {
+    dashboardDebts() {
         return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/credits`).then((response) => {
+            fetch(`${this.url}/dashboard/debts`).then((response) => {
                 return response.json();
             }).then((data) => {
                 resolve(data.items);

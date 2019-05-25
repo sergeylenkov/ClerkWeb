@@ -90,9 +90,9 @@ describe('GET /dashboard/goals', () => {
 	});
 });
 
-describe('GET /dashboard/credits', () => {
-	it('should get dashboard credits', (done) => {
-		request(app).get('/dashboard/credits')
+describe('GET /dashboard/debts', () => {
+	it('should get dashboard debts', (done) => {
+		request(app).get('/dashboard/debts')
 		.expect(200)
 		.end((err, res) => {
 			assert( res.body.items.length > 0, 'must be more then 0');

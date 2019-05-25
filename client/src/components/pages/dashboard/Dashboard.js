@@ -6,7 +6,7 @@ import { DashboardDeposits } from './Deposits.js';
 import { DashboardExpenses } from './Expenses.js';
 import { DashboardBudgets } from './Budgets.js';
 import { DashboardGoals } from './Goals.js';
-import { DashboardCredits } from './Credits.js';
+import { DashboardDebts } from './Debts';
 import { DashboardSchedulers } from './Schedulers.js';
 
 import styles from './Dashboard.module.css';
@@ -22,7 +22,7 @@ export class DashboardPage extends React.Component {
             expenses: [],
             budgets: [],
             goals: [],
-            credits: [],
+            debts: [],
             schedulers: []
         }
     }
@@ -81,9 +81,9 @@ export class DashboardPage extends React.Component {
             });
         });
 
-        data.dashboardCredits().then((credits) => {
+        data.dashboardDebts().then((debts) => {
             this.setState({
-                credits: credits
+                debts: debts
             });
         });
 
@@ -109,7 +109,7 @@ export class DashboardPage extends React.Component {
                     <DashboardSchedulers schedulers={this.state.schedulers} />
                     <DashboardBudgets budgets={this.state.budgets} />
                     <DashboardGoals goals={this.state.goals} />
-                    <DashboardCredits credits={this.state.credits} />
+                    <DashboardDebts debts={this.state.debts} />
                 </div>
             </div>
         );

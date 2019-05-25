@@ -45,8 +45,8 @@ router.get('/goals', (req, res) => {
     });
 });
 
-router.get('/credits', (req, res) => {
-    data.getCredits().then((items) => {
+router.get('/debts', (req, res) => {
+    data.getDebts().then((items) => {
         return res.json({ items: items });
     }).catch((error) => {
         res.status(500).send({ error: error });

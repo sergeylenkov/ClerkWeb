@@ -1,0 +1,103 @@
+.table {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    display: table;
+    border-collapse: collapse;
+}
+
+.row {
+    width: 100%;
+    display: table-row;    
+}
+
+.row.header {
+    border-bottom: 1px dotted #cccccc;
+}
+
+.cell {
+    display: table-cell;
+    padding: 10px 0;
+}
+
+.cellProgress {
+    composes: cell;
+    width: 100%;
+}
+
+.amountHeader {
+    font-size: 12px;
+    color: #979797;
+    text-align: right;
+}
+
+.progressHeader {
+    width: 100%;
+    display: flex;
+}
+
+.progressHeader0 {
+    margin: auto auto auto 0;
+    font-size: 10px;
+    color: #979797;
+}
+
+.progressHeader100 {
+    margin: auto 0 auto auto;
+    font-size: 10px;
+    color: #979797;
+}
+
+.name {
+    padding: 0 20px 0 0;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.amount {
+    padding: 0 0 0 20px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.remain {
+    padding: 0 0 0 20px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.current {
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    bottom: -14px;
+    white-space: nowrap;
+}
+
+.progress {
+    position: relative;
+    height: 6px;
+    width: 100%;
+    min-width: 150px;
+    background: #d8d8d8;
+}
+
+.fill {
+    width: 0;
+    height: 6px;
+    background: #6bcc83;
+}
+
+.half {
+
+}
+
+.over .fill {
+    background: #e24a0e;
+}
+
+.over .remain {
+    color: #e24a0e;
+}

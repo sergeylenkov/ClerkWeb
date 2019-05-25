@@ -84,12 +84,12 @@ module.exports.getGoals = () => {
     });
 }
 
-module.exports.getCredits = () => {
+module.exports.getDebts = () => {
     return new Promise((resolve, reject) => {
         db.all('SELECT a.id, a.name, a.credit_limit, c.short_name AS currency_name, a.type_id,\
                     (SELECT COALESCE(SUM(to_account_amount), 0) AS sum FROM transactions WHERE to_account_id = a.id AND deleted = 0) AS receipt,\
                     (SELECT COALESCE(SUM(from_account_amount), 0) AS sum FROM transactions WHERE from_account_id = a.id AND deleted = 0) AS expense\
-                FROM accounts a, currencies c WHERE (a.type_id = 4 OR a.credit_limit > 0) AND a.active = 1 AND a.currency_id = c.id', [], (err, rows) => {
+                FROM accounts a, currencies c WHERE (a.type_id = 3 OR a.credit_limit > 0) AND a.active = 1 AND a.currency_id = c.id', [], (err, rows) => {
             if (err) {
                 reject(err);
             } else {
@@ -101,7 +101,7 @@ module.exports.getCredits = () => {
 
                     if (row.credit_limit > 0) {
                         amount = row.credit_limit;
-                        balance = row.receipt - row.expense;
+                        balance = row.credit_limit + (row.receipt - row.expense);
                     }
 
                     let item = { id: row.id, name: row.name, type: row.type_id, amount: amount, balance: balance, currency: row.currency_name };
