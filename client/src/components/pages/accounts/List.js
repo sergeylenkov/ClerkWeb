@@ -29,7 +29,7 @@ export class AccountsList extends React.Component {
             const receipts = items.filter(el => el.type === AccountTypes.Receipts);
             const deposits = items.filter(el => el.type === AccountTypes.Deposits);
             const credits = items.filter(el => el.type === AccountTypes.Credits);
-            const virtual = items.filter(el => el.type === AccountTypes.Virtaul);
+            const virtual = items.filter(el => el.type === AccountTypes.Virtual);
 
             this.setState({
                 expenses: expenses,

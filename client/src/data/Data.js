@@ -2,8 +2,8 @@ export const AccountTypes = {
     Receipts: 0,
     Deposits: 1,
     Expenses: 2,
-    Debts: 4,
-    Virtaul: 4
+    Debts: 3,
+    Virtual: 4
 }
 
 export const BudgetTypes = {

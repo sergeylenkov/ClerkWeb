@@ -30,7 +30,7 @@ export class ProgressTable extends React.Component {
         let color = '';
 
         if (this.props.colors) {
-            colors = this.props.colors
+            colors = this.props.colors;
         }
 
         colors.forEach(el => {
