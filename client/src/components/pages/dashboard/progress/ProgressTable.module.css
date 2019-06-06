@@ -87,15 +87,10 @@
 .fill {
     width: 0;
     height: 6px;
-    background: #6bcc83;
 }
 
 .half {
 
-}
-
-.over .fill {
-    background: #e24a0e;
 }
 
 .over .remain {

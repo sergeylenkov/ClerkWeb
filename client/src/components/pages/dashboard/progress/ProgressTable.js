@@ -11,6 +11,11 @@ export class ProgressTable extends React.Component {
         this.headerElement = null;
         this.currentElements = {};
 
+        this.defaultColors = [
+            { from: 0, to: 79, color: '#6bcc83'},
+            { from: 80, to: 100, color: '#e24a0e' }
+        ]
+
         this.refTableCallback = element => {
             this.tableElement = element;
         }
@@ -18,6 +23,23 @@ export class ProgressTable extends React.Component {
         this.refHeaderCallback = element => {
             this.headerElement = element;
         };
+    }
+
+    getColorForProgress(percent) {
+        let colors = this.defaultColors;
+        let color = '';
+
+        if (this.props.colors) {
+            colors = this.props.colors
+        }
+
+        colors.forEach(el => {
+            if (percent >= el.from && percent <= el.to) {
+                color = el.color;
+            }
+        });
+
+        return color;
     }
 
     render() {
@@ -51,9 +73,10 @@ export class ProgressTable extends React.Component {
                         }
 
                         const progressStyle = {
-                            width: `${percent}%`
+                            width: `${percent}%`,
+                            background: this.getColorForProgress(percent)
                         }
-                        
+
                         let className = '';
 
                         if (percent > 50 && percent < 90) {
