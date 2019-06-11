@@ -13,6 +13,8 @@ export const BudgetTypes = {
 	Custom: 3
 }
 
+export let _exchangeRates = null;
+
 export class DataHelper {
     constructor() {
         this.url = 'http://localhost:5000';
@@ -189,6 +191,21 @@ export class DataHelper {
             }).catch((error) => {
                 console.log(error);
             });
+        });
+    }
+    
+    exchangeRates() {
+        return new Promise((resolve, reject) => {
+            if (_exchangeRates) {
+                resolve(_exchangeRates);
+            } else {
+                fetch(`${this.url}/exchangeRates`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    _exchangeRates = data.items;
+                    resolve(_exchangeRates);
+                });
+            }
         });
     }
 }

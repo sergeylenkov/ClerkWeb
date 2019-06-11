@@ -8,6 +8,7 @@ const budgets = require('./routes/budgets');
 const goals = require('./routes/goals');
 const schedulers = require('./routes/schedulers');
 const tags = require('./routes/tags');
+const exchangeRates = require('./routes/exchangeRates');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/budgets', budgets);
 app.use('/goals', goals);
 app.use('/schedulers', schedulers);
 app.use('/tags', tags);
+app.use('/exchangeRates', exchangeRates);
 
 app.get('*', (req, res) =>{
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

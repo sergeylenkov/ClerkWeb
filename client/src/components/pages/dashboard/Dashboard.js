@@ -8,6 +8,7 @@ import { DashboardBudgets } from './Budgets.js';
 import { DashboardGoals } from './Goals.js';
 import { DashboardDebts } from './Debts';
 import { DashboardSchedulers } from './Schedulers.js';
+import { convertExchangeRates } from '../../Utils.js';
 
 import styles from './Dashboard.module.css';
 
@@ -23,45 +24,54 @@ export class DashboardPage extends React.Component {
             budgets: [],
             goals: [],
             debts: [],
-            schedulers: []
+            schedulers: [],
+            total: { amount: 0, currency: 'RUB' }
         }
     }
 
     componentDidMount() {
         const data = new DataHelper();
 
-        data.dashboardBalance().then((items) => {
-            const own = items.filter(el => !el.credit);
-            const credits = items.filter(el => el.credit);
+        data.exchangeRates().then((items) => {
+            data.dashboardBalance().then((items) => {
+                const own = items.filter(el => !el.credit);
+                const credits = items.filter(el => el.credit);                
+                
+                let group = [];
+        
+                own.reduce((res, value) => {
+                    if (!res[value.currency]) {
+                        res[value.currency] = {
+                            id: value.currency,
+                            amount: 0,
+                            currency: value.currency
+                        };
     
-            let group = [];
-    
-            own.reduce((res, value) => {
-                if (!res[value.currency]) {
-                    res[value.currency] = {
-                        id: value.currency,
-                        amount: 0,
-                        currency: value.currency
-                    };
+                        group.push(res[value.currency])
+                    }
+        
+                    res[value.currency].amount += value.amount;
+        
+                    return res;
+                }, {});
+        
+                let total = 0;
 
-                    group.push(res[value.currency])
-                }
-    
-                res[value.currency].amount += value.amount;
-    
-                return res;
-            }, {});
-    
-            this.setState({
-                ownFunds: group,
-                creditFunds: credits,
-                accounts: items
-            });       
+                group.forEach((item) => {
+                    total = total + convertExchangeRates(item.currency, 'RUB', item.amount);
+                });
+
+                this.setState({
+                    ownFunds: group,
+                    creditFunds: credits,
+                    accounts: items,
+                    total: { amount: total, currency: 'RUB' }
+                });       
+            });
         });
 
         let from = moment().startOf('month');
-        let to = moment().endOf('month');
-        
+        let to = moment().endOf('month');        
 
         data.dashboardExpenses(from, to).then((expenses) => {
             this.setState({
@@ -101,7 +111,7 @@ export class DashboardPage extends React.Component {
         return (
             <div className={styles.container}>
                 <div className={styles.left}>
-                    <DashboardBalance own={this.state.ownFunds} credits={this.state.creditFunds} />
+                    <DashboardBalance total={this.state.total} own={this.state.ownFunds} credits={this.state.creditFunds} />
                     <DashboardDeposits accounts={this.state.accounts} />
                     <DashboardExpenses expenses={this.state.expenses} />
                 </div>

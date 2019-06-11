@@ -183,3 +183,14 @@ describe('POST /transactions', () => {
 		});
 	});
 });
+
+describe('GET /exchangeRates', () => {
+	it('should get all exchange rates', (done) => {
+	  	request(app).get('/exchangeRates')
+		.expect(200)
+		.end((err, res) => {
+		  assert( res.body.items.length > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});
