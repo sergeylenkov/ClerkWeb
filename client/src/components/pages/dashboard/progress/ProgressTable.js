@@ -50,7 +50,7 @@ export class ProgressTable extends React.Component {
                         <div className={styles.progressHeader} ref={this.refHeaderCallback}><div className={styles.progressHeader0}>0%</div><div className={styles.progressHeader100}>100%</div></div>                        
                     </div>
                     <div className={styles.cell}><div className={styles.amountHeader}>{this.props.amountTitle}</div></div>
-                    <div className={styles.cell}><div className={styles.amountHeader}>{this.props.remainTitle}</div></div>
+                    <div className={styles.cell}><div className={styles.remainHeader}>{this.props.remainTitle}</div></div>
                 </div>
                 {
                    
@@ -69,16 +69,12 @@ export class ProgressTable extends React.Component {
                             background: this.getColorForProgress(percent)
                         }
 
-                        let className = '';
-
-                        if (percent > 50 && percent < 90) {
-                            className += ` ${styles.half}`;
-                        } else if (percent >= 90) {
-                            className += ` ${styles.over}`;
+                        const colorStyle = {
+                            color: this.getColorForProgress(percent)
                         }
                         
                         return (
-                            <div key={item.id} className={`${styles.row} ${className}`}>
+                            <div key={item.id} className={styles.row}>
                                 <div className={styles.cell}><div className={styles.name}>{item.name}</div></div>
                                 <div className={styles.cellProgress}>
                                     <div className={styles.progress}>
@@ -91,7 +87,7 @@ export class ProgressTable extends React.Component {
                                     </div>
                                 </div>
                                 <div className={styles.cell}><div className={styles.amount}>{formatAmount(total, '', false)}</div></div>
-                                <div className={styles.cell}><div className={styles.remain}>{formatAmount(remain, '', false)}</div></div>
+                                <div className={styles.cell}><div className={styles.remain} style={colorStyle}>{formatAmount(remain, '', false)}</div></div>
                             </div>
                         ); 
                     })                    
