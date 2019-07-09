@@ -92,15 +92,17 @@ export class ProgressTable extends React.Component {
                         ); 
                     })                    
                 }
+                {this.props.children}
             </div>
         )
     }
 
     calculateLabelPosition(element, percent) {
         let headerWidth = 0;
+        let headerRect = null;
 
         if (this.headerElement && this.tableElement) {            
-            const headerRect = this.headerElement.getBoundingClientRect();
+            headerRect = this.headerElement.getBoundingClientRect();
             headerWidth = headerRect.width;      
         }
 
@@ -116,5 +118,12 @@ export class ProgressTable extends React.Component {
         }
 
         element.style.left = `${offset}px`;
+
+        if (this.props.onCalculateProgress) {
+            const tableRect = this.tableElement.getBoundingClientRect();
+            const offset = headerRect.left - tableRect.left;
+            
+            this.props.onCalculateProgress({ left: offset, width: headerWidth });
+        }
     }
 }

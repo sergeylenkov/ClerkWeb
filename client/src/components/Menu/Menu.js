@@ -30,7 +30,7 @@ export class Menu extends React.Component {
             selectedItem: MenuTypes.Dashboard
         };
 
-        this.onMenuSelect = this.onMenuSelect.bind(this);        
+        this.onMenuSelect = this.onMenuSelect.bind(this);
     }
 
     render() {
