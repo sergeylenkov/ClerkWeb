@@ -98,14 +98,18 @@ module.exports.getDebts = () => {
                 rows.forEach((row) => {
                     let amount = row.expense;
                     let balance = row.receipt;
-
+                    
                     if (row.credit_limit > 0) {
                         amount = row.credit_limit;
                         balance = row.credit_limit + (row.receipt - row.expense);
                     }
 
-                    let item = { id: row.id, name: row.name, type: row.type_id, amount: amount, balance: balance, currency: row.currency_name };
-                    items.push(item);
+                    let remainAmount = balance - amount;
+
+                    if (remainAmount < 0) {
+                        let item = { id: row.id, name: row.name, type: row.type_id, amount: amount, balance: balance, remainAmount: remainAmount, currency: row.currency_name };
+                        items.push(item);
+                    }
                 });
 
                 resolve(items);

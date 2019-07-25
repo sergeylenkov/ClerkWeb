@@ -24,7 +24,11 @@ export class DashboardExpenses extends React.Component {
 
                 {
                     this.props.expenses.map((item, i) => {
-                        const percent = (item.amount / max) * 100;
+                        let percent = (item.amount / max) * 100;
+
+                        if (percent < 1) {
+                            percent = 1;
+                        }
 
                         let progressStyle = {
                             width: `${percent}%`

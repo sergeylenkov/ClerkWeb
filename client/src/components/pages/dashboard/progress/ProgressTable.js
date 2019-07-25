@@ -58,7 +58,7 @@ export class ProgressTable extends React.Component {
                         const total = item.amount;
                         const current = item.balance;
                         const remain = total - current;
-                        let percent = current / (total / 100);
+                        let percent = Math.floor(current / (total / 100));
 
                         if (percent > 100) {
                             percent = 100;

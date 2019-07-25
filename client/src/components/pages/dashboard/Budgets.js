@@ -9,8 +9,9 @@ export class DashboardBudgets extends React.Component {
         super(props);
 
         this.colors = [
-            { from: 0, to: 79, color: '#6bcc83'},
-            { from: 80, to: 100, color: '#e24a0e' }
+            { from: 0, to: 49, color: '#6bcc83' },
+            { from: 50, to: 89, color: '#fbaf43' },
+            { from: 90, to: 100, color: '#e24a0e' }
         ]
 
         this.dayElement = null;
@@ -45,13 +46,12 @@ export class DashboardBudgets extends React.Component {
 
     renderDay() {
         if (this.dayElement && this.progressRect) {
-            console.log(this.progressRect, this.dayElement);
             const daysInMonth = moment().endOf('month').date();
             const today = moment().date();
             const dayPercent = (today / daysInMonth) * 100;
             
             const left = this.progressRect.width * (dayPercent / 100);
-            console.log(dayPercent, this.progressRect.width, dayPercent / 100, left);
+            
             this.dayElement.style.left = `${this.progressRect.left + left}px`;
         }
     }
