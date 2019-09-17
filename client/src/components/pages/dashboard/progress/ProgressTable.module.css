@@ -77,13 +77,13 @@
     position: absolute;
     font-size: 10px;
     font-weight: bold;
-    bottom: -14px;
+    bottom: -16px;
     white-space: nowrap;
 }
 
 .progress {
     position: relative;
-    height: 6px;
+    height: 4px;
     width: 100%;
     min-width: 150px;
     background: #d8d8d8;
@@ -91,5 +91,5 @@
 
 .fill {
     width: 0;
-    height: 6px;
+    height: 4px;
 }

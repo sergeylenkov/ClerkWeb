@@ -25,7 +25,13 @@ export class DashboardBalance extends React.Component {
 
                     {
                         this.props.credits.map((item, i) => {
-                            return (<div key={item.id} className={styles.item}>{formatAmount(item.credit + item.amount, item.currency)}</div>);
+                            let amount = item.credit;
+
+                            if (item.amount < 0) {
+                                amount = item.credit + item.amount;
+                            }
+                            
+                            return (<div key={item.id} className={styles.item}>{formatAmount(amount, item.currency)}</div>);
                         })
                     }
                     </div>
