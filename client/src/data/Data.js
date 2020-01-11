@@ -15,9 +15,23 @@ export const BudgetTypes = {
 
 export let _exchangeRates = null;
 
-export class DataHelper {
+export default class Data {
     constructor() {
         this.url = 'http://localhost:5000';
+    }
+
+    reports = {
+        getExpensesByMonth: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/reports/expenses/by_month?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        }
     }
 
     accounts() {
@@ -43,7 +57,7 @@ export class DataHelper {
             });
         });
     }
-    
+
     goals() {
         return new Promise((resolve, reject) => {
             fetch(`${this.url}/goals`).then((response) => {
@@ -80,132 +94,138 @@ export class DataHelper {
         });
     }
 
-    dashboardBalance() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/balance`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
-
-    dashboardExpenses(from, to) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/expenses?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
-
-    dashboardBudgets(from, to) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
-
-    dashboardGoals() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/goals`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
-
-    dashboardDebts() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/debts`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
-
-    dashboardSchedulers(from, to) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/dashboard/schedulers?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
-
-    transactions(from, to) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/transactions?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);            
-            });
-        });
-    }
-
-    recentTransactions(limit) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/transactions/recent?limit=${limit}`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);            
-            });
-        });
-    }
-
-    saveTransaction(transaction) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/transactions/`, {
-                method: 'POST',
-                body: JSON.stringify(transaction),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data);
-            }).catch((error) => {
-                console.log(error);
-            });
-        });
-    }
-    
-    exchangeRates() {
-        return new Promise((resolve, reject) => {
-            if (_exchangeRates) {
-                resolve(_exchangeRates);
-            } else {
-                fetch(`${this.url}/exchangeRates`).then((response) => {
+    dashboard = {
+        getBalance: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/dashboard/balance`).then((response) => {
                     return response.json();
                 }).then((data) => {
-                    _exchangeRates = data.items;
-                    resolve(_exchangeRates);
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
                 });
-            }
-        });
+            });
+        },
+
+        getExpenses: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/dashboard/expenses?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+
+        getBudgets: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/dashboard/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+
+        getGoals: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/dashboard/goals`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+
+        getDebts: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/dashboard/debts`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+
+        getSchedulers: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/dashboard/schedulers?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        }
+    }
+
+    transactions = {
+        getAll: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/transactions?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+
+        getRecents: (limit) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/transactions/recent?limit=${limit}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        },
+
+        save: (transaction) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/transactions/`, {
+                    method: 'POST',
+                    body: JSON.stringify(transaction),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data);
+                }).catch((error) => {
+                    console.log(error);
+                });
+            });
+        }
+    }
+
+    exchange = {
+        getExchangeRates: () => {
+            return new Promise((resolve, reject) => {
+                if (_exchangeRates) {
+                    resolve(_exchangeRates);
+                } else {
+                    fetch(`${this.url}/exchangeRates`).then((response) => {
+                        return response.json();
+                    }).then((data) => {
+                        _exchangeRates = data.items;
+                        resolve(_exchangeRates);
+                    });
+                }
+            });
+     }
     }
 }

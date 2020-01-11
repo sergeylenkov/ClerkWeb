@@ -1,0 +1,98 @@
+.container {
+    margin: 0 20px 20px 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin: 20px 0 10px 0;
+    font-size: 16px;
+    color: #000000;
+}
+
+.item {
+    margin: 0 0 30px 0;
+    display: flex;
+    flex-direction: row;
+    min-width: 350px;
+}
+
+.left {
+    margin: 0;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.right {
+    margin: 0 0 0 auto;
+    width: 120px;
+    flex-direction: column;
+}
+
+.top {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.name {
+    margin: auto auto auto 0;
+    padding: 0 30px 0 0;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.total {
+    margin: auto 0 0 10px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.current {
+    margin: auto 0 0 auto;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.progress {
+    margin: 10px 0 0 0;
+    height: 2px;
+    width: 100%;
+    background: #dcdcdc;
+}
+
+.fill {
+    width: 0;
+    height: 2px;
+    background: #6bcc83;
+}
+
+.remains {
+    font-size: 14px;
+    text-align: right;
+}
+
+.half .current {
+    color: #eaa60a;
+}
+
+.half .remains {
+    color: #eaa60a;
+}
+
+.half .fill {
+    background: #ffdc8c;
+}
+
+.over .remains {
+    color: #e24a0e;
+}
+
+.over .current {
+    color: #e24a0e;
+}
+
+.over .fill {
+    background: #e24a0e;
+}

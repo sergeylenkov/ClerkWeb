@@ -122,7 +122,7 @@ describe('GET /budgets', () => {
 	it('should get all budgets', (done) => {
 	 	request(app).get(`/budgets?from=${from.toISOString()}&to=${to.toISOString()}`)
 		.expect(200)
-		.end((err, res) => {        
+		.end((err, res) => {
 		  assert( res.body.items.length > 0, 'must be more then 0');
 		  done();
 		});
@@ -175,7 +175,7 @@ describe('POST /transactions', () => {
 
 	it('should add new transaction', (done) => {
 		request(app).post('/transactions')
-		.send(transaction)  
+		.send(transaction)
 		.expect(200)
 		.end((err, res) => {
 		  assert( res.body.id > 0, 'must be more then 0');
@@ -187,6 +187,20 @@ describe('POST /transactions', () => {
 describe('GET /exchangeRates', () => {
 	it('should get all exchange rates', (done) => {
 	  	request(app).get('/exchangeRates')
+		.expect(200)
+		.end((err, res) => {
+		  assert( res.body.items.length > 0, 'must be more then 0');
+		  done();
+		});
+	});
+});
+
+describe('GET /reports/expenses/by_month', () => {
+	const from = new Date('2018-01-01T00:00:00');
+	const to = new Date('2019-12-12T00:00:00');
+
+	it('should get expenses for report', (done) => {
+	 	request(app).get(`/reports/expenses/by_month?from=${from.toISOString()}&to=${to.toISOString()}`)
 		.expect(200)
 		.end((err, res) => {
 		  assert( res.body.items.length > 0, 'must be more then 0');

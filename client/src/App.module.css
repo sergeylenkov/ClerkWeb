@@ -1,6 +1,6 @@
 .container {
-    width: 100%; 
-    min-height: 100%;   
+    width: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     background: #f9f9f9;
@@ -24,8 +24,8 @@
 
 .menu {
     margin: auto;
-    padding: 0;    
-    min-width: 1000px;
+    padding: 0;
+    min-width: 1200px;
     max-width: 1400px;
     flex-grow: 1;
     box-sizing: border-box;
@@ -34,4 +34,11 @@
 .content {
     width: 100%;
     display: flex;
+}
+
+.page {
+    margin: 0 auto;
+    min-width: 1200px;
+    max-width: 1400px;
+    flex-grow: 1;
 }

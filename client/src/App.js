@@ -1,6 +1,8 @@
 import React from 'react';
 import { Menu, MenuTypes } from './components/menu/Menu.js';
-import { Pages } from './components/pages/Pages.js';
+import Dashboard from './components/dashboard/Dashboard.js';
+import Transactions from './components/transactions/Transactions.js';
+import Reports from './components/reports/Reports.js';
 
 import styles from './App.module.css';
 
@@ -9,21 +11,44 @@ export default class App extends React.Component {
    		super(props);
 
     	this.state = {
-			activePage: MenuTypes.Dashboard,
+			selectedPage: MenuTypes.Dashboard,
 		}
-		
-		this.onMenuChange = this.onMenuChange.bind(this);		
+
+		this.onMenuChange = this.onMenuChange.bind(this);
 	}
 
 	render() {
+		let page = null;
+
+		switch (this.state.selectedPage) {
+			case MenuTypes.Dashboard:
+				page = <Dashboard />
+				break;
+
+			case MenuTypes.Transactions:
+				page = <Transactions />
+				break;
+
+			case MenuTypes.Reports:
+				page = <Reports />
+				break;
+
+			default:
+				page = null;
+		}
+
     	return (
     	  	<div className={styles.container}>
 			  	<div className={styles.navigation}>
 				  	<img className={styles.logo} src="logo.png" alt="Logo" />
-        			<div className={styles.menu}><Menu onChange={this.onMenuChange} /></div>
+        			<div className={styles.menu}>
+						<Menu onChange={this.onMenuChange} />
+					</div>
 				</div>
         		<div className={styles.content}>
-					<Pages activePage={this.state.activePage} />
+					<div className={styles.page}>
+						{page}
+					</div>
 				</div>
       		</div>
     	);
@@ -31,7 +56,7 @@ export default class App extends React.Component {
 
   	onMenuChange(type) {
     	this.setState({
-			activePage: type
+			selectedPage: type
 		});
 	}
 }
