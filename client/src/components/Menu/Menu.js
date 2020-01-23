@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 import { MenuButton } from './Button.js';
 
 import styles from './Menu.module.css';
@@ -11,21 +12,21 @@ export const MenuTypes = {
     Schedulers: 4,
     Reports: 5,
     Tags: 6,
-    Transactions: 8    
+    Transactions: 8
 }
 
-export class Menu extends React.Component {
+class Menu extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             items: [
-                { title: 'Dashboard', type: MenuTypes.Dashboard },
-                { title: 'Transactions', type: MenuTypes.Transactions },
-                { title: 'Budgets', type: MenuTypes.Budgets },
-                { title: 'Goals', type: MenuTypes.Goals },
-                { title: 'Schedulers', type: MenuTypes.Schedulers },
-                { title: 'Reports', type: MenuTypes.Reports }
+                { title: 'Dashboard', type: MenuTypes.Dashboard, path: '/' },
+                { title: 'Transactions', type: MenuTypes.Transactions, path: '/transactions' },
+                { title: 'Budgets', type: MenuTypes.Budgets, path: '/budgets' },
+                { title: 'Goals', type: MenuTypes.Goals, path: '/goals' },
+                { title: 'Schedulers', type: MenuTypes.Schedulers, path: 'schedulers' },
+                { title: 'Reports', type: MenuTypes.Reports, path: '/reports' }
             ],
             selectedItem: MenuTypes.Dashboard
         };
@@ -34,23 +35,32 @@ export class Menu extends React.Component {
     }
 
     render() {
+        const { pathname } = this.props.location;
+
         return (
             <div className={styles.container}>
                 {
                     this.state.items.map((item, i) => {
-                        const selected = (item.type === this.state.selectedItem);
-                        return (<MenuButton key={i} value={item.type} title={item.title} isSelected={selected} onClick={this.onMenuSelect} />)
+                        const selected = pathname === item.path;
+
+                        return (
+                            <MenuButton
+                                key={i}
+                                value={item.path}
+                                title={item.title}
+                                isSelected={selected}
+                                onClick={this.onMenuSelect}
+                            />
+                        )
                     })
                 }
             </div>
-        );        
+        );
     }
 
-    onMenuSelect(type) {        
-        this.setState({
-            selectedItem: type
-        });
-
-        this.props.onChange(type);
+    onMenuSelect(path) {
+        this.props.history.push(path);
     }
 }
+
+export default withRouter(Menu)
