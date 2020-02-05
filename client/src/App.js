@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Menu from './components/menu/Menu.js';
-import Dashboard from './components/dashboard/Dashboard.js';
-import Transactions from './components/transactions/Transactions.js';
-import Reports from './components/reports/Reports.js';
+import Menu from './components/Menu';
+import Dashboard from './components/Dashboard';
+import Transactions from './components/Transactions';
+import Reports from './components/Reports';
 
 import styles from './App.module.css';
 
