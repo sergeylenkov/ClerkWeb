@@ -3,6 +3,7 @@ import moment from 'moment';
 import { LineChart, Line, ResponsiveContainer, Tooltip, YAxis, XAxis, CartesianGrid } from 'recharts';
 import { formatAmount } from '../Utils.js';
 import Data from '../../data/Data.js';
+import ExpensesTooltip from './ExpensesTooltip';
 
 import styles from './Reports.module.css';
 
@@ -60,64 +61,6 @@ export default class Reports extends React.Component {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
-    render() {
-        const reportStyle = {
-            width: `${this.state.width}px`,
-            height: `${this.state.height}px`
-        }
-
-        return (
-            <div className={styles.container}>
-                <div className={styles.filter}>
-
-                </div>
-                <div className={styles.content} ref={this.refContentCallback}>
-                    <div className={styles.report} style={reportStyle}>
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={this.state.data}>
-                                <Line dataKey="total" stroke="#2196f3" isAnimationActive={false} />
-                                <Tooltip content={this.getTooltip} isAnimationActive={false} />
-                                <XAxis dataKey="formattedDate" />
-                                <YAxis />
-                                <CartesianGrid strokeDasharray="5 5" />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    getTooltip(data) {
-        if (data && data.active) {
-            const payload = data.payload[0].payload;
-            const formattedDate = payload.date.format('MMM YYYY');
-
-            return (
-                <div className={styles.tooltip}>
-                    <div className={styles.tooltipHeader}>
-                        <div className={styles.tooltipDate}>{formattedDate}</div>
-                        <div className={styles.tooltipTotal}>{formatAmount(payload.total, 'RUB')}</div>
-                    </div>
-                    <div className={styles.tooltipContent}>
-                    {
-                        payload.expenses.map((item, i) => {
-                            return (
-                                <div key={i} className={styles.tooltipItem}>
-                                    <div className={styles.tooltipName}>{item.name}</div>
-                                    <div className={styles.tooltipAmount}>{formatAmount(item.amount, 'RUB')}</div>
-                                </div>
-                            );
-                        })
-                    }
-                    </div>
-                </div>
-            )
-        }
-
-        return '';
-    }
-
     calculateReportPosition() {
         if (this.contentElement) {
             const rect = this.contentElement.getBoundingClientRect();
@@ -136,5 +79,33 @@ export default class Reports extends React.Component {
 
     updateDimensions() {
         this.calculateReportPosition();
+    }
+
+    render() {
+        const reportStyle = {
+            width: `${this.state.width}px`,
+            height: `${this.state.height}px`
+        }
+
+        return (
+            <div className={styles.container}>
+                <div className={styles.filter}>
+
+                </div>
+                <div className={styles.content} ref={this.refContentCallback}>
+                    <div className={styles.report} style={reportStyle}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={this.state.data}>
+                                <Line dataKey="total" stroke="#2196f3" isAnimationActive={false} />
+                                <Tooltip content={<ExpensesTooltip />} isAnimationActive={false} />
+                                <XAxis dataKey="formattedDate" />
+                                <YAxis />
+                                <CartesianGrid strokeDasharray="5 5" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
