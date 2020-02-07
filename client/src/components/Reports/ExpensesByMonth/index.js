@@ -6,14 +6,14 @@ import ExpensesTooltip from './Tooltip';
 
 import styles from './index.module.css';
 
-export default class ExpensesReport extends React.Component {
+export default class ExpensesByMonth extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             data: [],
-            width: 1,
-            height: 1
+            width: 600,
+            height: 400
         }
 
         this.contentElement = null;
@@ -69,7 +69,7 @@ export default class ExpensesReport extends React.Component {
             }
 
             this.setState({
-                width: rect.width - 40,
+                width: rect.width,
                 height: height
             });
         }

@@ -27,8 +27,7 @@ class Menu extends React.Component {
                 { title: 'Goals', type: MenuTypes.Goals, path: '/goals' },
                 { title: 'Schedulers', type: MenuTypes.Schedulers, path: 'schedulers' },
                 { title: 'Reports', type: MenuTypes.Reports, path: '/reports' }
-            ],
-            selectedItem: MenuTypes.Dashboard
+            ]
         };
 
         this.onMenuSelect = this.onMenuSelect.bind(this);
@@ -43,21 +42,21 @@ class Menu extends React.Component {
 
         return (
             <div className={styles.container}>
-                {
-                    this.state.items.map((item, i) => {
-                        const selected = pathname === item.path;
+            {
+                this.state.items.map((item, i) => {
+                    const selected = pathname.split('/')[1] === item.path.split('/')[1];
 
-                        return (
-                            <MenuButton
-                                key={i}
-                                value={item.path}
-                                title={item.title}
-                                isSelected={selected}
-                                onClick={this.onMenuSelect}
-                            />
-                        )
-                    })
-                }
+                    return (
+                        <MenuButton
+                            key={i}
+                            value={item.path}
+                            title={item.title}
+                            isSelected={selected}
+                            onClick={this.onMenuSelect}
+                        />
+                    )
+                })
+            }
             </div>
         );
     }

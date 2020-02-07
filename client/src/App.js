@@ -13,7 +13,7 @@ export default class App extends React.Component {
 			<BrowserRouter>
 				<div className={styles.container}>
 					<div className={styles.navigation}>
-						<img className={styles.logo} src="logo.png" alt="Logo" />
+						<img className={styles.logo} src='/logo.png' alt='Logo' />
 						<div className={styles.menu}>
 							<Menu onChange={this.onMenuChange} />
 						</div>
@@ -21,13 +21,13 @@ export default class App extends React.Component {
 					<div className={styles.content}>
 						<div className={styles.page}>
 							<Switch>
-								<Route exact path="/">
+								<Route exact path='/'>
 									<Dashboard />
 								</Route>
-								<Route path="/transactions">
+								<Route path='/transactions'>
 									<Transactions />
 								</Route>
-								<Route path="/reports">
+								<Route path='/reports'>
 									<Reports />
 								</Route>
 							</Switch>
