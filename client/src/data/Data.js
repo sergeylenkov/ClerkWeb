@@ -31,67 +31,88 @@ export default class Data {
                     reject(error);
                 });
             });
+        },
+        getExpensesByAccount: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/reports/expenses/by_account?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
         }
     }
 
-    accounts() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/accounts`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
+    accounts = {
+        getAll: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/accounts`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
             });
-        });
+        }
     }
 
-    budgets(from, to) {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
+    budgets = {
+        getAll: (from, to) => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/budgets?from=${from.format("YYYY-MM-DD")}&to=${to.format("YYYY-MM-DD")}`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
             });
-        });
+        }
     }
 
-    goals() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/goals`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
+    goals = {
+        getAll: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/goals`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
             });
-        });
+        }
     }
 
-    schedulers() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/schedulers`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
+    schedulers = {
+        getAll: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/schedulers`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
             });
-        });
+        }
     }
 
-    tags() {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.url}/tags`).then((response) => {
-                return response.json();
-            }).then((data) => {
-                resolve(data.items);
-            }).catch((error) => {
-                reject(error);
+    tags = {
+        getAll: () => {
+            return new Promise((resolve, reject) => {
+                fetch(`${this.url}/tags`).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    resolve(data.items);
+                }).catch((error) => {
+                    reject(error);
+                });
             });
-        });
+        }
     }
 
     dashboard = {

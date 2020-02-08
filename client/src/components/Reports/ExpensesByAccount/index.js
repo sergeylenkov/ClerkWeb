@@ -1,12 +1,12 @@
 import React from 'react';
 import moment from 'moment';
-import { LineChart, Line, ResponsiveContainer, Tooltip, YAxis, XAxis, CartesianGrid } from 'recharts';
+import { BarChart, Bar, ResponsiveContainer, YAxis, XAxis, CartesianGrid, Tooltip } from 'recharts';
 import Data from '../../../data/Data.js';
-import ExpensesTooltip from './Tooltip';
+import AccountTooltip from './Tooltip';
 
 import styles from './index.module.css';
 
-export default class ExpensesByMonth extends React.Component {
+export default class ExpensesByAccount extends React.Component {
     constructor(props) {
         super(props);
 
@@ -26,6 +26,7 @@ export default class ExpensesByMonth extends React.Component {
         this.data = new Data();
 
         this.updateDimensions = this.updateDimensions.bind(this);
+        this.amountTickFormatter = this.amountTickFormatter.bind(this);
     }
 
     componentDidMount() {
@@ -36,19 +37,8 @@ export default class ExpensesByMonth extends React.Component {
 
         from.subtract(6, 'months');
 
-        this.data.reports.getExpensesByMonth(from, to).then((expenses) => {
+        this.data.reports.getExpensesByAccount(from, to).then((expenses) => {
             console.log(expenses);
-            expenses.forEach(item => {
-                item.date = moment(item.date);
-                const date = item.date;
-
-                if (date.year() === moment().year()) {
-                    item.formattedDate = date.format('MMM');
-                } else {
-                    item.formattedDate = date.format('MMM YYYY');
-                }
-            });
-
             this.setState({
                 data: expenses,
             });
@@ -64,8 +54,8 @@ export default class ExpensesByMonth extends React.Component {
             const rect = this.contentElement.getBoundingClientRect();
             let height = rect.height;
 
-            if (height < 600) {
-                height = 600;
+            if (height < 800) {
+                height = 800;
             }
 
             this.setState({
@@ -77,6 +67,10 @@ export default class ExpensesByMonth extends React.Component {
 
     updateDimensions() {
         this.calculateReportPosition();
+    }
+
+    amountTickFormatter(tick) {
+        return tick;
     }
 
     render() {
@@ -93,13 +87,20 @@ export default class ExpensesByMonth extends React.Component {
                 <div className={styles.content} ref={this.refContentCallback}>
                     <div className={styles.report} style={reportStyle}>
                         <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={this.state.data}>
-                                <Tooltip content={<ExpensesTooltip />} isAnimationActive={false} />
-                                <XAxis dataKey="formattedDate" />
-                                <YAxis />
+                            <BarChart data={this.state.data} layout="vertical" >
+                                <XAxis dataKey="total" type="number" tickFormatter={this.amountTickFormatter} />
+                                <YAxis dataKey="name" type="category" width={120} />
                                 <CartesianGrid strokeDasharray="5 5" />
-                                <Line dataKey="total" stroke="#2196f3" isAnimationActive={false} />
-                            </LineChart>
+                                <Tooltip content={<AccountTooltip />} isAnimationActive={false} />
+                                <Bar
+                                    dataKey="total"
+                                    fill="#2196f3"
+                                    maxBarSize={10}
+                                    minPointSize={5}
+                                    legendType="none"
+                                    isAnimationActive={false}
+                                />
+                            </BarChart >
                         </ResponsiveContainer>
                     </div>
                 </div>

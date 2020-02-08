@@ -2,8 +2,7 @@ import React from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import ReportTab from './Tab';
 import ExpensesByMonth from './ExpensesByMonth';
-import ExpensesForPeriod from './ExpensesForPeriod';
-
+import ExpensesByAccount from './ExpensesByAccount';
 import styles from './index.module.css';
 
 class Reports extends React.Component {
@@ -13,7 +12,7 @@ class Reports extends React.Component {
         this.state = {
             items: [
                 { id: 0, title: 'Expenses By Month', path: '/reports/expenses_by_month' },
-                { id: 1, title: 'Expenses For Period', path: '/reports/expenses_for_period' },
+                { id: 1, title: 'Expenses For Period', path: '/reports/expenses_by_account' },
             ]
         };
 
@@ -51,8 +50,8 @@ class Reports extends React.Component {
                         <Route path='/reports/expenses_by_month'>
                             <ExpensesByMonth />
                         </Route>
-                        <Route path='/reports/expenses_for_period'>
-                            <ExpensesForPeriod />
+                        <Route path='/reports/expenses_by_account'>
+                            <ExpensesByAccount />
                         </Route>
                     </Switch>
                 </div>

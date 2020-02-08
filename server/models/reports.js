@@ -34,6 +34,28 @@ module.exports.getExpensesByMonth = (from, to) => {
     });
 }
 
+
+module.exports.getExpensesByAccount = (from, to) => {
+    return new Promise((resolve, reject) => {
+        db.all(`SELECT a.name, TOTAL(t.to_account_amount) as sum FROM transactions t, accounts a
+                 WHERE (a.type_id = 2 OR a.type_id = 3) AND t.to_account_id = a.id AND t.paid_at >= ? AND t.paid_at <= ? AND t.deleted = 0
+                 GROUP BY a.name ORDER BY sum DESC`, [from, to], (error, rows) => {
+            if (error) {
+                reject(error);
+            } else {
+                let items = [];
+
+                rows.forEach((row) => {
+                    let item = { name: row.name, total: row.sum };
+                    items.push(item);
+                });
+
+                resolve(items);
+            }
+        });
+    });
+}
+
 function _getExpensesForMonth(date) {
     return new Promise((resolve, reject) => {
         db.all(`SELECT a.id, a.name, TOTAL(t.from_account_amount) AS sum FROM transactions t, accounts a

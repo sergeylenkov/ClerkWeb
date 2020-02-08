@@ -1,0 +1,28 @@
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter {
+    width: 100%;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.content {
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+}
+
+.report {
+    width: 600px;
+    height: 600px;
+    margin: auto;
+    font-size: 12px;
+}
