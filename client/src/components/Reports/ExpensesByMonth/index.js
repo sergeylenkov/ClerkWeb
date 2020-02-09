@@ -3,6 +3,7 @@ import moment from 'moment';
 import { LineChart, Line, ResponsiveContainer, Tooltip, YAxis, XAxis, CartesianGrid } from 'recharts';
 import Data from '../../../data/Data.js';
 import ExpensesTooltip from './Tooltip';
+import DatePicker, { DatePickerPeriod } from '../../DatePicker';
 
 import styles from './index.module.css';
 
@@ -13,7 +14,9 @@ export default class ExpensesByMonth extends React.Component {
         this.state = {
             data: [],
             width: 600,
-            height: 400
+            height: 400,
+            isDatePickerVisible: false,
+            selectedPeriod: DatePickerPeriod.Year
         }
 
         this.contentElement = null;
@@ -24,8 +27,10 @@ export default class ExpensesByMonth extends React.Component {
         }
 
         this.data = new Data();
+        this.periods = [DatePickerPeriod.Year, DatePickerPeriod.PreviousYear, DatePickerPeriod.Custom];
 
         this.updateDimensions = this.updateDimensions.bind(this);
+        this.onToggleDatePicker = this.onToggleDatePicker.bind(this);
     }
 
     componentDidMount() {
@@ -79,6 +84,12 @@ export default class ExpensesByMonth extends React.Component {
         this.calculateReportPosition();
     }
 
+    onToggleDatePicker() {
+        this.setState({
+            isDatePickerVisible: !this.state.isDatePickerVisible
+        });
+    }
+
     render() {
         const reportStyle = {
             width: `${this.state.width}px`,
@@ -88,7 +99,15 @@ export default class ExpensesByMonth extends React.Component {
         return (
             <div className={styles.container}>
                 <div className={styles.filter}>
-
+                    <div className={styles.periodButton} onClick={this.onToggleDatePicker}>Month</div>
+                    {
+                        this.state.isDatePickerVisible &&
+                        <DatePicker
+                            className={styles.datePicker}
+                            periods={this.periods}
+                            selectedPeriod={this.state.selectedPeriod}
+                        />
+                    }
                 </div>
                 <div className={styles.content} ref={this.refContentCallback}>
                     <div className={styles.report} style={reportStyle}>

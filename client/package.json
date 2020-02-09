@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "moment": "^2.24.0",
+    "rc-calendar": "^9.15.9",
     "react": "^16.6.3",
     "react-day-picker": "^7.3.0",
     "react-dom": "^16.6.3",
