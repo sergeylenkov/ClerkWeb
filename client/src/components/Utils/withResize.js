@@ -1,7 +1,7 @@
 import React from "react";
 
-export const withResize = Component => {
-    class WrappedComponent extends React.Component {
+export function withResize(WrappedComponent) {
+    return class extends React.Component {
         constructor(props) {
             super(props);
 
@@ -33,9 +33,7 @@ export const withResize = Component => {
         }
 
         render() {
-            return <Component size={this.state.size} {...this.props} />;
+            return <WrappedComponent size={this.state.size} {...this.props} />;
         }
     }
-
-    return WrappedComponent;
 }
