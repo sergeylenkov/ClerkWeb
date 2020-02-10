@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { _exchangeRates } from '../data/Data.js';
+import { _exchangeRates } from '../../data/Data.js';
 
 const currencySign = {
     'RUB': '₽',
@@ -8,16 +8,16 @@ const currencySign = {
     'EUR': '€'
 }
 
-export function formatAmount(value, currency='RUB', withFraction=true) {    
+export function formatAmount(value, currency='RUB', withFraction=true) {
     value = value.toFixed(2).toString();
     value = value.trim().replace(' ', '').replace(',', '.');
-    
+
     const values = value.split('.');
     const integer = values[0];
     const fraction = values[1];
     let formatted = '';
     let count = 0;
-    
+
     for (let i = integer.length - 1; i >= 0; i--) {
         formatted = formatted + integer[i];
         count++;
@@ -30,9 +30,9 @@ export function formatAmount(value, currency='RUB', withFraction=true) {
 
     formatted = formatted.split('').reverse().join('');
     formatted = formatted.replace('- ', '-');
-    
+
     const sign = currencySign[currency];
-    
+
     if (withFraction) {
         return <span><span>{formatted}</span><span className='fraction'>.{fraction}</span> {sign}</span>
     }
@@ -43,12 +43,12 @@ export function formatAmount(value, currency='RUB', withFraction=true) {
 export function formatDate(date) {
     const now = moment();
     const week = moment().startOf('week');
-    
+
     let formatted = date.format('MMM D, YYYY');
 
     const isToday = now.isSame(date, 'year') && now.isSame(date, 'month') && now.isSame(date, 'day');
     const isWeek = date.isSameOrAfter(week);
-    
+
     if (isToday) {
         formatted = 'Today';
     } else if (isWeek) {
@@ -68,16 +68,16 @@ export function isSameDate(date1, date2) {
     return false;
 }
 
-export function convertExchangeRates(from, to, amount) {    
+export function convertExchangeRates(from, to, amount) {
     if (from === to) {
         return amount;
     }
-    
-    let rate = 1;    
-    
+
+    let rate = 1;
+
     if (_exchangeRates[`${from}_${to}`]) {
         rate = _exchangeRates[`${from}_${to}`];
     }
-        
-    return amount * rate;    
+
+    return amount * rate;
 }

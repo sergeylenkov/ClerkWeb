@@ -8,7 +8,7 @@ import { DashboardBudgets } from './Budgets';
 import { DashboardGoals } from './Goals';
 import { DashboardDebts } from './Debts';
 import { DashboardSchedulers } from './Schedulers';
-import { convertExchangeRates } from '../Utils.js';
+import { convertExchangeRates } from '../Utils';
 
 import styles from './index.module.css';
 

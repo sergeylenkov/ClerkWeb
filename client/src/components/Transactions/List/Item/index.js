@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Icon, Icons } from '../../../Icon.js';
-import { formatAmount, formatDate } from '../../../Utils.js';
+import { formatAmount, formatDate } from '../../../Utils';
 import TransactionsListItemMenu from '../ContextMenu';
 
 import styles from './index.module.css';

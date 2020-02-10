@@ -1,16 +1,12 @@
 import React from 'react';
-import { formatAmount } from '../../Utils.js';
+import { formatAmount } from '../../Utils';
+import { withResize } from '../../Utils/withResize';
 
 import styles from './index.module.css';
 
-export class ProgressTable extends React.Component {
+class ProgressTable extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state ={
-            width: 0,
-            height: 0
-        };
 
         this.tableElement = null;
         this.headerElement = null;
@@ -27,23 +23,6 @@ export class ProgressTable extends React.Component {
         this.refHeaderCallback = element => {
             this.headerElement = element;
         };
-
-        this.updateDimensions = this.updateDimensions.bind(this);
-    }
-
-    componentDidMount() {
-        window.addEventListener('resize', this.updateDimensions);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateDimensions);
-    }
-
-    updateDimensions() {
-        this.setState({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
     }
 
     getColorForProgress(percent) {
@@ -149,3 +128,5 @@ export class ProgressTable extends React.Component {
         }
     }
 }
+
+export default withResize(ProgressTable);

@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { ProgressTable } from '../Progress';
+import ProgressTable from '../Progress';
 
 import styles from './index.module.css';
 
