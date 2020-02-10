@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Data, { AccountTypes } from '../../data/Data.js';
+import Data, { AccountTypes } from 'data/Data.js';
 import { DashboardBalance } from './Balance';
 import { DashboardDeposits } from './Deposits';
 import { DashboardExpenses } from './Expenses';
@@ -8,7 +8,7 @@ import { DashboardBudgets } from './Budgets';
 import { DashboardGoals } from './Goals';
 import { DashboardDebts } from './Debts';
 import { DashboardSchedulers } from './Schedulers';
-import { convertExchangeRates } from '../Utils';
+import { convertExchangeRates } from 'components/Utils';
 
 import styles from './index.module.css';
 

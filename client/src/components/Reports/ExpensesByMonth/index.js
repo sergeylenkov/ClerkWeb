@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import { withResize } from '../../Utils/withResize';
+import { withResize } from 'components/Utils/withResize';
 import { LineChart, Line, ResponsiveContainer, Tooltip, YAxis, XAxis, CartesianGrid } from 'recharts';
-import Data from '../../../data/Data.js';
+import Data from 'data/Data.js';
 import ExpensesTooltip from './Tooltip';
-import DatePicker, { DatePickerPeriod } from '../../DatePicker';
+import DatePicker, { DatePickerPeriod } from 'components/DatePicker';
 
 import styles from './index.module.css';
 
@@ -14,8 +14,6 @@ class ExpensesByMonth extends React.Component {
 
         this.state = {
             data: [],
-            width: 600,
-            height: 400,
             isDatePickerVisible: false,
             selectedPeriod: DatePickerPeriod.Year
         }

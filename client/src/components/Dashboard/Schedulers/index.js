@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { formatAmount, isSameDate } from '../../Utils';
+import { formatAmount, isSameDate } from 'components/Utils';
 
 import styles from './index.module.css';
 

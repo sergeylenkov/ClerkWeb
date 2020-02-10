@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { withResize } from '../../Utils/withResize';
+import { withResize } from 'components/Utils/withResize';
 import { BarChart, Bar, ResponsiveContainer, YAxis, XAxis, CartesianGrid, Tooltip } from 'recharts';
-import Data from '../../../data/Data.js';
+import Data from 'data/Data.js';
 import AccountTooltip from './Tooltip';
 
 import styles from './index.module.css';

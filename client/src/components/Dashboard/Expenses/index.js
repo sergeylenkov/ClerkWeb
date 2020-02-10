@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { formatAmount } from '../../Utils';
+import { formatAmount } from 'components/Utils';
 
 import styles from './index.module.css';
 

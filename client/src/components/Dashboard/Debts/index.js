@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgressTable from '../Progress';
+import ProgressTable from 'components/Dashboard/Progress';
 
 import styles from './index.module.css';
 

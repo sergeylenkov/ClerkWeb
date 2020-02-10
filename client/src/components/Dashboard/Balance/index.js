@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatAmount } from '../../Utils';
+import { formatAmount } from 'components/Utils';
 
 import styles from './index.module.css';
 

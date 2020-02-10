@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatAmount } from '../../Utils';
-import { withResize } from '../../Utils/withResize';
+import { formatAmount } from 'components/Utils';
+import { withResize } from 'components/Utils/withResize';
 
 import styles from './index.module.css';
 
