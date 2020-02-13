@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Data, { AccountTypes } from 'data/Data.js';
-import { DashboardBalance } from './Balance';
+import DashboardBalance from './Balance';
 import { DashboardDeposits } from './Deposits';
 import { DashboardExpenses } from './Expenses';
 import { DashboardBudgets } from './Budgets';

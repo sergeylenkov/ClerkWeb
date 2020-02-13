@@ -1,5 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import { MenuButton } from './Button';
 
 import styles from './index.module.css';
@@ -19,14 +20,16 @@ class Menu extends React.Component {
     constructor(props) {
         super(props);
 
+        const { t } = props;
+
         this.state = {
             items: [
-                { title: 'Dashboard', type: MenuTypes.Dashboard, path: '/' },
-                { title: 'Transactions', type: MenuTypes.Transactions, path: '/transactions' },
-                { title: 'Budgets', type: MenuTypes.Budgets, path: '/budgets' },
-                { title: 'Goals', type: MenuTypes.Goals, path: '/goals' },
-                { title: 'Schedulers', type: MenuTypes.Schedulers, path: 'schedulers' },
-                { title: 'Reports', type: MenuTypes.Reports, path: '/reports' }
+                { title: t('Dashboard'), type: MenuTypes.Dashboard, path: '/' },
+                { title: t('Transactions'), type: MenuTypes.Transactions, path: '/transactions' },
+                { title: t('Budgets'), type: MenuTypes.Budgets, path: '/budgets' },
+                { title: t('Goals'), type: MenuTypes.Goals, path: '/goals' },
+                { title: t('Schedulers'), type: MenuTypes.Schedulers, path: 'schedulers' },
+                { title: t('Reports'), type: MenuTypes.Reports, path: '/reports' }
             ]
         };
 
@@ -62,4 +65,6 @@ class Menu extends React.Component {
     }
 }
 
-export default withRouter(Menu)
+export default withRouter(
+    withTranslation()(Menu)
+);

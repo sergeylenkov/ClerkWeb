@@ -1,10 +1,13 @@
 import React from 'react';
 import { formatAmount } from 'components/Utils';
+import { withTranslation } from 'react-i18next';
 
 import styles from './index.module.css';
 
-export class DashboardBalance extends React.Component {
+class DashboardBalance extends React.Component {
     render() {
+        const { t } = this.props;
+
         return (
             <div className={styles.container}>
                 <div className={styles.header}>Total</div>
@@ -38,3 +41,5 @@ export class DashboardBalance extends React.Component {
         );
     }
 }
+
+export default withTranslation()(DashboardBalance);
