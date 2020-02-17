@@ -1,0 +1,10 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(3,97,172,1) 0%, rgba(3,135,225,1) 50%, rgba(3,97,172,1) 100%);
+
+    display: flex;
+}

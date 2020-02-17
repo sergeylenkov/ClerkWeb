@@ -1,10 +1,19 @@
 {
     "translation": {
-        "Dashboard": "Dashboard",
-        "Transactions": "Transactions",
-        "Budgets": "Budgets",
-        "Goals": "Goals",
-        "Schedulers": "Schedulers",
-        "Reports": "Reports"
+        "login": {
+            "Title": "Sign in",
+            "Username": "Login",
+            "Password": "Password",
+            "Login": "Login",
+            "Register": "Register"
+        },
+        "menu": {
+            "Dashboard": "Dashboard",
+            "Transactions": "Transactions",
+            "Budgets": "Budgets",
+            "Goals": "Goals",
+            "Schedulers": "Schedulers",
+            "Reports": "Reports"
+        }
     }
 }

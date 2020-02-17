@@ -1,10 +1,19 @@
 {
     "translation": {
-        "Dashboard": "Обзор",
-        "Transactions": "Транзакции",
-        "Budgets": "Бюджет",
-        "Goals": "Цели",
-        "Schedulers": "Планировщик",
-        "Reports": "Отчеты"
+        "login": {
+            "Title": "Вход",
+            "Username": "Логин",
+            "Password": "Пароль",
+            "Login": "Войти",
+            "Register": "Регистрация"
+        },
+        "menu": {
+            "Dashboard": "Обзор",
+            "Transactions": "Транзакции",
+            "Budgets": "Бюджет",
+            "Goals": "Цели",
+            "Schedulers": "Планировщик",
+            "Reports": "Отчеты"
+        }
     }
 }

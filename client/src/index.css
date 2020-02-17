@@ -20,6 +20,10 @@ button {
 	outline: none;
 }
 
-.fraction {
-	color: #969696;
+input {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: none;
+    outline: none;
 }
