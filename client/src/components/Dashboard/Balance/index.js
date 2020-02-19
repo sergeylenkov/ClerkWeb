@@ -6,8 +6,6 @@ import styles from './index.module.css';
 
 class DashboardBalance extends React.Component {
     render() {
-        const { t } = this.props;
-
         return (
             <div className={styles.container}>
                 <div className={styles.header}>Total</div>

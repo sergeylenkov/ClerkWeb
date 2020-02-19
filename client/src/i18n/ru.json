@@ -5,7 +5,8 @@
             "Username": "Логин",
             "Password": "Пароль",
             "Login": "Войти",
-            "Register": "Регистрация"
+            "Register": "Регистрация",
+            "EnterEmail": "Введите свой емейл"
         },
         "menu": {
             "Dashboard": "Обзор",
@@ -14,6 +15,11 @@
             "Goals": "Цели",
             "Schedulers": "Планировщик",
             "Reports": "Отчеты"
+        },
+        "dashboard": {
+            "Balance": "Остаток",
+            "Expenses": "Расходы",
+            "Receipts": "Доходы"
         }
     }
 }

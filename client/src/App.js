@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ModalBackground from 'components/ModalBackground';
-import Dashboard from 'components/Dashboard';
+import MainPage from 'components/MainPage';
 import Login from 'components/Login';
 
 import styles from './App.module.css';
@@ -16,7 +16,7 @@ class App extends React.Component {
 			<div className={styles.container}>
 				<Switch>
 					<Route exact path='/'>
-						{isLogged ? <Dashboard /> : <Redirect to={'/login'} />}
+						{isLogged ? <MainPage /> : <Redirect to={'/login'} />}
 					</Route>
 					<Route path='/login'>
 						<ModalBackground><Login /></ModalBackground>

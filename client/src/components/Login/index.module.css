@@ -46,6 +46,10 @@
     box-shadow: 0 1px 0 #378ef0;
 }
 
+.field.invalid {
+    border-color: #e34850;
+}
+
 .loginButton {
     margin: 20px auto 0 auto;
 }

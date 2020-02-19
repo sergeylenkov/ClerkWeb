@@ -5,15 +5,21 @@
             "Username": "Login",
             "Password": "Password",
             "Login": "Login",
-            "Register": "Register"
+            "Register": "Register",
+            "EnterEmail": "Please enter an email address."
         },
         "menu": {
-            "Dashboard": "Dashboard",
+            "Dashboard": "Overview",
             "Transactions": "Transactions",
             "Budgets": "Budgets",
             "Goals": "Goals",
             "Schedulers": "Schedulers",
             "Reports": "Reports"
+        },
+        "dashboard": {
+            "Balance": "Balance",
+            "Expenses": "Expenses",
+            "Receipts": "Receipts"
         }
     }
 }
