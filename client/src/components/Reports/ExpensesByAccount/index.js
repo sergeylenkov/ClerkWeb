@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { withResize } from 'components/Utils/withResize';
 import { BarChart, Bar, ResponsiveContainer, YAxis, XAxis, CartesianGrid, Tooltip } from 'recharts';
-import Data from 'data/Data.js';
+import { data } from 'data';
 import AccountTooltip from './Tooltip';
 
 import styles from './index.module.css';
@@ -21,7 +21,7 @@ class ExpensesByAccount extends React.Component {
             this.contentElement = element;
         }
 
-        this.data = new Data();
+        //this.data = new Data();
 
         this.amountTickFormatter = this.amountTickFormatter.bind(this);
     }
@@ -32,7 +32,7 @@ class ExpensesByAccount extends React.Component {
 
         from.subtract(6, 'months');
 
-        this.data.reports.getExpensesByAccount(from, to).then((expenses) => {
+        data.reports.getExpensesByAccount(from, to).then((expenses) => {
             console.log(expenses);
             this.setState({
                 data: expenses,

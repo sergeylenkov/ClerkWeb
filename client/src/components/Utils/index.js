@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import { _exchangeRates } from '../../data/Data.js';
 
 const currencySign = {
     'RUB': '₽',
@@ -66,18 +65,4 @@ export function isSameDate(date1, date2) {
     }
 
     return false;
-}
-
-export function convertExchangeRates(from, to, amount) {
-    if (from === to) {
-        return amount;
-    }
-
-    let rate = 1;
-
-    if (_exchangeRates[`${from}_${to}`]) {
-        rate = _exchangeRates[`${from}_${to}`];
-    }
-
-    return amount * rate;
 }

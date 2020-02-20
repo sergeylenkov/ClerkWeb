@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { withResize } from 'components/Utils/withResize';
 import { LineChart, Line, ResponsiveContainer, Tooltip, YAxis, XAxis, CartesianGrid } from 'recharts';
-import Data from 'data/Data.js';
+import { data } from 'data';
 import ExpensesTooltip from './Tooltip';
 import DatePicker, { DatePickerPeriod } from 'components/DatePicker';
 
@@ -24,7 +24,6 @@ class ExpensesByMonth extends React.Component {
             this.contentElement = element;
         }
 
-        this.data = new Data();
         this.periods = [DatePickerPeriod.Year, DatePickerPeriod.PreviousYear, DatePickerPeriod.Custom];
 
         this.onToggleDatePicker = this.onToggleDatePicker.bind(this);
@@ -36,7 +35,7 @@ class ExpensesByMonth extends React.Component {
 
         from.subtract(6, 'months');
 
-        this.data.reports.getExpensesByMonth(from, to).then((expenses) => {
+        data.reports.getExpensesByMonth(from, to).then((expenses) => {
             console.log(expenses);
             expenses.forEach(item => {
                 item.date = moment(item.date);

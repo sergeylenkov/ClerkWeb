@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Data from 'data/Data.js';
+import Data from 'data';
 import TransactionsList from './List';
 
 import styles from './index.module.css';

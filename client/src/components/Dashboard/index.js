@@ -1,8 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
-import Data, { AccountTypes } from 'data/Data.js';
-import { convertExchangeRates } from 'components/Utils';
+import { data, AccountTypes } from 'data';
 import FormattedAmount from 'components/FormattedAmount';
 
 import styles from './index.module.css';
@@ -16,26 +15,27 @@ class Dashboard extends React.Component {
       creditFunds: [],
       accounts: [],
       expenses: [],
+      receipts: [],
       budgets: [],
       goals: [],
       debts: [],
       schedulers: [],
       total: { amount: 0, currency: 'RUB' },
       totalExpenses: { amount: 0, currency: 'RUB' },
+      totalReceipts: { amount: 0, currency: 'RUB' },
     }
-
-    this.data = new Data();
   }
 
   componentDidMount() {
-    this.data.exchange.getExchangeRates().then(() => {
+    data.exchange.getExchangeRates().then(() => {
       this.getBalance();
       this.getExpenses();
+      this.getReceipts();
     });
   }
 
   getBalance() {
-    this.data.dashboard.getBalance().then((items) => {
+    data.dashboard.getBalance().then((items) => {
       let own = [];
       let credits = [];
       let currency = {};
@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
       });
 
       const total = items.reduce((accumulator, item) => {
-        return accumulator + convertExchangeRates(item.currency, 'RUB', item.amount);
+        return accumulator + data.exchange.convert(item.currency, 'RUB', item.amount);
       }, 0);
 
       this.setState({
@@ -76,9 +76,9 @@ class Dashboard extends React.Component {
     const from = moment().startOf('month');
     const to = moment().endOf('month');
 
-    this.data.dashboard.getExpenses(from, to).then((expenses) => {
+    data.dashboard.getExpenses(from, to).then((expenses) => {
       const total = expenses.reduce((accumulator, item) => {
-          return accumulator + convertExchangeRates(item.currency, 'RUB', item.amount);
+          return accumulator + data.exchange.convert(item.currency, 'RUB', item.amount);
       }, 0);
 
       this.setState({
@@ -88,9 +88,25 @@ class Dashboard extends React.Component {
     });
   }
 
+  getReceipts() {
+    const from = moment().startOf('month');
+    const to = moment().endOf('month');
+
+    data.dashboard.getReceipts(from, to).then((receipts) => {
+      const total = receipts.reduce((accumulator, item) => {
+          return accumulator + data.exchange.convert(item.currency, 'RUB', item.amount);
+      }, 0);
+
+      this.setState({
+        receipts: receipts,
+        totalReceipts: { amount: total, currency: 'RUB' }
+      });
+    });
+  }
+
   render() {
     const { t } = this.props;
-    const { total, totalExpenses } = this.state;
+    const { total, totalExpenses, totalReceipts } = this.state;
 
     return (
       <div className={styles.container}>
@@ -102,7 +118,7 @@ class Dashboard extends React.Component {
             </div>
             <div className={styles.receipts}>
               <div className={styles.receiptsLabel}>{t('dashboard.Receipts')}</div>
-              <div className={styles.receiptsAmount}><FormattedAmount amount={0} currency={totalExpenses.currency} /></div>
+              <div className={styles.receiptsAmount}><FormattedAmount amount={totalReceipts.amount} currency={totalReceipts.currency} /></div>
             </div>
             <div className={styles.expenses}>
               <div className={styles.expensesLabel}>{t('dashboard.Expenses')}</div>
