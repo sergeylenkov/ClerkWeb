@@ -6,8 +6,8 @@
     font-weight: 600;
     text-align: center;
 
-    background: #0057ff;
-    color: #ffffff;
+    background: var(--button-background);
+    color: var(--button-text);
     border-radius: 16px;
     transition: background-color 0.2s ease-in;
 
@@ -15,10 +15,10 @@
 }
 
 .container:hover {
-    background-color: #0d66d0;
+    background-color: var(--button-background-hover);
 }
 
 .container:disabled {
-    background-color: #f4f4f4;
-    color: #bcbcbc;
+    background-color: var(--button-background-disabled);
+    color: var(--button-text-disabled);
 }

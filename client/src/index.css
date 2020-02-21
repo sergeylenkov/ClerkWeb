@@ -34,4 +34,9 @@ input {
 	--content-background: #eff5fd;
 	--header-text: #ffffff;
 	--header-text-secondary: #bacae3;
+	--button-background: #0057ff;
+	--button-text: #ffffff;
+	--button-background-hover: #0d66d0;
+	--button-background-disabled: #f4f4f4;
+	--button-text-disabled: #bcbcbc;
 }
