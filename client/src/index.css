@@ -27,3 +27,11 @@ input {
 	background: none;
     outline: none;
 }
+
+:root {
+	--header-background: #0c51bd;
+	--header-background-secondary: #0656d4;
+	--content-background: #eff5fd;
+	--header-text: #ffffff;
+	--header-text-secondary: #bacae3;
+}

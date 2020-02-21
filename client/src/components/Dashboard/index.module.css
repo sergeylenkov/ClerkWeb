@@ -4,7 +4,7 @@
 
 .header {
     display: flex;
-    background: #0656d4;
+    background: var(--header-background-secondary);
 }
 
 .content {
@@ -28,7 +28,7 @@
 .balanceAmount {
     margin-top: 5px;
     font-size: 22px;
-    color: #ffffff;
+    color: var(--header-text);
 }
 
 .expenses {
@@ -39,13 +39,13 @@
 
 .expensesLabel {
     font-size: 10px;
-    color: #bacae3;
+    color: var(--header-text-secondary);
 }
 
 .expensesAmount {
     margin-top: 5px;
     font-size: 18px;
-    color: #ffffff;
+    color: var(--header-text);
 }
 
 .receipts {
