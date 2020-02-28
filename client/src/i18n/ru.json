@@ -19,7 +19,8 @@
         "dashboard": {
             "Balance": "Остаток",
             "Expenses": "Расходы",
-            "Receipts": "Доходы"
+            "Receipts": "Доходы",
+            "LastTransactions": "Последние транзакции"
         }
     }
 }

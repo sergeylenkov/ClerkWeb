@@ -1,9 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
-import { data, AccountTypes } from 'data';
+import { connect } from 'react-redux';
+import { data } from 'data';
+import { AccountTypes } from 'data/accounts';
 import FormattedAmount from 'components/FormattedAmount';
-
+import DashboardTransactions from './Transactions';
 import styles from './index.module.css';
 
 class Dashboard extends React.Component {
@@ -26,12 +28,12 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount() {
-    data.exchange.getExchangeRates().then(() => {
+  componentDidUpdate(nextProps) {
+    if (this.props.isInitialized && this.props.isInitialized !== nextProps.isInitialized) {
       this.getBalance();
       this.getExpenses();
       this.getReceipts();
-    });
+    }
   }
 
   getBalance() {
@@ -126,9 +128,18 @@ class Dashboard extends React.Component {
             </div>
           </div>
         </div>
+        <DashboardTransactions />
       </div>
     );
   }
 }
 
-export default withTranslation()(Dashboard);
+const mapStateToProps = state => {
+  return {
+    isInitialized: state.data.isInitialized
+	};
+};
+
+export default connect(mapStateToProps, null)(
+  withTranslation()(Dashboard)
+);

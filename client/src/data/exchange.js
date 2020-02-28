@@ -1,10 +1,12 @@
+import { isEmpty } from 'utils';
+
 export function exchange(url) {
-  this.exchangeRates = {};
   this.url = url;
+  this.exchangeRates = {};
 
   this.getExchangeRates = function() {
     return new Promise((resolve, reject) => {
-      if (this.exchangeRates) {
+      if (!isEmpty(this.exchangeRates)) {
         resolve(this.exchangeRates);
       } else {
         fetch(`${this.url}/exchangeRates`).then((response) => {

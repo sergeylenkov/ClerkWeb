@@ -15,7 +15,7 @@ module.exports.getTransactions = (from, to) => {
 
             Promise.all(promises).then(() => {
                 resolve(items);
-            });            
+            });
         }).catch((err) => {
             reject(err);
         });
@@ -37,7 +37,7 @@ module.exports.getRecentTransactions = (limit) => {
 
             Promise.all(promises).then(() => {
                 resolve(items);
-            });            
+            });
         }).catch((err) => {
             reject(err);
         });
@@ -53,9 +53,9 @@ module.exports.saveTransaction = (transaction) => {
 
 function _getTransactions(from, to) {
     return new Promise((resolve, reject) => {
-        db.all('SELECT a1.name AS from_account_name, a1.type_id AS from_type_id, a2.name AS to_account_name, a2.type_id AS to_type_id, t.*\
-                  FROM transactions t, accounts a1, accounts a2\
-                WHERE t.deleted = 0 AND a1.id = t.from_account_id AND a2.id = t.to_account_id AND t.paid_at >= ? AND t.paid_at <= ? ORDER BY t.paid_at DESC, t.created_at DESC', [from, to], (err, rows) => {
+        db.all(`SELECT a1.name AS from_account_name, a1.type_id AS from_type_id, a2.name AS to_account_name, a2.type_id AS to_type_id, t.*
+                  FROM transactions t, accounts a1, accounts a2
+                WHERE t.deleted = 0 AND a1.id = t.from_account_id AND a2.id = t.to_account_id AND t.paid_at >= ? AND t.paid_at <= ? ORDER BY t.paid_at DESC, t.created_at DESC`, [from, to], (err, rows) => {
             if (err) {
                 reject(err);
             } else {
@@ -74,8 +74,8 @@ function _getTransactions(from, to) {
 
 function _getRecentTransactions(limit) {
     return new Promise((resolve, reject) => {
-        db.all(`SELECT MAX(t.paid_at) AS paid_at, t.id, a1.name AS from_account_name, a2.name AS to_account_name\
-                 FROM transactions t, accounts a1, accounts a2\
+        db.all(`SELECT MAX(t.paid_at) AS paid_at, t.id, a1.name AS from_account_name, a2.name AS to_account_name
+                 FROM transactions t, accounts a1, accounts a2
                 WHERE a1.id = t.from_account_id AND a2.id = t.to_account_id GROUP BY t.from_account_id, t.to_account_id ORDER BY paid_at DESC LIMIT ?`, [limit], (err, rows) => {
             if (err) {
                 reject(err);

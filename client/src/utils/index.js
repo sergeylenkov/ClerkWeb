@@ -66,3 +66,7 @@ export function isSameDate(date1, date2) {
 
     return false;
 }
+
+export function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }

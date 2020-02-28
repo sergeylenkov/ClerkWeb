@@ -11,7 +11,7 @@ class App extends React.Component {
 	render() {
 		const { isLogged } = this.props;
 
-    	return (
+    return (
 			<BrowserRouter>
 			<div className={styles.container}>
 				<Switch>
@@ -24,13 +24,13 @@ class App extends React.Component {
 				</Switch>
 			</div>
 			</BrowserRouter>
-    	);
-  	}
+    );
+  }
 }
 
 const mapStateToProps = state => {
-    return {
-        isLogged: state.user.isLogged
+  return {
+    isLogged: state.user.isLogged
 	};
 };
 

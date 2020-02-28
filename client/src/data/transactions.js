@@ -38,7 +38,7 @@ export function transactions(url) {
       }).then((data) => {
         resolve(data);
       }).catch((error) => {
-        console.log(error);
+        reject(error);
       });
     });
   }

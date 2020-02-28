@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { withResize } from 'components/Utils/withResize';
+import { withResize } from 'utils/withResize';
 import { BarChart, Bar, ResponsiveContainer, YAxis, XAxis, CartesianGrid, Tooltip } from 'recharts';
 import { data } from 'data';
 import AccountTooltip from './Tooltip';
@@ -8,92 +8,90 @@ import AccountTooltip from './Tooltip';
 import styles from './index.module.css';
 
 class ExpensesByAccount extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            data: []
-        }
-
-        this.contentElement = null;
-
-        this.refContentCallback = element => {
-            this.contentElement = element;
-        }
-
-        //this.data = new Data();
-
-        this.amountTickFormatter = this.amountTickFormatter.bind(this);
+    this.state = {
+      data: []
     }
 
-    componentDidMount() {
-        let from = moment().startOf('month');
-        let to = moment().endOf('month');
+    this.contentElement = null;
 
-        from.subtract(6, 'months');
-
-        data.reports.getExpensesByAccount(from, to).then((expenses) => {
-            console.log(expenses);
-            this.setState({
-                data: expenses,
-            });
-        });
+    this.refContentCallback = element => {
+      this.contentElement = element;
     }
 
-    getReportSize() {
-        let height = 600;
-        let width = 400;
+    this.amountTickFormatter = this.amountTickFormatter.bind(this);
+  }
 
-        if (this.contentElement) {
-            const rect = this.contentElement.getBoundingClientRect();
+  componentDidMount() {
+    let from = moment().startOf('month');
+    let to = moment().endOf('month');
 
-            height = rect.height;
-            width = rect.width;
+    from.subtract(6, 'months');
 
-            if (height < 800) {
-                height = 800;
-            }
-        }
+    data.reports.getExpensesByAccount(from, to).then((expenses) => {
+      console.log(expenses);
+      this.setState({
+        data: expenses,
+      });
+    });
+  }
 
-        return {
-            width: `${width}px`,
-            height: `${height}px`
-        }
+  getReportSize() {
+    let height = 600;
+    let width = 400;
+
+    if (this.contentElement) {
+      const rect = this.contentElement.getBoundingClientRect();
+
+      height = rect.height;
+      width = rect.width;
+
+      if (height < 800) {
+        height = 800;
+      }
     }
 
-    amountTickFormatter(tick) {
-        return tick;
+    return {
+      width: `${width}px`,
+      height: `${height}px`
     }
+  }
 
-    render() {
-        return (
-            <div className={styles.container}>
-                <div className={styles.filter}>
+  amountTickFormatter(tick) {
+    return tick;
+  }
 
-                </div>
-                <div className={styles.content} ref={this.refContentCallback}>
-                    <div className={styles.report} style={this.getReportSize()}>
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={this.state.data} layout="vertical" >
-                                <XAxis dataKey="total" type="number" tickFormatter={this.amountTickFormatter} />
-                                <YAxis dataKey="name" type="category" width={120} />
-                                <CartesianGrid strokeDasharray="5 5" />
-                                <Tooltip content={<AccountTooltip />} isAnimationActive={false} />
-                                <Bar
-                                    dataKey="total"
-                                    fill="#2196f3"
-                                    maxBarSize={10}
-                                    minPointSize={5}
-                                    legendType="none"
-                                    isAnimationActive={false}
-                                />
-                            </BarChart >
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className={styles.container}>
+        <div className={styles.filter}>
+
+        </div>
+        <div className={styles.content} ref={this.refContentCallback}>
+          <div className={styles.report} style={this.getReportSize()}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={this.state.data} layout="vertical" >
+                <XAxis dataKey="total" type="number" tickFormatter={this.amountTickFormatter} />
+                <YAxis dataKey="name" type="category" width={120} />
+                <CartesianGrid strokeDasharray="5 5" />
+                <Tooltip content={<AccountTooltip />} isAnimationActive={false} />
+                <Bar
+                  dataKey="total"
+                  fill="#2196f3"
+                  maxBarSize={10}
+                  minPointSize={5}
+                  legendType="none"
+                  isAnimationActive={false}
+                />
+              </BarChart >
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default withResize(ExpensesByAccount);

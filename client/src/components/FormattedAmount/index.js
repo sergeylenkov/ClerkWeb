@@ -6,9 +6,18 @@ const currencySign = {
   'EUR': '€'
 }
 
+/**
+ * FormattedAmount
+ * @constructor
+ * @param {number} amount - amount
+ * @param {string} currency - currency code
+ * @param {boolean} withFraction - format amount with fraction
+ */
+
 class FormattedAmount extends React.Component {
   render() {
     const { amount, currency, withFraction = true } = this.props;
+
     let value = amount;
 
     value = value.toFixed(2).toString();

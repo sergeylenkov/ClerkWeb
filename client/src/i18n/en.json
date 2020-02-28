@@ -19,7 +19,8 @@
         "dashboard": {
             "Balance": "Balance",
             "Expenses": "Expenses",
-            "Receipts": "Receipts"
+            "Receipts": "Receipts",
+            "LastTransactions": "Last transactions"
         }
     }
 }
