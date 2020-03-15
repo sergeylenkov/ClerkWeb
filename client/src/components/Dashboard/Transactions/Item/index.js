@@ -1,11 +1,10 @@
-import React from 'react';
 import FormattedAmount from 'components/FormattedAmount';
-
+import React from 'react';
 import styles from './index.module.css';
 
 class TransactionItem extends React.Component {
   render() {
-    const { fromAmount, fromName, tags } = this.props.transaction;
+    const { fromAmount, fromName } = this.props.transaction;
 
     return (
       <div className={styles.container}>
