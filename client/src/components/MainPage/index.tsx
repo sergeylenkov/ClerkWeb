@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
+
+import Dashboard from 'components/Dashboard';
+import Menu from 'components/Menu';
+import Reports from 'components/Reports';
 import { connect } from 'react-redux';
 import { data } from 'data';
 import { setInitialized } from 'store/actions/data';
-import Menu from 'components/Menu';
-import Reports from 'components/Reports';
-import Dashboard from 'components/Dashboard';
-
 import styles from './index.module.css';
 
-class MainPage extends Component {
-  componentDidMount() {
+interface MainPageProps {
+  setInitialized: (isInitialized: boolean) => void;
+}
+
+class MainPage extends Component<MainPageProps> {
+  public componentDidMount() {
 		data.exchange.getExchangeRates().then(() => {
 			data.accounts.getAll().then(() => {
 				this.props.setInitialized(true);
@@ -18,7 +22,7 @@ class MainPage extends Component {
 		});
   }
 
-  render() {
+  public render() {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -39,15 +43,15 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: { data: { isInitialized: boolean; }; }) => {
   return {
     isInitialized: state.data.isInitialized
 	};
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: (arg0: { type: string; isInitialized: any; }) => any) => {
   return {
-    setInitialized: (isInitialized) => dispatch(setInitialized(isInitialized))
+    setInitialized: (isInitialized: boolean) => dispatch(setInitialized(isInitialized))
   };
 };
 

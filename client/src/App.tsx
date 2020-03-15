@@ -1,14 +1,18 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import ModalBackground from 'components/ModalBackground';
-import MainPage from 'components/MainPage';
-import Login from 'components/Login';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import React, { Component } from 'react';
 
+import Login from 'components/Login';
+import MainPage from 'components/MainPage';
+import ModalBackground from 'components/ModalBackground';
+import { connect } from 'react-redux';
 import styles from './App.module.css';
 
-class App extends React.Component {
-	render() {
+interface AppProps {
+	isLogged: boolean;
+}
+
+class App extends Component<AppProps> {
+	public render() {
 		const { isLogged } = this.props;
 
     return (
@@ -28,7 +32,7 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: { user: { isLogged: boolean; }; }) => {
   return {
     isLogged: state.user.isLogged
 	};
