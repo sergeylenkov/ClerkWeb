@@ -49,7 +49,7 @@ const mapStateToProps = (state: { data: { isInitialized: boolean; }; }) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch: (arg0: { type: string; isInitialized: any; }) => any) => {
+const mapDispatchToProps = (dispatch: (arg0: { type: string; isInitialized: boolean; }) => any) => {
   return {
     setInitialized: (isInitialized: boolean) => dispatch(setInitialized(isInitialized))
   };
