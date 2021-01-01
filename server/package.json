@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "API_TEST=true mocha test/ --recursive",
-    "prod": "PORT=8080 node index.jd"
+    "prod": "PORT=8080 node index.js"
   },
   "keywords": [],
   "author": "",
