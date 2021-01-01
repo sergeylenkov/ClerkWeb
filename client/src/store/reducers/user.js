@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT } from '../constants/user';
 
 const initialState = {
-    isLogged: false,
+    isLogged: true,
     username: '',
 }
 

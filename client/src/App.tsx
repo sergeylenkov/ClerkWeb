@@ -7,9 +7,13 @@ import ModalBackground from 'components/ModalBackground';
 import { connect } from 'react-redux';
 import styles from './App.module.css';
 
-interface AppProps {
-	isLogged: boolean;
-}
+const mapStateToProps = (state: { user: { isLogged: boolean; }; }) => {
+  return {
+    isLogged: state.user.isLogged
+	};
+};
+
+type AppProps = ReturnType<typeof mapStateToProps>;
 
 class App extends Component<AppProps> {
 	public render() {
@@ -17,25 +21,21 @@ class App extends Component<AppProps> {
 
     return (
 			<BrowserRouter>
-			<div className={styles.container}>
-				<Switch>
-					<Route exact path='/'>
-						{isLogged ? <MainPage /> : <Redirect to={'/login'} />}
-					</Route>
-					<Route path='/login'>
-						<ModalBackground><Login /></ModalBackground>
-					</Route>
-				</Switch>
-			</div>
+				<div className={styles.container}>
+					<Switch>
+					<Route exact path='/login'>
+							<ModalBackground><Login /></ModalBackground>
+						</Route>
+						<Route path={['/', '/:path']}>
+							{isLogged ? <MainPage /> : <Redirect to={'/login'} />}
+						</Route>
+					</Switch>
+				</div>
 			</BrowserRouter>
     );
   }
 }
 
-const mapStateToProps = (state: { user: { isLogged: boolean; }; }) => {
-  return {
-    isLogged: state.user.isLogged
-	};
-};
 
-export default connect(mapStateToProps, null)(App);
+
+export default connect(mapStateToProps)(App);

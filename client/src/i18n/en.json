@@ -1,26 +1,28 @@
 {
-    "translation": {
-        "login": {
-            "Title": "Sign in",
-            "Username": "Login",
-            "Password": "Password",
-            "Login": "Login",
-            "Register": "Register",
-            "EnterEmail": "Please enter an email address."
-        },
-        "menu": {
-            "Dashboard": "Overview",
-            "Transactions": "Transactions",
-            "Budgets": "Budgets",
-            "Goals": "Goals",
-            "Schedulers": "Schedulers",
-            "Reports": "Reports"
-        },
-        "dashboard": {
-            "Balance": "Balance",
-            "Expenses": "Expenses",
-            "Receipts": "Receipts",
-            "LastTransactions": "Last transactions"
-        }
-    }
+  "login": {
+    "title": "Sign in",
+    "username": "Login",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register",
+    "enterEmail": "Please enter an email address."
+  },
+  "menu": {
+    "dashboard": "Overview",
+    "transactions": "Transactions",
+    "budgets": "Budgets",
+    "goals": "Goals",
+    "schedulers": "Schedulers",
+    "reports": "Reports"
+  },
+  "dashboard": {
+    "balance": "Balance",
+    "expenses": "Expenses",
+    "receipts": "Receipts",
+    "lastTransactions": "Last transactions"
+  },
+  "reports": {
+    "expensesByMonth": "Expenses By Month",
+    "expensesForPeriod": "Expenses For Period"
+  }
 }

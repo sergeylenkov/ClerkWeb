@@ -11,7 +11,7 @@ import store from './store';
 ReactDOM.render(
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <App isLogged={false} />
+        <App />
       </Provider>
     </I18nextProvider>,
     document.getElementById("root")

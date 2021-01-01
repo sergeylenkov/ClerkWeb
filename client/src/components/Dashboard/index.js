@@ -115,15 +115,15 @@ class Dashboard extends React.Component {
         <div className={styles.header}>
           <div className={styles.content}>
             <div className={styles.balance}>
-              <div className={styles.balanceLabel}>{t('dashboard.Balance')}, {moment().format('d MMMM')}</div>
+              <div className={styles.balanceLabel}>{t('dashboard.balance')}, {moment().format('d MMMM')}</div>
               <div className={styles.balanceAmount}><FormattedAmount amount={total.amount} currency={total.currency} /></div>
             </div>
             <div className={styles.receipts}>
-              <div className={styles.receiptsLabel}>{t('dashboard.Receipts')}</div>
+              <div className={styles.receiptsLabel}>{t('dashboard.receipts')}</div>
               <div className={styles.receiptsAmount}><FormattedAmount amount={totalReceipts.amount} currency={totalReceipts.currency} /></div>
             </div>
             <div className={styles.expenses}>
-              <div className={styles.expensesLabel}>{t('dashboard.Expenses')}</div>
+              <div className={styles.expensesLabel}>{t('dashboard.expenses')}</div>
               <div className={styles.expensesAmount}><FormattedAmount amount={totalExpenses.amount} currency={totalExpenses.currency} /></div>
             </div>
           </div>
@@ -140,6 +140,6 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps)(
   withTranslation()(Dashboard)
 );

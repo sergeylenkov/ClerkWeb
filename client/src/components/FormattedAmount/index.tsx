@@ -1,26 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const currencySign = {
+const currencySign: {[key: string]: string} = {
   'RUB': '₽',
   'USD': '$',
   'EUR': '€'
 }
 
-/**
- * FormattedAmount
- * @constructor
- * @param {number} amount - amount
- * @param {string} currency - currency code
- * @param {boolean} withFraction - format amount with fraction
- */
+interface FormattedAmountProps {
+  amount: number;
+  currency: string;
+  withFraction: boolean;
+}
 
-class FormattedAmount extends React.Component {
+class FormattedAmount extends Component<FormattedAmountProps> {
   render() {
     const { amount, currency, withFraction = true } = this.props;
 
-    let value = amount;
-
-    value = value.toFixed(2).toString();
+    let value = amount.toFixed(2).toString();
     value = value.trim().replace(' ', '').replace(',', '.');
 
     const values = value.split('.');
@@ -45,10 +41,10 @@ class FormattedAmount extends React.Component {
     const sign = currencySign[currency];
 
     if (withFraction) {
-      return <span><span>{formatted}</span><span>.{fraction}</span> {sign}</span>
+      return `${formatted}.${fraction} ${sign}`;
     }
 
-    return <span><span>{formatted}</span> {sign}</span>
+    return `${formatted} ${sign}`
   }
 }
 

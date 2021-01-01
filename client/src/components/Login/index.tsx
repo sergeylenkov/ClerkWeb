@@ -60,17 +60,17 @@ class Login extends Component<LoginProps, LoginState> {
 
     return (
       <form className={styles.container} onSubmit={this.onLogin}>
-        <h1>{t('login.Title')}</h1>
+        <h1>{t('login.title')}</h1>
         <div className={styles.fieldContainer}>
-          <label className={styles.fieldTitle} htmlFor="username">{t('login.Username')}</label>
+          <label className={styles.fieldTitle} htmlFor="username">{t('login.username')}</label>
           <input id="username" autoComplete="on" className={styles.field} onChange={this.onUsernameChange} />
         </div>
         <div className={styles.fieldContainer}>
-          <label className={styles.fieldTitle} htmlFor="password">{t('login.Password')}</label>
+          <label className={styles.fieldTitle} htmlFor="password">{t('login.password')}</label>
           <input id="password" autoComplete="on" type="password" className={styles.field} onChange={this.onPasswordChange} />
         </div>
         <div className={styles.loginButton}>
-          <PrimaryButton type="submit">{t('login.Login')}</PrimaryButton>
+          <PrimaryButton type="submit">{t('login.login')}</PrimaryButton>
         </div>
       </form>
     )

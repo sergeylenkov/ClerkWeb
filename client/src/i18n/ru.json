@@ -1,26 +1,24 @@
 {
-    "translation": {
-        "login": {
-            "Title": "Вход",
-            "Username": "Логин",
-            "Password": "Пароль",
-            "Login": "Войти",
-            "Register": "Регистрация",
-            "EnterEmail": "Введите свой емейл"
-        },
-        "menu": {
-            "Dashboard": "Обзор",
-            "Transactions": "Транзакции",
-            "Budgets": "Бюджет",
-            "Goals": "Цели",
-            "Schedulers": "Планировщик",
-            "Reports": "Отчеты"
-        },
-        "dashboard": {
-            "Balance": "Остаток",
-            "Expenses": "Расходы",
-            "Receipts": "Доходы",
-            "LastTransactions": "Последние транзакции"
-        }
-    }
+  "login": {
+    "title": "Вход",
+    "username": "Логин",
+    "password": "Пароль",
+    "login": "Войти",
+    "register": "Регистрация",
+    "enterEmail": "Введите свой емейл"
+  },
+  "menu": {
+    "dashboard": "Обзор",
+    "transactions": "Транзакции",
+    "budgets": "Бюджет",
+    "goals": "Цели",
+    "schedulers": "Планировщик",
+    "reports": "Отчеты"
+  },
+  "dashboard": {
+    "balance": "Остаток",
+    "expenses": "Расходы",
+    "receipts": "Доходы",
+    "lastTransactions": "Последние транзакции"
+  }
 }
