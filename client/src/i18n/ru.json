@@ -20,5 +20,9 @@
     "expenses": "Расходы",
     "receipts": "Доходы",
     "lastTransactions": "Последние транзакции"
+  },
+  "reports": {
+    "expensesByMonth": "Расходы по месяцам",
+    "expensesForPeriod": "Расходы за период"
   }
 }

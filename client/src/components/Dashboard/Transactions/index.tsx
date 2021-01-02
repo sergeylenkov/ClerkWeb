@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import moment from 'moment';
-import { withTranslation } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { data } from 'data';
 import TransactionItem from './Item';
 
 import styles from './index.module.css';
 
-class DashboardTransactions extends React.Component {
-  constructor(props) {
+interface DashboardTransactionsProps extends WithTranslation {};
+interface DashboardTransactionsState {
+  transactions: any[]
+}
+
+class DashboardTransactions extends Component<DashboardTransactionsProps, DashboardTransactionsState> {
+  constructor(props: DashboardTransactionsProps) {
     super(props);
 
     this.state = {
@@ -32,7 +37,7 @@ class DashboardTransactions extends React.Component {
 
     return (
       <div className={styles.container}>
-        <h3>{t('dashboard.LastTransactions')}</h3>
+        <h3>{t('dashboard.lastTransactions')}</h3>
         {
           transactions.map((transaction, index) => {
             return <TransactionItem key={index} transaction={transaction} />
